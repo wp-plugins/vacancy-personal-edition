@@ -10,7 +10,7 @@ A full featured reservation and appointment booking solution
 
 == Description ==
 
-The perfect booking solution for any person or establishment that needs to allow users to submit reservation/appointment requests. Create your venues and locations and by simply using a shortcode in your post or page you are all setup and ready to go. Lots of customizable options with an easy to use frontend and backend interfaces. Extend Vacancy's functionality even further with the available addons.
+The perfect booking solution for any person or establishment that needs to allow users to submit reservation/appointment requests. Create your venues and locations, add the [vacancy] shortcode in your page or post, and you are all setup and ready to go. Lots of customizable options with an easy to use frontend and backend interfaces. Extend Vacancy's functionality even further with the available addons.
 
 = Features =
 
@@ -20,8 +20,8 @@ The perfect booking solution for any person or establishment that needs to allow
 * Customizable labels for your Venues/Locations/Reservations
 * Custom reservation availability on a per location basis per day basis
 * Reservation Confilct detection
-* Push reservations to Modern Tribe's Events Calendar Pro now available in the Vacancy ECP addon!
-* Recurring reservations, Export your schedules, Customize colors, Use unlimited venues/locations and more now available in the Vacancy PRO Edition addon!
+* Push reservations to Modern Tribe's Events Calendar Pro now available in the <a target="_blank" href="//kraftpress.it/downloads/vacancy-ecp/">Vacancy ECP addon</a>!
+* Recurring reservations, Export your schedules, Customize colors, Use unlimited venues/locations and more now available in the <a target="_blank" href="//kraftpress.it/downloads/vacancy-pro-edition/">Vacancy PRO Edition addon</a>!
 
 = Coming Soon =
 * Payment Gateway to require payment for user submitted reservations
