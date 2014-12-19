@@ -51,11 +51,17 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed WP admin bar visibility bug
+
 = 1.0.1 =
 * Initial release
 
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+* Fixed WP admin bar visibility bug
 
 = 1.0.1 =
 * Initial release

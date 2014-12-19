@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.0.1
+    Version: 1.0.2
     Author: kraftpress
     Author URI: http://kraftpress.it
     Contributors: kraftpress, buildcreate, a2rocklobster
@@ -20,7 +20,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.0',
+                'version' => '1.0.2',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
@@ -103,7 +103,17 @@
                 if(!empty($_POST['va_notification_header'])){update_option('va_notification_header', sanitize_text_field($_POST['va_notification_header']));}
                 if(!empty($_POST['va_notification_footer'])){update_option('va_notification_footer', sanitize_text_field($_POST['va_notification_footer']));}
                 if(!empty($_POST['va_hide_admin_bar'])){update_option('va_hide_admin_bar', sanitize_text_field($_POST['va_hide_admin_bar']));}
-                if(!empty($_POST['va_show_admin_bar_for'])){update_option('va_show_admin_bar_for', sanitize_text_field($_POST['va_show_admin_bar_for']));}
+                if(!empty($_POST['va_show_admin_bar_for'])){
+                    $vals = $_POST['va_show_admin_bar_for'];
+                    if(is_array($vals)){
+                        foreach($vals as $k => $v){$vals[$k] = sanitize_text_field($v);}
+                        update_option('va_show_admin_bar_for', $vals);
+                    }else{
+                        update_option('va_show_admin_bar_for', sanitize_text_field($vals));
+                    }
+                }else{
+                    update_option('va_show_admin_bar_for', array(''));
+                }
                 if(!empty($_POST['va_setup_cleanup'])){update_option('va_setup_cleanup', sanitize_text_field($_POST['va_setup_cleanup']));}
                 if(isset($_POST['va_user_subject_line_new'])){update_option('va_user_subject_line_new', sanitize_text_field($_POST['va_user_subject_line_new']));}
                 if(isset($_POST['va_user_subject_line_approved'])){update_option('va_user_subject_line_approved', sanitize_text_field($_POST['va_user_subject_line_approved']));}
