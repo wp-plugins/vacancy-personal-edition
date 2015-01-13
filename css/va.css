@@ -18,7 +18,7 @@
 #va-day-view td {position:relative; box-sizing:border-box; height:30px; border-left:1px solid #eee; border-top:1px solid #eee;}
 #va-day-view td.ui-selectee:hover {background:#FFDAB9;}
 #va-day-view td.available:hover {cursor:pointer;}
-#va-day-view td.available:hover:before {float:left; content:'Select this start time'; display: block; line-height:1em; padding-left:10px;}
+#va-day-view td.available:hover:before {float:left; content:'Select'; display: block; line-height:1em; padding-left:10px;}
 #va-day-view td.available:hover:after {margin-left:5px; margin-right:10px; float:right; line-height:1em; content:"\f00c"; font-family: 'FontAwesome';}
 #va-day-view td.available.va-editing:hover:before {float:left; content:''; display: block; line-height:1em; padding-left:10px;}
 #va-day-view td.available.va-editing:hover:after {margin-left:5px; margin-right:10px; float:right; line-height:1em; content:""; font-family: 'FontAwesome';}
@@ -51,8 +51,8 @@
 #va-reservation-form select, 
 #va-reservation-form .chosen-container {width:100%; margin-bottom:10px;}
 #va-lightbox-datepicker {margin-bottom:10px;}
-.va-your-name, .va-venue {float:left; width:48%;margin-right:4%;}
-.va-phone, .va-locations {float:left; width:48%; }
+.va-your-name, .va-venue, .va-email {float:left; width:48%;margin-right:4%;}
+.va-phone, .va-locations, .va-send-to {float:left; width:48%; }
 .va-start {width:48%; float: left;}
 .va-end {width:48%; float: right;}
 .chosen-choices {box-shadow: 0 0 5px rgba(0, 0, 0, 0);}

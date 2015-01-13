@@ -86,7 +86,7 @@
 				<form method="post" action="">
 					<h2 class="va-tab-title">Notification Settings</h2><hr/>
 					<p>These notification settings are for the emails that Vacancy can send when various actions occur. Customize these to your liking.</p>
-					<br/>
+					<h3>Choose when Notifications are sent:</h3>
 					<p>
 						<strong>Send admin notification when a new <?php echo $this->va_settings['reservation_single']; ?> is submitted</strong> &nbsp;
 						<select name="va_admin_new_notification">
@@ -108,6 +108,7 @@
 							<option value="no" <?php if($this->va_settings['user_approved_notification'] == "no"){echo 'selected';};?>>No</option>
 						</select>
 					</p>
+					<h3>This is where your Notifications are from:</h3>
 					<p>
 						<strong>FROM Email name</strong><br/>
 						<input type="text" name="va_from_email_name" size="80" value="<?php echo $this->va_settings['from_email_name']; ?>"/>
@@ -118,11 +119,43 @@
 						<input type="text" name="va_from_email_address" size="80" value="<?php echo $this->va_settings['from_email_address']; ?>"/>
 						<br/><span class="description">this should match your domain to help avoid spam filtering</span>
 					</p>	
-					<p id="va-admin-email">
-						<strong>Admin email address(es)</strong><br/>
-						<input type="text" name="va_new_notification_email" size="80" value="<?php echo $this->va_settings['admin_new_notification_email']; ?>"/>
-						<br/><span class="description">comma separate multiple emails</span>
-					</p>
+					<h3>These are where Admin Notifications can go to:</h3>
+					<p>This will be chosen by the user when submitting a <?php echo $this->va_settings['reservation_single']; ?>. Leave the second label and email address blank if you only want to give the user one option.</p>
+					<table>
+					<tr>
+						<td>
+							<p id="va-admin-email-label-one">
+								<strong>Label</strong><br/>
+								<input type="text" name="va_admin_email_label_one" size="20" value="<?php echo $this->va_settings['admin_email_label_one']; ?>"/>
+								<br/><span class="description"> (i.e. Rentals)</span>
+							</p>	
+						</td>
+						<td>
+							<p id="va-admin-email-one">
+								<strong>TO email address(es)</strong><br/>
+								<input type="text" name="va_admin_email_one" size="54" value="<?php echo $this->va_settings['admin_email_one']; ?>"/>
+								<br/><span class="description">comma separate multiple emails</span>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p id="va-admin-email-label-two">
+								<strong>Label</strong><br/>
+								<input type="text" name="va_admin_email_label_two" size="20" value="<?php echo $this->va_settings['admin_email_label_two']; ?>"/>
+								<br/><span class="description"> (i.e. Student Groups)</span>
+							</p>	
+						</td>
+						<td>
+							<p id="va-admin-email-two">
+								<strong>TO email address(es)</strong><br/>
+								<input type="text" name="va_admin_email_two" size="54" value="<?php echo $this->va_settings['admin_email_two']; ?>"/>
+								<br/><span class="description">comma separate multiple emails</span>
+							</p>
+						</td>
+					</tr>
+					</table>
+					<h3>This is the content of your Notifications:</h3>
 					<p>
 						<strong>User notification for new <?php echo $this->va_settings['reservation_single']; ?> subject line</strong><br/>
 						<input type="text" name="va_user_subject_line_new" size="80" value="<?php echo $this->va_settings['user_subject_line_new']; ?>"/>

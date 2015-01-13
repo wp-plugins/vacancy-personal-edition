@@ -19,7 +19,7 @@ The perfect booking solution for any person or establishment that needs to allow
 * One simple shortcode to use Vacancy on any page or post
 * Customizable labels for your Venues/Locations/Reservations
 * Custom reservation availability on a per location basis per day basis
-* Reservation Confilct detection
+* Reservation Conflict detection
 * Push reservations to Modern Tribe's Events Calendar Pro now available in the <a target="_blank" href="//kraftpress.it/downloads/vacancy-ecp/">Vacancy ECP addon</a>!
 * Recurring reservations, Export your schedules, Customize colors, Use unlimited venues/locations and more now available in the <a target="_blank" href="//kraftpress.it/downloads/vacancy-pro-edition/">Vacancy PRO Edition addon</a>!
 
@@ -51,6 +51,14 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.0.3 =
+* Added the ability to have users choose which admin group to notify when submitting reservations
+* Added filtering for Reservation Start/End times to make choosing times easier on the user
+* Fixed Notification Header/Footer formatting on save
+* Fixed WP admin bar visibility bug (again)
+* Cleaned up some code to hopefully avoid some plugin activation errors
+* Cleaned up some css
+
 = 1.0.2 =
 * Fixed WP admin bar visibility bug
 
@@ -59,6 +67,14 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+* Added the ability to have users choose which admin group to notify when submitting reservations
+* Added filtering for Reservation Start/End times to make choosing times easier on the user
+* Fixed Notification Header/Footer formatting on save
+* Fixed WP admin bar visibility bug (again)
+* Cleaned up some code to hopefully avoid some plugin activation errors
+* Cleaned up some css
 
 = 1.0.2 =
 * Fixed WP admin bar visibility bug
