@@ -23,7 +23,7 @@
             <input type="radio" id="va-venue-availability-1" name="va_venue_availability" value="venue" <?php if((get_post_meta($location->ID, 'va_venue_availability', true) == "venue") || (get_post_meta($location->ID, 'va_venue_availability', true) == "")){echo 'checked';} ?> />
             <label for="va-venue-availability-1">Use <?php echo $this->va_settings['venue_plural']; ?> availability</label><br/>
             <input type="radio" id="va-venue-availability-2" name="va_venue_availability" value="custom" <?php if(get_post_meta($location->ID, 'va_venue_availability', true) == "custom"){echo 'checked';} ?> />
-            <label for="va-venue-availability-2">Use custom availability for this <?php echo $this->va_settings['location_single']; ?></label>
+            <label for="va-venue-availability-2">Use custom availability for this <?php echo $this->va_settings['location_single']; ?>. <em>(Leave times blank to make this <?php echo $this->va_settings['location_single']; ?> unavailable on those days)</em></label>
         </p>
         <div class="va-availability" style="display:none;"> 
             <?php $days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'); ?>

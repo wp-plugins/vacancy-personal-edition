@@ -25,7 +25,7 @@ The perfect booking solution for any person or establishment that needs to allow
 
 = Coming Soon =
 * Payment Gateway to require payment for user submitted reservations
-* Customizable form fields for reservations
+* Customizable form builder for reservations
 
 = Please Vote and Enjoy =
 
@@ -51,6 +51,16 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.1.0 =
+* BIG UPDATE!!
+* Fixed custom location availability bug
+* Added some new form fields
+* Added the ability to select which form fields to display on the reservation form
+* Added the ability to set a specified time length for reservations
+* Fixed the sticky table header resizing issue on scroll
+* Added the option to have the user select which department to send reservation submissions to
+* Added the option to show or hide reservation details on the calendar
+
 = 1.0.3 =
 * Added the ability to have users choose which admin group to notify when submitting reservations
 * Added filtering for Reservation Start/End times to make choosing times easier on the user
@@ -67,6 +77,16 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+* BIG UPDATE!!
+* Fixed custom location availability bug
+* Added some new form fields
+* Added the ability to select which form fields to display on the reservation form
+* Added the ability to set a specified time length for reservations
+* Fixed the sticky table header resizing issue on scroll
+* Added the option to have the user select which department to send reservation submissions to
+* Added the option to show or hide reservation details on the calendar
 
 = 1.0.3 =
 * Added the ability to have users choose which admin group to notify when submitting reservations

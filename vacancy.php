@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.0.3
+    Version: 1.1.0
     Author: kraftpress
     Author URI: http://kraftpress.it
     Contributors: kraftpress, buildcreate, a2rocklobster
@@ -20,7 +20,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.0.3',
+                'version' => '1.1.0',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
@@ -33,6 +33,8 @@
                 'default_venue' => '',
                 'day_start_time' => '08:00',
                 'day_end_time' => '22:00',
+                'end_time_length_hr' => '0',
+                'end_time_length_min' => '0',
                 'require_login' => 'yes',
                 'admin_new_notification' => 'yes',
                 'admin_email_label_one' => 'Rentals',
@@ -43,13 +45,15 @@
                 'user_approved_notification' => 'yes',
                 'from_email_name' => '',
                 'from_email_address' => '',
-                'hide_admin_bar' => 'yes',
+                'hide_admin_bar' => 'no',
                 'show_admin_bar_for' => 'administrator',
                 'user_subject_line_new' => '',
                 'user_subject_line_approved' => '',
                 'reservation_success_message' => '',
                 'setup_cleanup' => 'yes',
-                'saving_reservation_meta' => false
+                'saving_reservation_meta' => false,
+                'show_reservation_details' => 'yes',
+                'show_form_fields' => array('end_time','setup_time','cleanup_time','title','venue','location','phone','type','description','setup_needs','av_needs')
             );
             // filters 
             add_filter('manage_edit-va_venue_columns', array($this, 'va_venue_columns_filter'), 999, 1);
@@ -85,6 +89,11 @@
             add_shortcode('vacancy', array($this, 'va_display_form'));
         }
         function init(){
+			// force browser to clear cache
+			header("Cache-Control: no-cache, must-revalidate");
+			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+			header("Content-Type: application/xml; charset=utf-8");
+			
             // set options
             if(isset($_POST['va_update_settings'])){
                 if(!empty($_POST['va_venue_single'])){update_option('va_venue_single', sanitize_text_field($_POST['va_venue_single']));}
@@ -96,6 +105,10 @@
                 if(!empty($_POST['va_default_venue'])){update_option('va_default_venue', sanitize_text_field($_POST['va_default_venue']));}
                 if(!empty($_POST['va_day_start_time'])){update_option('va_day_start_time', sanitize_text_field($_POST['va_day_start_time']));}
                 if(!empty($_POST['va_day_end_time'])){update_option('va_day_end_time', sanitize_text_field($_POST['va_day_end_time']));}
+                
+                if(!empty($_POST['va_end_time_length_hr'])){update_option('va_end_time_length_hr', sanitize_text_field($_POST['va_end_time_length_hr']));}
+                if(!empty($_POST['va_end_time_length_min'])){update_option('va_end_time_length_min', sanitize_text_field($_POST['va_end_time_length_min']));}
+
                 if(!empty($_POST['va_require_login'])){update_option('va_require_login', sanitize_text_field($_POST['va_require_login']));}
                 if(!empty($_POST['va_admin_new_notification'])){update_option('va_admin_new_notification', sanitize_text_field($_POST['va_admin_new_notification']));}
                 if(!empty($_POST['va_admin_email_one'])){update_option('va_admin_email_one', sanitize_text_field($_POST['va_admin_email_one']));}
@@ -124,6 +137,20 @@
                 if(isset($_POST['va_user_subject_line_new'])){update_option('va_user_subject_line_new', sanitize_text_field($_POST['va_user_subject_line_new']));}
                 if(isset($_POST['va_user_subject_line_approved'])){update_option('va_user_subject_line_approved', sanitize_text_field($_POST['va_user_subject_line_approved']));}
                 if(isset($_POST['va_reservation_success_message'])){update_option('va_reservation_success_message', sanitize_text_field($_POST['va_reservation_success_message']));}
+                if(isset($_POST['va_show_reservation_details'])){update_option('va_show_reservation_details', sanitize_text_field($_POST['va_show_reservation_details']));}
+               
+                $show_form_fields = get_option('va_show_form_fields');
+                if(!is_array($show_form_fields)){
+                    update_option('va_show_form_fields', $this->va_settings['show_form_fields']);
+                }
+                if(isset($_POST['va_save_form_settings'])){
+                    if(isset($_POST['va_show_form_fields'])){
+                        $vals = $_POST['va_show_form_fields'];
+                    }else{
+                        $vals = array();
+                    }
+                    update_option('va_show_form_fields', $vals);
+                }
             }
             
             // get options
@@ -144,7 +171,13 @@
             $day_start_time = get_option('va_day_start_time');
             if(!empty($day_start_time)){$this->va_settings['day_start_time'] = $day_start_time;} 
             $day_end_time = get_option('va_day_end_time');
-            if(!empty($day_end_time)){$this->va_settings['day_end_time'] = $day_end_time;}       
+            if(!empty($day_end_time)){$this->va_settings['day_end_time'] = $day_end_time;} 
+
+            $end_time_length_hr = get_option('va_end_time_length_hr');
+            if(!empty($end_time_length_hr)){$this->va_settings['end_time_length_hr'] = $end_time_length_hr;} 
+            $end_time_length_min = get_option('va_end_time_length_min');
+            if(!empty($end_time_length_min)){$this->va_settings['end_time_length_min'] = $end_time_length_min;} 
+
             $require_login = get_option('va_require_login');
             if(!empty($require_login)){$this->va_settings['require_login'] = $require_login;}
             $admin_new_notification = get_option('va_admin_new_notification');
@@ -175,6 +208,9 @@
             $this->va_settings['user_subject_line_new'] = get_option('va_user_subject_line_new');
             $this->va_settings['user_subject_line_approved'] = get_option('va_user_subject_line_approved');
             $this->va_settings['reservation_success_message'] = get_option('va_reservation_success_message');
+            $show_reservation_details = get_option('va_show_reservation_details');
+            if(!empty($show_reservation_details)){$this->va_settings['show_reservation_details'] = $show_reservation_details;}
+            $this->va_settings['show_form_fields'] = get_option('va_show_form_fields');
 
             // Create Venue post type
             $labels = array(
@@ -245,11 +281,27 @@
 
             if(isset($_POST['va_reservation_submitted'])){
                 // set cookies for later use
-                setcookie('va_reservation_title', sanitize_text_field($_POST['va_reservation_title']), time() + (86400), "/");
-                setcookie('va_reservation_content', sanitize_text_field($_POST['va_reservation_content']), time() + (86400), "/");
-                setcookie('va_reservation_name', sanitize_text_field($_POST['va_reservation_name']), time() + (86400), "/");
-                setcookie('va_reservation_phone', sanitize_text_field($_POST['va_reservation_phone']), time() + (86400), "/");
-                setcookie('va_reservation_email', sanitize_text_field($_POST['va_reservation_email']), time() + (86400), "/");
+                if(isset($_POST['va_reservation_title'])){
+                    setcookie('va_reservation_title', sanitize_text_field($_POST['va_reservation_title']), time() + (86400), "/");
+                }
+                if(isset($_POST['va_reservation_content'])){
+                    setcookie('va_reservation_content', sanitize_text_field($_POST['va_reservation_content']), time() + (86400), "/");
+                }
+                if(isset($_POST['va_reservation_name'])){
+                    setcookie('va_reservation_name', sanitize_text_field($_POST['va_reservation_name']), time() + (86400), "/");
+                }
+                if(isset($_POST['va_reservation_phone'])){
+                    setcookie('va_reservation_phone', sanitize_text_field($_POST['va_reservation_phone']), time() + (86400), "/");
+                }
+                if(isset($_POST['va_reservation_email'])){
+                    setcookie('va_reservation_email', sanitize_text_field($_POST['va_reservation_email']), time() + (86400), "/");
+                }
+                if(isset($_POST['va_reservation_setup'])){
+                    setcookie('va_reservation_setup', sanitize_text_field($_POST['va_reservation_setup']), time() + (86400), "/");
+                }
+                if(isset($_POST['va_reservation_av'])){
+                    setcookie('va_reservation_av', sanitize_text_field($_POST['va_reservation_av']), time() + (86400), "/");
+                }
             }
             
             
@@ -308,7 +360,7 @@
             wp_enqueue_style('va-datepicker', $this->va_settings['dir'] . 'css/va-datepicker.css', false, $this->va_settings['version']);
             wp_enqueue_script('jquery-ui', "//code.jquery.com/ui/1.11.1/jquery-ui.js", array('jquery-ui-core', 'jquery-ui-mouse'), '1.11.1');
             wp_enqueue_script('va-chosen', $this->va_settings['dir'] . 'js/chosen_v1.2.0/chosen.jquery.js', array('jquery'), $this->va_settings['version']); 
-            wp_enqueue_script('va-sticky-table-headers', $this->va_settings['dir'] . 'js/stickytableheaders/jquery.stickytableheaders.js', array('jquery'), $this->va_settings['version']);
+            wp_enqueue_script('va-float-thead', $this->va_settings['dir'] . 'js/floatThead/dist/jquery.floatThead.js', array('jquery'), $this->va_settings['version']);
            
             if(is_admin()){
                 wp_enqueue_style('va-admin-css', $this->va_settings['dir'] . 'css/va-admin.css', false, $this->va_settings['version']); 
@@ -716,6 +768,8 @@
                 $phone = sanitize_text_field($_POST['va_reservation_phone']);
                 $email = sanitize_text_field($_POST['va_reservation_email']);
                 $comments = sanitize_text_field($_POST['va_reservation_comments']);
+                $setup_needs = sanitize_text_field($_POST['va_reservation_setup']);
+                $av_needs = sanitize_text_field($_POST['va_reservation_av']);
 
 
                 // Update the meta field in the database.
@@ -729,6 +783,8 @@
                 update_post_meta($post_id, 'va_reservation_phone', $phone);
                 update_post_meta($post_id, 'va_reservation_email', $email);
                 update_post_meta($post_id, 'va_reservation_comments', $comments);
+                update_post_meta($post_id, 'va_reservation_setup', $setup_needs);
+                update_post_meta($post_id, 'va_reservation_av', $av_needs);
 
                 $push = null;
                 if(isset($_POST['va_push_to_ecp'])){
@@ -794,22 +850,57 @@
             if(!wp_verify_nonce($_POST['va_save_submitted_reservation_nonce'], 'va_save_submitted_reservation')){return;}
             
             // sanitize data
-            $title = sanitize_text_field($_POST['va_reservation_title']);
-            $post_content = sanitize_text_field($_POST['va_reservation_content']);
+            if(in_array('title',$this->va_settings['show_form_fields'])){
+                $title = sanitize_text_field($_POST['va_reservation_title']);
+            }else{
+                $title = sanitize_text_field($_POST['va_reservation_name']);
+            }
+            if(in_array('description',$this->va_settings['show_form_fields'])){
+                $post_content = sanitize_text_field($_POST['va_reservation_content']);
+            }else{
+                $post_content = '';
+            }
             $venue_id = sanitize_text_field($_POST['va_venue_id']);
             $location_ids = $_POST['va_location_id'];
             $date = sanitize_text_field($_POST['va_reservation_dates']);
-            $start_setup_time = sanitize_text_field($_POST['va_start_setup_time']);
-            $end_cleanup_time = sanitize_text_field($_POST['va_end_cleanup_time']);
+            if(in_array('setup_time',$this->va_settings['show_form_fields'])){
+                $start_setup_time = sanitize_text_field($_POST['va_start_setup_time']);
+            }else{
+                $start_setup_time = false;
+            }
+            if(in_array('cleanup_time',$this->va_settings['show_form_fields'])){
+                $end_cleanup_time = sanitize_text_field($_POST['va_end_cleanup_time']);
+            }else{
+                $end_cleanup_time = false;
+            }
             $start_time = sanitize_text_field($_POST['va_start_time']);
-            $end_time = sanitize_text_field($_POST['va_end_time']);
+            if(in_array('end_time',$this->va_settings['show_form_fields'])){
+                $end_time = sanitize_text_field($_POST['va_end_time']);
+            }else{
+                $start_time_temp = strtotime($start_time);
+                $end_time_temp = strtotime("+".$this->va_settings['end_time_length_hr']." hours", $start_time_temp);
+                $end_time = date('h:i',strtotime("+".$this->va_settings['end_time_length_min']." minutes", $end_time_temp));
+            }
             $name = sanitize_text_field($_POST['va_reservation_name']);
-            $phone = sanitize_text_field($_POST['va_reservation_phone']);
+            if(in_array('phone',$this->va_settings['show_form_fields'])){
+                $phone = sanitize_text_field($_POST['va_reservation_phone']);
+            }else{
+                $phone = '';
+            }
             $email = sanitize_text_field($_POST['va_reservation_email']);
             $admin_notification_label = sanitize_text_field($_POST['va_reservation_send_to']);
             $admin_notification_email = $this->va_settings['admin_email_'.$admin_notification_label];
+			if(in_array('setup_needs',$this->va_settings['show_form_fields'])){
+                $setup_needs = sanitize_text_field($_POST['va_reservation_setup']);
+            }else {
+                $setup_needs = '';
+            }
+            if(in_array('av_needs',$this->va_settings['show_form_fields'])){
+			 $av_needs = sanitize_text_field($_POST['va_reservation_av']);
+            }else {
+                $av_needs = '';
+            }
             
-
             if($start_setup_time){
                 $reservation_start = $start_setup_time;
             }else{
@@ -931,6 +1022,11 @@
                         update_post_meta($post_id, 'va_reservation_name', $name);
                         update_post_meta($post_id, 'va_reservation_phone', $phone);
                         update_post_meta($post_id, 'va_reservation_email', $email);
+                        update_post_meta($post_id, 'va_reservation_setup', $setup_needs);
+                        update_post_meta($post_id, 'va_reservation_av', $av_needs);
+						
+						// set ECP to on by default
+						update_post_meta($post_id, 'va_push_to_ecp', 'on');
 
                         // send notifications
                         if($this->va_settings['admin_new_notification'] == 'yes'){
@@ -963,8 +1059,10 @@
                             $content .= '<br/><p>Contact Information:<p>';
                             $content .= '<ul><li><strong>Name: </strong> '.$name.'</li>';
                             $content .= '<li><strong>Phone: </strong> '.$phone.'</li>';
-                            $content .= '<li><strong>Email: </strong> '.$email.'</li></ul>';
-                            $content .= '<br/><p><strong>Additional Information:</strong><br/>';
+                            $content .= '<li><strong>Email: </strong> '.$email.'</li>';
+                            $content .= '<li><strong>Set Up Need: </strong> '.$setup_needs.'</li>';
+                            $content .= '<li><strong>A/V Needs: </strong> '.$av_needs.'</li></ul>';
+                            $content .= '<br/><p><strong>'.$this->va_settings['reservation_single'].' Description:</strong><br/>';
                             $content .= $post_content.'</p><br/>';
                             $content .= '<p>'.nl2br(get_option('va_notification_footer')).'</p>';
                             $this->va_send_notification($admin_notification_email, $subject, $content); 
@@ -1007,9 +1105,16 @@
                             $content .= '<li><strong>'.$this->va_settings['reservation_single'].' Start Time: </strong> '.date('g:i a', strtotime($start_time)).'</li>';
                             $content .= '<li><strong>'.$this->va_settings['reservation_single'].' End Time: </strong> '.date('g:i a', strtotime($end_time)).'</li>';
                             if($end_cleanup_time){
-                                $content .= '<li><strong>Cleanup End Time: </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li></ul>';
+                                $content .= '<li><strong>Cleanup End Time: </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li>';
+                            }                            
+							if($setup_needs){
+                                $content .= '<li><strong>Set Up Needs: </strong> '.$setup_needs.'</li>';
+                            }                            
+							if($av_needs){
+                                $content .= '<li><strong>A/V Needs: </strong> '.$av_needs.'</li>';
                             }
-                            $content .= '<br/><p><strong>Additional Information:</strong><br/>';
+							$content .= '</ul>';
+                            $content .= '<br/><p><strong>'.$this->va_settings['reservation_single'].' Description:</strong><br/>';
                             $content .= $post_content.'</p><br/>';
                             $content .= '<p>'.nl2br(get_option('va_notification_footer')).'</p>';
                             $this->va_send_notification(sanitize_text_field($_POST['va_reservation_email']), $subject, $content); 
@@ -1279,7 +1384,7 @@
             }
         }
 
-        // ajax request
+        // frontend display - ajax request
         function va_draw_shortcode_day(){
             ob_start();
             ?>
@@ -1338,16 +1443,28 @@
                                         <td class="time"><?php echo date('g:i a',strtotime($time)); ?></td>
                                     <?php foreach($locations->posts as $location) : ?>
                                         <td id="<?php echo $venue_id . '-' . $location->ID . '-' . $date . '-' . str_replace(':',':',$time); ?>"
-                                            <?php // check for custom availability 
+                                            <?php 
                                                 $status = 'not-available';
-                                                if(get_post_meta($location->ID, 'va_venue_availability', true) == 'custom'){
+												
+												// check for custom availability 
+                                                if(get_post_meta($location->ID, 'va_venue_availability', true) == 'custom'){ 
                                                     $location_start = get_post_meta($location->ID, 'va_location_'.strtolower(date('l',strtotime($date))).'_start', true);
-                                                    $location_end = get_post_meta($location->ID, 'va_location_'.strtolower(date('l',strtotime($date))).'_end', true); ?>
-                                                    class="<?php if(!($time >= $location_start && $time < $location_end)){echo $status;}?>" <?php echo apply_filters('va_unavailable_background', '', $status); ?>>
-                                                <?php }else{ ?>
-                                                    class="<?php if(($time >= $venue_start && $time < $venue_end)){$status =  'available';} echo $status; ?>" <?php echo apply_filters('va_unavailable_background', '', $status); ?>>
-                                                <?}
-                                            ?>
+                                                    $location_end = get_post_meta($location->ID, 'va_location_'.strtolower(date('l',strtotime($date))).'_end', true);
+													
+                                                    if(($location_start <= date('H:i', strtotime($time))) && (date('H:i', strtotime($time)) <= $location_end)){
+														$status = 'available';
+													}
+												}
+												else{
+													//check location availability
+													if(($venue_start <= date('H:i', strtotime($time))) && (date('H:i', strtotime($time)) <= $venue_end)){
+														$status = 'available';
+													}
+                                                } 
+												
+											?>
+											class="<?php echo $status; ?>" <?php echo apply_filters('va_unavailable_background', '', $status); ?>>
+                                      
                                             <?php if($reservations) : ?>
                                                 <?php foreach($reservations->posts as $reservation) : ?>
                                                     <?php $found = false; ?>
@@ -1367,7 +1484,11 @@
                                                         <?php if($status != 'denied' && $status != 'private') : ?>
                                                             <?php if($start == $time) : ?>
                                                                 <div class="reservation <?php echo $status; ?>" style="height:<?php echo $height; ?>px;<?php echo apply_filters('va_reservation_background', '', $status); ?>">
-                                                                    <?php echo $reservation->post_title . ' (' . date('g:i a', strtotime($start)) . ' - ' . date('g:i a', strtotime($end)) . ')'; ?>
+                                                                    <?php if($this->va_settings['show_reservation_details'] == 'yes') : ?>
+                                                                        <?php echo $reservation->post_title . ' (' . date('g:i a', strtotime($start)) . ' - ' . date('g:i a', strtotime($end)) . ')'; ?>
+                                                                    <?php else : ?>
+                                                                        <?php echo date('g:i a', strtotime($start)) . ' - ' . date('g:i a', strtotime($end)); ?>
+                                                                    <?php endif; ?>
                                                                 </div>
                                                             <?php else : ?>
                                                                 <div></div>
@@ -1390,11 +1511,18 @@
                     <div id="va-reservation-form-wrap" style="display:none;"></div>
                     <script type="text/javascript">
                         jQuery(document).ready(function($){
-                            if($('#wpadminbar').length > 0){
-                                $("#va-day-view").stickyTableHeaders({fixedOffset: 32});
+                            if($('#wpadminbar').length > 0){ 
+                                $("#va-day-view").floatThead({
+                                    useAbsolutePositioning: false,
+                                    scrollingTop: 32
+                                });
+                               
                             }else{
-                                $("#va-day-view").stickyTableHeaders({fixedOffset: 0});
+                               $("#va-day-view").floatThead({
+                                    useAbsolutePositioning: false
+                                });
                             }
+                            
                             $("#va-day-view td").each(function(){
                                 if($(this).children('div').length > 0){$(this).toggleClass('available not-available');}
                             });
@@ -1528,116 +1656,155 @@
                     <?php $setup_cleanup = $this->va_settings['setup_cleanup']; ?>
                     <div class="va-start">
                         <label><strong>Start <?php echo $this->va_settings['reservation_single']; ?> at:</strong> <?php echo $this->va_get_time_select('va_start_time', $start_time, null, true); ?></label>
-                        <div class="va-setup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
-                            <label>Do you need setup time before your <?php echo $this->va_settings['reservation_single']; ?> begins?
-                                <select name="va_need_setup_time">
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
-                                </select>
-                            </label> 
-                            <div id="va-setup-time" style="display:none;">
-                                <label>Start Setup before <?php echo $this->va_settings['reservation_single']; ?> at:
-                                    <?php echo $this->va_get_time_select('va_start_setup_time',null,null,false,false,$start_time); ?>
+                        <?php if(in_array('setup_time', $this->va_settings['show_form_fields'])) : ?>
+                            <div class="va-setup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
+                                <label>Do you need setup time before your <?php echo $this->va_settings['reservation_single']; ?> begins?
+                                    <select name="va_need_setup_time">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
                                 </label> 
+                                <div id="va-setup-time" style="display:none;">
+                                    <label>Start Setup before <?php echo $this->va_settings['reservation_single']; ?> at:
+                                        <?php echo $this->va_get_time_select('va_start_setup_time',null,null,false,false,$start_time); ?>
+                                    </label> 
+                                </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                     <div class="va-end">
-                        <label><strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> <?php echo $this->va_get_time_select('va_end_time', null, null, true, $start_time); ?></label>
-                        <div class="va-cleanup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
-                            <label>Do you need cleanup time after your <?php echo $this->va_settings['reservation_single']; ?> ends?
-                                <select name="va_need_cleanup_time">
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
-                                </select>
-                            </label>
-                            <div id="va-cleanup-time" style="display:none;">
-                                <label>End Cleanup after <?php echo $this->va_settings['reservation_single']; ?> at:
-                                    <?php echo $this->va_get_time_select('va_end_cleanup_time',null,null,false,$start_time); ?>
-                                </label> 
+                        <?php if(in_array('end_time', $this->va_settings['show_form_fields'])) : ?>
+                            <label><strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> <?php echo $this->va_get_time_select('va_end_time', null, null, true, $start_time); ?></label>
+                        <?php else : ?>
+                            <br/>
+                            <label><?php echo $this->va_settings['reservation_plural']; ?> last for: <?php echo $this->va_settings['end_time_length_hr']; ?> hr <?php echo $this->va_settings['end_time_length_min']; ?> min</label>
+                        <?php endif; ?>
+                        <?php if(in_array('cleanup_time', $this->va_settings['show_form_fields'])) : ?>
+                            <div class="va-cleanup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
+                                <label>Do you need cleanup time after your <?php echo $this->va_settings['reservation_single']; ?> ends?
+                                    <select name="va_need_cleanup_time">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
+                                </label>
+                                <div id="va-cleanup-time" style="display:none;">
+                                    <label>End Cleanup after <?php echo $this->va_settings['reservation_single']; ?> at:
+                                        <?php echo $this->va_get_time_select('va_end_cleanup_time',null,null,false,$start_time); ?>
+                                    </label> 
+                                </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                     <span class="va-clearer"></span>
                     
-                    <label><?php echo $this->va_settings['reservation_single']; ?> Title </label>
-                    <input type="text" name="va_reservation_title" value="<?php if(isset($_COOKIE['va_reservation_title'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_title']));} ?>" required />
+                    <?php if(in_array('title', $this->va_settings['show_form_fields'])) : ?>
+                        <label><?php echo $this->va_settings['reservation_single']; ?> Title </label>
+                        <input type="text" name="va_reservation_title" value="<?php if(isset($_COOKIE['va_reservation_title'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_title']));} ?>" required />
+                    <?php endif; ?>
                     <span class="va-clearer"></span>
-                    <div class="va-venue">
-                        <label><?php echo $this->va_settings['venue_single']; ?>:</label>
-                        <?php if($offsite) : ?>
-                            <p><?php echo get_the_title($venue_id); ?></p>
-                            <input type="hidden" name="va_venue_id" value="<?php echo $venue_id; ?>" />
-                        <?php else : ?>
-                            <?php $venues = $this->va_get_venues(); ?>
-                            <?php if($venues->have_posts()) : ?>
-                                <select id="va-venue-id" name="va_venue_id" required>
-                                <?php while($venues->have_posts()) : $venues->the_post(); ?>
-                                    <option value="<?php the_ID();?>" 
-                                        <?php if($venue_id == get_the_ID()){echo 'selected';} ?>
-                                    ><?php the_title(); ?></option>
-                                <?php endwhile; ?>
-                                </select>
+
+                    <?php if(in_array('venue', $this->va_settings['show_form_fields'])) : ?>
+                        <div class="va-venue">
+                            <label><?php echo $this->va_settings['venue_single']; ?>:</label>
+                            <?php if($offsite) : ?>
+                                <p><?php echo get_the_title($venue_id); ?></p>
+                                <input type="hidden" name="va_venue_id" value="<?php echo $venue_id; ?>" />
+                            <?php else : ?>
+                                <?php $venues = $this->va_get_venues(); ?>
+                                <?php if($venues->have_posts()) : ?>
+                                    <select id="va-venue-id" name="va_venue_id" required>
+                                    <?php while($venues->have_posts()) : $venues->the_post(); ?>
+                                        <option value="<?php the_ID();?>" 
+                                            <?php if($venue_id == get_the_ID()){echo 'selected';} ?>
+                                        ><?php the_title(); ?></option>
+                                    <?php endwhile; ?>
+                                    </select>
+                                <?php endif; ?>
                             <?php endif; ?>
-                        <?php endif; ?>
-                    </div>
-                    <div class="va-locations">
-                        <label><?php echo $this->va_settings['location_plural']?>:</label> 
-                        <?php if($offsite) : ?>
-                            <p>*<?php echo $this->va_settings['location_plural']; ?> not available for offsite <?php echo $this->va_settings['venue_plural']; ?></p>
-                        <?php else : ?>
-                            <?php 
-                                $args = array(
-                                    'post_type' => 'va_location',
-                                    'posts_per_page' => -1,
-                                    'meta_key' => 'va_venue_id',
-                                    'meta_value' => $venue_id
-                                );
-                                $locations = new WP_Query($args);
-                            ?>
-                            <?php if($locations->have_posts()) : ?>
-                                <select id="va-location-id" name="va_location_id[]" multiple required>
-                                <option></option>
-                                <?php while($locations->have_posts()) : $locations->the_post(); ?>
-                                    <option value="<?php the_ID();?>" 
-                                        <?php if($location_id == get_the_ID()){echo 'selected';} ?>
-                                    ><?php the_title(); ?></option>
-                                <?php endwhile; ?>
-                                </select>
+                        </div>
+                    <?php else : ?>
+                        <input type="hidden" name="va_venue_id" value="<?php echo $venue_id; ?>" />
+                    <?php endif; ?>
+
+                    <?php if(in_array('location', $this->va_settings['show_form_fields'])) : ?>
+                        <div class="va-locations">
+                            <label><?php echo $this->va_settings['location_plural']?>:</label> 
+                            <?php if($offsite) : ?>
+                                <p>*<?php echo $this->va_settings['location_plural']; ?> not available for offsite <?php echo $this->va_settings['venue_plural']; ?></p>
+                            <?php else : ?>
+                                <?php 
+                                    $args = array(
+                                        'post_type' => 'va_location',
+                                        'posts_per_page' => -1,
+                                        'meta_key' => 'va_venue_id',
+                                        'meta_value' => $venue_id
+                                    );
+                                    $locations = new WP_Query($args);
+                                ?>
+                                <?php if($locations->have_posts()) : ?>
+                                    <select id="va-location-id" name="va_location_id[]" multiple required>
+                                    <option></option>
+                                    <?php while($locations->have_posts()) : $locations->the_post(); ?>
+                                        <option value="<?php the_ID();?>" 
+                                            <?php if($location_id == get_the_ID()){echo 'selected';} ?>
+                                        ><?php the_title(); ?></option>
+                                    <?php endwhile; ?>
+                                    </select>
+                                <?php endif; ?>
                             <?php endif; ?>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php else : ?>
+                        <input type="hidden" name="va_location_id[]" value="<?php echo $location_id; ?>" />
+                    <?php endif; ?>
                     <span class="va-clearer"></span>
                     <div class="va-your-name">
                         <label>Your Name</label>
                         <input type="text" name="va_reservation_name" value="<?php if(isset($_COOKIE['va_reservation_name'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_name']));} ?>" required />
                     </div>
-                    <div class="va-phone">
-                        <label>Phone</label>
-                        <input type="tel" name="va_reservation_phone" value="<?php if(isset($_COOKIE['va_reservation_phone'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_phone']));} ?>" required />
-                    </div>
+                    <?php if(in_array('phone', $this->va_settings['show_form_fields'])) : ?>
+                        <div class="va-phone">
+                            <label>Phone</label>
+                            <input type="tel" name="va_reservation_phone" value="<?php if(isset($_COOKIE['va_reservation_phone'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_phone']));} ?>" required />
+                        </div>
+                    <?php endif; ?>
                     <span class="va-clearer"></span>
                     <div class="va-email">
                         <label>Email</label>
                         <input type="email" name="va_reservation_email" value="<?php if(isset($_COOKIE['va_reservation_email'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_email']));} ?>" required />
                         <span class="va-clearer"></span>
                     </div>
-                    <div class="va-send-to">
-                        <label>Send <?php echo $this->va_settings['reservation_single']; ?> Request to:</label>
-                        <select name="va_reservation_send_to" required>
-                            <?php if($this->va_settings['admin_email_two'] == '') : ?>
-                                <option value="one"><?php echo $this->va_settings['admin_email_label_one']; ?></option>
-                            <?php else : ?>
-                                <option value="">-- Choose One --</option>
-                                <option value="one"><?php echo $this->va_settings['admin_email_label_one']; ?></option>
-                                <option value="two"><?php echo $this->va_settings['admin_email_label_two']; ?></option>
-                            <?php endif; ?>
-                        </select>
-                    </div>
+                    <?php if(in_array('type', $this->va_settings['show_form_fields'])) : ?>
+                        <div class="va-send-to">
+                            <label><?php echo $this->va_settings['reservation_single']; ?> Type:</label>
+                            <select name="va_reservation_send_to" required>
+                                <?php if($this->va_settings['admin_email_two'] == '') : ?>
+                                    <option value="one"><?php echo $this->va_settings['admin_email_label_one']; ?></option>
+                                <?php else : ?>
+                                    <option value="">-- Choose One --</option>
+                                    <option value="one"><?php echo $this->va_settings['admin_email_label_one']; ?></option>
+                                    <option value="two"><?php echo $this->va_settings['admin_email_label_two']; ?></option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+                    <?php else : ?>
+                        <input type="hidden" name="va_reservation_send_to" value="one" />
+                    <?php endif; ?>
                     <span class="va-clearer"></span>
-                    <label><strong>Additional Information and Requests</strong></label>
-                    <textarea name="va_reservation_content" style="width:100%;" rows="6"><?php if(isset($_COOKIE['va_reservation_content'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_content']));} ?></textarea>
-                </div>
+                    <?php if(in_array('description', $this->va_settings['show_form_fields'])) : ?>
+                        <label><strong><?php echo $this->va_settings['reservation_single']; ?> Description:</strong></label>
+                        <textarea name="va_reservation_content" style="width:100%;" rows="6"><?php if(isset($_COOKIE['va_reservation_content'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_content']));} ?></textarea>
+                    <?php endif; ?>
+				    <span class="va-clearer"></span>
+                    <?php if(in_array('setup_needs', $this->va_settings['show_form_fields'])) : ?>
+                        <label><strong>Set Up Needs:</strong></label>
+                        <textarea name="va_reservation_setup" style="width:100%;" rows="6"><?php if(isset($_COOKIE['va_reservation_setup'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_setup']));} ?></textarea>
+                    <?php endif; ?>
+                    <span class="va-clearer"></span> 
+                    <?php if(in_array('av_needs', $this->va_settings['show_form_fields'])) : ?>
+                        <label><strong>A/V Tech Needs: (ie. Screen, Projector, Speakers, Microphone, etc.)</label>
+                        <textarea name="va_reservation_av" style="width:100%;" rows="6"><?php if(isset($_COOKIE['va_reservation_av'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_av']));} ?></textarea>
+                    <?php endif; ?>
+				</div>
                 <br/>
                 <div>
                     <?php wp_nonce_field('va_save_submitted_reservation', 'va_save_submitted_reservation_nonce'); ?>
@@ -1832,6 +1999,8 @@
             <?php 
             return ob_get_clean();
         }
+		
+		// admin calendar view
         function va_draw_day($date, $venue_id){
             $date = date('Y-m-d', strtotime($date));
             ob_start();
@@ -1904,16 +2073,27 @@
                         <td class="time"><?php echo date('g:i a',strtotime($time)); ?></td>
                     <?php foreach($locations->posts as $location) : ?>
                         <td id="<?php echo $location->ID . '-' . str_replace(':','',$time); ?>"
-                            <?php // check for custom availability 
-                                $status = 'not-available';
-                                if(get_post_meta($location->ID, 'va_venue_availability', true) == 'custom'){
-                                    $location_start = get_post_meta($location->ID, 'va_location_'.strtolower(date('l',strtotime($date))).'_start', true);
-                                    $location_end = get_post_meta($location->ID, 'va_location_'.strtolower(date('l',strtotime($date))).'_end', true); ?>
-                                    class="<?php if((date('G:i', strtotime($time)) <= $location_start) || (date('G:i', strtotime($time)) > $location_end)){echo $status;}else{$status = 'available';}?>" <?php echo apply_filters('va_unavailable_background', '', $status); ?>>
-                                <?php }else{ ?>
-                                    class="<?php if((date('G:i', strtotime($time)) <= $venue_start) || (date('G:i', strtotime($time)) > $venue_end)){echo $status;}else{$status = 'available';}?>" <?php echo apply_filters('va_unavailable_background', '', $status); ?>>
-                                <?}
-                            ?>
+							<?php 
+								$status = 'not-available';
+								
+								// check for custom availability 
+								if(get_post_meta($location->ID, 'va_venue_availability', true) == 'custom'){ 
+									$location_start = get_post_meta($location->ID, 'va_location_'.strtolower(date('l',strtotime($date))).'_start', true);
+									$location_end = get_post_meta($location->ID, 'va_location_'.strtolower(date('l',strtotime($date))).'_end', true);
+									
+									if(($location_start <= date('H:i', strtotime($time))) && (date('H:i', strtotime($time)) <= $location_end)){
+										$status = 'available';
+									}
+								}
+								else{
+									//check location availability
+									if(($venue_start <= date('H:i', strtotime($time))) && (date('H:i', strtotime($time)) <= $venue_end)){
+										$status = 'available';
+									}
+								} 
+								
+							?>
+							class="<?php echo $status; ?>" <?php echo apply_filters('va_unavailable_background', '', $status); ?>>
                         
                             <?php foreach($reservations->posts as $reservation) : ?>
                             <?php //echo get_post_meta($reservation->ID, 'va_location_id', true); echo $location->ID;?>
@@ -1974,10 +2154,22 @@
             $status = wp_mail($to, $subject, $content, $headers);
         }
  
-        function va_get_times($lower = 0, $upper = 23, $step = 1, $format = NULL){
-            if($format === NULL){
+        function va_get_times($lower = 0, $upper = 23.75, $step = 1, $format = NULL){
+            
+			// set default format
+			if($format === NULL){
                 $format = 'H:i';
             }
+			
+			// convert time to decimal
+			if(strpos($lower,':') !== false) {
+				$lower = $this->va_time_to_decimal($lower);
+			}
+			if(strpos($upper,':') !== false) {
+				$upper = $this->va_time_to_decimal($upper);
+			}
+
+			// build array
             $times = array();
             foreach(range($lower, $upper, $step) as $increment){
                 $increment = number_format($increment, 2);
@@ -1987,6 +2179,15 @@
             }
             return $times;
         }
+		
+		function va_time_to_decimal($time){
+			$time_arr = explode(':', $time);
+			$hour = intval($time_arr[0]);
+			$minute = intval($time_arr[1])/60;
+			$decimal = number_format($hour + $minute, 2);
+			return $decimal;
+		}
+		
         function va_get_time_select($name, $value = null, $id = null, $required = false, $start = false, $end = false){
             ob_start();
             ?>

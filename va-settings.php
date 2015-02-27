@@ -5,6 +5,7 @@
 			<?php $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'va-general'; ?>
 			<a href="?page=va-settings&tab=va-general" class="nav-tab <?php echo $active_tab == 'va-general' ? 'nav-tab-active' : ''; ?>">General</a>
 			<a href="?page=va-settings&tab=va-labels" class="nav-tab <?php echo $active_tab == 'va-labels' ? 'nav-tab-active' : ''; ?>">Labels</a>
+			<a href="?page=va-settings&tab=va-forms" class="nav-tab <?php echo $active_tab == 'va-forms' ? 'nav-tab-active' : ''; ?>">Forms</a>
 			<a href="?page=va-settings&tab=va-notifications" class="nav-tab <?php echo $active_tab == 'va-notifications' ? 'nav-tab-active' : ''; ?>">Notifications</a>
 			<a href="?page=va-settings&tab=va-setup-usage" class="nav-tab <?php echo $active_tab == 'va-setup-usage' ? 'nav-tab-active' : ''; ?>">Setup & Usage</a>
 			<?php echo apply_filters('va_pro_tabs', '', $active_tab); ?>
@@ -20,6 +21,13 @@
 					<h2 class="va-tab-title">General Settings</h2><hr/>
 					<p>Here you can customize the general Vacancy settings to your liking.</p>
 					<br/>
+					<p>
+						<label>Show <?php echo $this->va_settings['reservation_single']; ?> Details</label>
+						<select name="va_show_reservation_details">
+							<option value="yes" <?php if($this->va_settings['show_reservation_details'] == "yes"){echo 'selected';};?>>Yes</option>
+							<option value="no" <?php if($this->va_settings['show_reservation_details'] == "no"){echo 'selected';};?>>No</option>
+						</select>
+					</p>					
 					<p>
 						<label>Require Login</label>
 						<select name="va_require_login">
@@ -78,6 +86,56 @@
 						Message to display after successful <?php echo $this->va_settings['reservation_single']; ?> submission<br/>
 						<input type="text" name="va_reservation_success_message" size="80" value="<?php echo $this->va_settings['reservation_success_message']; ?>"/>
 					</p>
+					<input class="button button-primary" type="submit" name="va_update_settings" value="Update Settings" />
+				</form>
+			</div>
+		<?php elseif($active_tab == 'va-forms') : ?>
+			<div id="va-forms">
+				<form method="post" action="">
+					<h2 class="va-tab-title">Form Settings</h2><hr/>
+					<div id="va-show-form-fields">
+						<p>Display these fields on the <?php echo $this->va_settings['reservation_single']; ?> form:</p>
+						<ul>
+						<?php
+							$fields = array(
+								'end_time' => 'End Time',
+								'setup_time' => 'Setup Time',
+								'cleanup_time' => 'Cleanup Time',
+								'title' => 'Title',
+								'venue' => $this->va_settings['venue_single'],
+								'location' => $this->va_settings['location_single'],
+								'phone' => 'Phone',
+								'type' => $this->va_settings['reservation_single'] . ' type',
+								'description' => 'Description',
+								'setup_needs' => 'Setup Needs',
+								'av_needs' => 'A/V Needs'
+							); 
+						?>
+						<?php foreach($fields as $key => $value) : ?>
+							<li>
+								<input id="<?php echo $key; ?>" type="checkbox" name="va_show_form_fields[]" value="<?php echo $key; ?>" <?php if(is_array($this->va_settings['show_form_fields'])){if(in_array($key, $this->va_settings['show_form_fields'])){echo 'checked';}}else if($key == $this->va_settings['show_form_fields']){echo 'checked';} ?>/> <label for="<?php echo $key; ?>"><?php echo $value; ?></label>
+								<span class="va-clearer"></span>
+							</li>
+						<?php endforeach; ?>
+						</ul>
+					</div>
+					<div class="reservation-end-times" style="display:none;">
+						<p>
+							<?php echo $this->va_settings['reservation_plural']; ?> last for:<br/>
+							<select name="va_end_time_length_hr">
+							<?php for($i=0;$i<24;$i++) : ?>
+								<option value="<?php echo $i; ?>" <?php if($this->va_settings['end_time_length_hr'] == $i){echo 'selected';};?>><?php echo $i; ?></option>
+							<?php endfor; ?>
+							</select> hours<br/>
+							<select name="va_end_time_length_min">
+								<option value="00" <?php if($this->va_settings['end_time_length_hr'] == '00'){echo 'selected';};?>>00</option>
+								<option value="15" <?php if($this->va_settings['end_time_length_hr'] == '15'){echo 'selected';};?>>15</option>
+								<option value="30" <?php if($this->va_settings['end_time_length_hr'] == '30'){echo 'selected';};?>>30</option>
+								<option value="45" <?php if($this->va_settings['end_time_length_hr'] == '45'){echo 'selected';};?>>45</option>
+							</select> minutes
+						</p>
+					</div>
+					<input type="hidden" name="va_save_form_settings" />
 					<input class="button button-primary" type="submit" name="va_update_settings" value="Update Settings" />
 				</form>
 			</div>
@@ -229,7 +287,7 @@
 				<ul>
 					<li>The first thing you'll need to do is <a target="_blank" href="/wp-admin/edit.php?post_type=va_venue">create a <?php echo $this->va_settings['venue_single']; ?></a>. This is done by clicking on the "<?php echo $this->va_settings['venue_plural']; ?>" submenu item under "Vacancy" in the Wordpress admin sidebar and then adding a new post. Give your <?php echo $this->va_settings['venue_single']; ?> a title and complete the meta fields.</li>
 					<li>Next you'll need to <a target="_blank" href="/wp-admin/edit.php?post_type=va_location">create a <?php echo $this->va_settings['location_single']; ?></a>. This is done by clicking on the "<?php echo $this->va_settings['location_plural']; ?>" submenu item under "Vacancy" in the Wordpress admin sidebar and then adding a new post. Give your <?php echo $this->va_settings['location_single']; ?> a title and complete the meta fields. Each <?php echo $this->va_settings['location_single']; ?> can use the availability of the <?php echo $this->va_settings['venue_single']; ?> you assign it to, or can use its own availability.</li>
-					<li>Once you've created your <?php echo $this->va_settings['venue_plural']; ?> & <?php echo $this->va_settings['location_plural']; ?> you should visit the "General", "Labels" and "Notifications" tabs above. Browse through the settings and configure Vacancy to behave the way you want it to.</li>
+					<li>Once you've created your <?php echo $this->va_settings['venue_plural']; ?> & <?php echo $this->va_settings['location_plural']; ?> you should visit the "General", "Labels", "Forms" and "Notifications" tabs above. Browse through the settings and configure Vacancy to behave the way you want it to.</li>
 				</ul>
 				<h3>Usage</h3>
 				<ul>
@@ -261,6 +319,13 @@
 		}
 		$('select[name="va_hide_admin_bar"]').on('change', function(){
 			$('#va-show-admin-bar').slideToggle('fast');
+		});
+
+		if(!($('#va-forms #end_time:checked').length > 0)){
+			$('.reservation-end-times').slideToggle('fast');
+		}
+		$('#end_time').on('click', function(){
+			$('.reservation-end-times').slideToggle('fast');
 		});
     });
 </script>

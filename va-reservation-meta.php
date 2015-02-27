@@ -14,7 +14,7 @@
                     ><?php echo $status; ?></option>
                 <?php endforeach; ?>
             </select><br/><span class="description">TIP: 'Pending' and 'Approved' will block out thier timeslot. 'Denied' simply won't show this <?php echo $this->va_settings['reservation_single']; ?> on the calendar</span><br/>
-            <br/><label><?php echo $this->va_settings['reservation_single']; ?> Comments</label></br/><textarea name="va_reservation_comments" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_comments', true); ?></textarea>
+            <br/><label>Comments <em>(sent to the submittor via <?php echo $this->va_settings['reservation_single']; ?> status change notification)</em></label></br/><textarea name="va_reservation_comments" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_comments', true); ?></textarea>
         </p>
         <h3><?php echo $this->va_settings['venue_single']; ?> and <?php echo $this->va_settings['location_single']; ?></h3>
         <?php $venue_id; ?>
@@ -108,6 +108,14 @@
             <?php $value = get_post_meta($reservation->ID, 'va_end_cleanup_time', true); ?>
             <?php echo $this->va_get_time_select('va_end_cleanup_time', $value); ?>
         </p>
+		<p>
+			<label>Set Up Needs</label></br/>
+			<textarea name="va_reservation_setup" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_setup', true); ?></textarea>
+		</p>		
+		<p>
+			<label>A/V Tech Needs</label></br/>
+			<textarea name="va_reservation_av" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_av', true); ?></textarea>
+		</p>
 
         <h3>Contact Information</h3>
         <p>

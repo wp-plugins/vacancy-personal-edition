@@ -46,7 +46,7 @@
     </div>
    
     <div class="va-availability" style="display:none;">  
-        <h3><?php echo $this->va_settings['reservation_single']; ?> availability</h3>
+        <h3><?php echo $this->va_settings['reservation_single']; ?> availability. <em>(Leave times blank to make this <?php echo $this->va_settings['venue_single']; ?> unavailable on those days)</em></h3>
         <?php $days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'); ?>
         <?php foreach($days as $day) : ?>
         <div>

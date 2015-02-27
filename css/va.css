@@ -14,15 +14,17 @@
 #va-table-wrap .va-next-day {font-size:0.6em; float:right;}
 #va-day-view {margin:20px 0; width:100%; background: #fff; border-right:1px solid #eee; border-bottom:1px solid #eee;}
 #va-day-view .va-header-row {background: #ddd;}
+.va-header-row th {text-align: center;}
 #va-day-view th {padding:10px; box-sizing:border-box; text-align: center; line-height: 1.2em;}
 #va-day-view td {position:relative; box-sizing:border-box; height:30px; border-left:1px solid #eee; border-top:1px solid #eee;}
 #va-day-view td.ui-selectee:hover {background:#FFDAB9;}
 #va-day-view td.available:hover {cursor:pointer;}
-#va-day-view td.available:hover:before {float:left; content:'Select'; display: block; line-height:1em; padding-left:10px;}
-#va-day-view td.available:hover:after {margin-left:5px; margin-right:10px; float:right; line-height:1em; content:"\f00c"; font-family: 'FontAwesome';}
+/*#va-day-view td.available:hover:before {float:left; content:'Select'; display: block; line-height:1em; padding-left:10px;}*/
+/*#va-day-view td.available:hover:after {margin-left:5px; margin-right:10px; float:right; line-height:1em; content:"\f00c"; font-family: 'FontAwesome';}*/
+#va-day-view td.available:hover:after {display:block; text-align:center; line-height:1em; content:"\f00c"; font-family: 'FontAwesome';}
 #va-day-view td.available.va-editing:hover:before {float:left; content:''; display: block; line-height:1em; padding-left:10px;}
 #va-day-view td.available.va-editing:hover:after {margin-left:5px; margin-right:10px; float:right; line-height:1em; content:""; font-family: 'FontAwesome';}
-#va-day-view td.time {padding:0 10px;}
+#va-day-view td.time {padding:0 10px; white-space:nowrap;}
 #va-day-view .reservation {border: 1px solid #fff; border-width: 0 0 1px 0; padding:10px; line-height:1.4em; color:white; z-index:9; position:absolute; top:0; left:0; width:100%; box-sizing:border-box; overflow: auto;}
 #va-day-view .pending {background:#74ace8;}
 #va-day-view .approved {background:#43d94d;}
