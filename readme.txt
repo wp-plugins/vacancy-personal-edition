@@ -2,7 +2,7 @@
 Contributors: kraftpress, buildcreate, a2rocklobster
 Tags: reservation system, reservation scheduling, reservation, appointment system, appointment scheduling, appointment, user submitted, calendar, booking, scheduling, schedule, venue, location, vacancy
 Requires at least: 3.5.0
-Tested up to: 3.9.1
+Tested up to: 4.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
