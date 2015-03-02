@@ -51,6 +51,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.1.1 =
+* Bug fix: afternoon reservations where bugged and returning the wrong end time when using the new specified reservation length feature
+
 = 1.1.0 =
 * BIG UPDATE!!
 * Fixed custom location availability bug
@@ -77,6 +80,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+* Bug fix: afternoon reservations where bugged and returning the wrong end time when using the new specified reservation length feature
 
 = 1.1.0 =
 * BIG UPDATE!!

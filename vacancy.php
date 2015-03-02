@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.1.0
+    Version: 1.1.1
     Author: kraftpress
     Author URI: http://kraftpress.it
     Contributors: kraftpress, buildcreate, a2rocklobster
@@ -879,7 +879,7 @@
             }else{
                 $start_time_temp = strtotime($start_time);
                 $end_time_temp = strtotime("+".$this->va_settings['end_time_length_hr']." hours", $start_time_temp);
-                $end_time = date('h:i',strtotime("+".$this->va_settings['end_time_length_min']." minutes", $end_time_temp));
+                $end_time = date('H:i',strtotime("+".$this->va_settings['end_time_length_min']." minutes", $end_time_temp));
             }
             $name = sanitize_text_field($_POST['va_reservation_name']);
             if(in_array('phone',$this->va_settings['show_form_fields'])){
