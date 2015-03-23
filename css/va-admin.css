@@ -65,3 +65,5 @@
 .icon-ok {float:left; margin-left:10px; color:#70b92f; font-size: 1.8em;}
 .icon-remove {float:left; margin-left:10px; color:red; font-size: 1.8em;}
 #va-setup-usage ul {list-style: disc; margin-left:20px;}
+.va-main-wrap form .form-field-labels label {float:none; width:auto; display:block;}
+.va-main-wrap form .form-field-labels input {width:400px;}

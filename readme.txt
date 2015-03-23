@@ -52,7 +52,10 @@ Your votes really make a difference! And don't forget to leave your support/feat
 == Changelog ==
 
 = 1.1.1 =
-* Bug fix: afternoon reservations where bugged and returning the wrong end time when using the new specified reservation length feature
+* Added customizable form field labels
+* Added auto scroll back to vacancy form on previous/next day click
+* The "Select a Venue" filter above the vacancy form is now hidden if there is only 1 Venue
+* Fixed datepicker showing behind table header when open
 
 = 1.1.0 =
 * BIG UPDATE!!
@@ -82,7 +85,10 @@ Your votes really make a difference! And don't forget to leave your support/feat
 == Upgrade Notice ==
 
 = 1.1.1 =
-* Bug fix: afternoon reservations where bugged and returning the wrong end time when using the new specified reservation length feature
+* Added customizable form field labels
+* Added auto scroll back to vacancy form on previous/next day click
+* The "Select a Venue" filter above the vacancy form is now hidden if there is only 1 Venue
+* Fixed datepicker showing behind table header when open
 
 = 1.1.0 =
 * BIG UPDATE!!

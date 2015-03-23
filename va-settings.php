@@ -92,7 +92,45 @@
 		<?php elseif($active_tab == 'va-forms') : ?>
 			<div id="va-forms">
 				<form method="post" action="">
-					<h2 class="va-tab-title">Form Settings</h2><hr/>
+					<h2 class="va-tab-title">Form Field Labels</h2><hr/>
+					<p>This allows you to update the labels on the reservation form. Leave blank for default values shown.</p>
+					<div class="form-field-labels">
+						<p>
+							<label><?php echo $this->va_settings['reservation_single']; ?> Title:</label>
+							<input type="text" name="va_title_label" value="<?php echo $this->va_settings['title_label'];?>"/>
+						</p>					
+						<p>
+							<label>Your Name:</label>
+							<input type="text" name="va_name_label" value="<?php echo $this->va_settings['name_label'];?>"/>
+						</p>
+						<p>
+							<label>Phone:</label>
+							<input type="text" name="va_phone_label" value="<?php echo $this->va_settings['phone_label']; ?>"/>
+						</p>					
+						<p>
+							<label>Email:</label>
+							<input type="text" name="va_email_label" value="<?php echo $this->va_settings['email_label'];?>"/>
+						</p>
+						<p>
+							<label><?php echo $this->va_settings['reservation_single']; ?> Type:</label>
+							<input type="text" name="va_reservation_type_label" value="<?php echo $this->va_settings['reservation_type_label'];?>"/>
+						</p>					
+						<p>
+							<label><?php echo $this->va_settings['reservation_single']; ?> Description:</label>
+							<input type="text" name="va_description_label" value="<?php echo $this->va_settings['description_label'];?>"/>
+							
+						</p>					
+						<p>
+							<label>Setup Needs:</label>
+							<input type="text" name="va_setup_needs_label" value="<?php echo $this->va_settings['setup_needs_label'];?>"/>
+						</p>					
+						<p>
+							<label>A/V Tech Needs: (ie. Screen, Projector, Speakers, Microphone, etc.)</label>
+							<input type="text" name="va_av_needs_label" value="<?php echo $this->va_settings['av_needs_label'];?>"/>
+						</p>
+					</div>
+					<br/>
+					<h2 class="va-tab-title">Form Field Visibility</h2><hr/>
 					<div id="va-show-form-fields">
 						<p>Display these fields on the <?php echo $this->va_settings['reservation_single']; ?> form:</p>
 						<ul>

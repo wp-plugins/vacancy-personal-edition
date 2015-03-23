@@ -46,7 +46,7 @@
 .va-calendar .calendar-row td .day-number {position:absolute; top:0; right:5px;}
 .va-reservation-success-message {margin-bottom:20px; clear: left;padding: 5px 10px;background: #F0F8FF;border-radius: 5px;border: 1px solid #ADD8E6;}
 #va-reservation-form {margin-top:10px;}
-#va-reservation-form label {display:block;}
+#va-reservation-form label {display:block; line-height: 1.2em;}
 .va-lightbox-form label {font-weight:bold; margin-bottom:10px;}
 #va-reservation-form input, 
 #va-reservation-form textarea, 
