@@ -1,0 +1,67 @@
+#adminmenu #toplevel_page_va-settings .menu-icon-generic div.wp-menu-image:before {
+	font-family: FontAwesome !important;
+    content: "\f017";
+	font-size: 1.3em !important;
+}
+.va-clearer {
+	clear: both; 
+	height: 0; 
+	line-height: 0; 
+	display: block;
+}
+#va-fields h1,#va-fields h2,#va-fields h3,#va-fields h4,#va-fields h5,#va-fields h6{}
+.va-main-wrap {margin-right: 20px;}
+.va-content-wrap {float:left; width:70%;}
+.va-page-title {font-weight: normal; margin-bottom:30px;}
+.va-tab-title {margin-top: 20px}
+#va-shortcode {float:right; font-size: 14px;}
+.va-settings-sidebar {float:right; width:25%; background:#ddd; padding:0 20px;margin-top:25px;}
+.va-main-wrap form label {display: block; width:170px; float:left; line-height: 2.25em; clear:left;}
+.va-main-wrap form input[type="submit"] {display: block; float:left; margin-top:30px; clear:left;}
+#va-show-admin-bar ul {margin-left: 20px;}
+#va-calendar-form, #va-day-form {float:right; margin-top:4px;}
+#va-calendar-venue {float:right;margin-left:10px;}
+.va-calendar {width:100%; min-width: 600px;}
+.va-calendar-nav {float:right; margin-bottom:15px;}
+.va-calendar-nav button {margin-left:10px !important;}
+#va-calendar-month {border:1px solid #ccc; border-width: 1px 1px 1px 0;}
+#va-calendar-month th {width:14.285%; background: #ddd; padding:5px 0;border-left:1px solid #ccc;}
+.va-calendar .calendar-row td.calendar-day:hover {cursor:pointer;}
+.va-calendar .calendar-row td {padding:25px 10px 5px 10px; background:#fff; position:relative; height: 120px; overflow: auto; border:1px solid #ccc; border-width: 1px 0 0 1px;}
+.va-calendar .calendar-row td.calendar-day-np {background: #f5f5f5;}
+.va-calendar .calendar-row td.today {background:#ffffe0;}
+.va-calendar .calendar-row td .day-number {position:absolute; top:0; right:5px;}
+.va-calendar .calendar-row td i {display:none; position:absolute; top:4px; left:5px;}
+.va-calendar .calendar-row td:hover i {display:block;}
+.va-calendar .calendar-row td a {display:block; padding:5px 10px; color:white; border-radius:5px; text-decoration: none; margin-bottom:5px;}
+.va-calendar .calendar-row td a:hover {text-decoration: underline;}
+.va-calendar .calendar-row td a.pending {background:blue;}
+.va-calendar .calendar-row td a.approved {background:green;}
+.va-calendar .calendar-row td a.denied {background:red;}
+.va-venue-general {padding-left:10px;margin-bottom:20px;}
+.va-venue-general input[type="text"]{width:300px;}
+.va-availability {background:#f5f5f5;}
+.va-availability>div{float:left; margin:5px 15px;}
+#va-day-view {width:100%; background: #fff; border-right:1px solid #eee; border-bottom:1px solid #eee;}
+#va-day-view .va-header-row {background: #ddd;}
+#va-day-view th {padding:10px; box-sizing:border-box;}
+#va-day-view td {position:relative; box-sizing:border-box; height:30px; border-left:1px solid #eee; border-top:1px solid #eee;}
+#va-day-view td.time {padding:0 10px;}
+#va-day-view .reservation {z-index:9; position:absolute; top:0; left:0; width:100%; box-sizing:border-box; overflow: auto;}
+#va-day-view .va-edit {color:#0074a2;}
+#va-day-view a {text-decoration: none; color:white; padding:10px;  box-sizing:border-box;}
+#va-day-view a i {float:right;display:none;margin-right: 10px;margin-top: 4px;}
+#va-day-view td:hover a i {display:block;}
+#va-day-view a.pending {background:blue;}
+#va-day-view a.pending i {margin:0;}
+#va-day-view a.approved {background:green;}
+#va-day-view a.approved i {margin:0;}
+#va-day-view a.denied {background:red;}
+#va-day-view a.denied i {margin:0;}
+#va-day-view .not-available {background:#ccc;}
+.tableFloatingHeaderOriginal{z-index: 99;}
+#va-settings-wrap {float:left; width:60%;}
+.va-key {float:left;width:80%;}
+.icon-ok {float:left; margin-left:10px; color:#70b92f; font-size: 1.8em;}
+.icon-remove {float:left; margin-left:10px; color:red; font-size: 1.8em;}
+#va-setup-usage ul {list-style: disc; margin-left:20px;}
