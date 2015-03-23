@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.1.1
+    Version: 1.2.0
     Author: kraftpress
     Author URI: http://kraftpress.it
     Contributors: kraftpress, buildcreate, a2rocklobster
@@ -20,7 +20,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.1.1',
+                'version' => '1.2.0',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
