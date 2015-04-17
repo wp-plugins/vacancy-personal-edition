@@ -51,6 +51,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.2.1 =
+* Fixed a bug where reservations for locations with custom availability weren't getting errors
+
 = 1.2.0 =
 * Added customizable form field labels
 * Added auto scroll back to vacancy form on previous/next day click
@@ -86,6 +89,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+* Fixed a bug where reservations for locations with custom availability weren't getting errors
 
 = 1.2.0 =
 * Added customizable form field labels
