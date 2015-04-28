@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.2.1
+    Version: 1.2.2
     Author: kraftpress
     Author URI: http://kraftpress.it
     Contributors: kraftpress, buildcreate, a2rocklobster
@@ -20,7 +20,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.2.1',
+                'version' => '1.2.2',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
@@ -35,6 +35,12 @@
                 'day_end_time' => '22:00',
                 'end_time_length_hr' => '0',
                 'end_time_length_min' => '0',
+                'end_time_min_length_hr' => '0',
+                'end_time_min_length_min' => '0',
+                'end_time_max_length_hr' => '0',
+                'end_time_max_length_min' => '0',
+                'end_time_minmax_interval' => 0.25,
+                'end_time_type' => 'standard',
                 'require_login' => 'yes',
                 'admin_new_notification' => 'yes',
                 'admin_email_label_one' => 'Rentals',
@@ -53,7 +59,7 @@
                 'setup_cleanup' => 'yes',
                 'saving_reservation_meta' => false,
                 'show_reservation_details' => 'yes',
-                'show_form_fields' => array('end_time','setup_time','cleanup_time','title','venue','location','phone','type','description','setup_needs','av_needs'),
+                'show_form_fields' => array('setup_time','cleanup_time','title','venue','location','phone','type','description','setup_needs','av_needs'),
                 'title_label' => '',
                 'name_label' => '',
                 'email_label' => '',
@@ -123,8 +129,14 @@
                 if(isset($_POST['va_setup_needs_label'])){update_option('va_setup_needs_label', sanitize_text_field($_POST['va_setup_needs_label']));}
                 if(isset($_POST['va_av_needs_label'])){update_option('va_av_needs_label', sanitize_text_field($_POST['va_av_needs_label']));}
                 
+                if(!empty($_POST['va_end_time_type'])){update_option('va_end_time_type', sanitize_text_field($_POST['va_end_time_type']));}
                 if(!empty($_POST['va_end_time_length_hr'])){update_option('va_end_time_length_hr', sanitize_text_field($_POST['va_end_time_length_hr']));}
                 if(!empty($_POST['va_end_time_length_min'])){update_option('va_end_time_length_min', sanitize_text_field($_POST['va_end_time_length_min']));}
+                if(!empty($_POST['va_end_time_min_length_hr'])){update_option('va_end_time_min_length_hr', sanitize_text_field($_POST['va_end_time_min_length_hr']));}
+                if(!empty($_POST['va_end_time_min_length_min'])){update_option('va_end_time_min_length_min', sanitize_text_field($_POST['va_end_time_min_length_min']));}
+                if(!empty($_POST['va_end_time_max_length_hr'])){update_option('va_end_time_max_length_hr', sanitize_text_field($_POST['va_end_time_max_length_hr']));}
+                if(!empty($_POST['va_end_time_max_length_min'])){update_option('va_end_time_max_length_min', sanitize_text_field($_POST['va_end_time_max_length_min']));}
+                if(!empty($_POST['va_end_time_minmax_interval'])){update_option('va_end_time_minmax_interval', sanitize_text_field($_POST['va_end_time_minmax_interval']));}
 
                 if(!empty($_POST['va_require_login'])){update_option('va_require_login', sanitize_text_field($_POST['va_require_login']));}
                 if(!empty($_POST['va_admin_new_notification'])){update_option('va_admin_new_notification', sanitize_text_field($_POST['va_admin_new_notification']));}
@@ -207,10 +219,22 @@
             $av_needs_label = get_option('va_av_needs_label');
             if(!empty($av_needs_label)){$this->va_settings['av_needs_label'] = $av_needs_label;} 
 
+            $end_time_type = get_option('va_end_time_type');
+            if(!empty($end_time_type)){$this->va_settings['end_time_type'] = $end_time_type;} 
             $end_time_length_hr = get_option('va_end_time_length_hr');
             if(!empty($end_time_length_hr)){$this->va_settings['end_time_length_hr'] = $end_time_length_hr;} 
             $end_time_length_min = get_option('va_end_time_length_min');
             if(!empty($end_time_length_min)){$this->va_settings['end_time_length_min'] = $end_time_length_min;} 
+            $end_time_min_length_hr = get_option('va_end_time_min_length_hr');
+            if(!empty($end_time_min_length_hr)){$this->va_settings['end_time_min_length_hr'] = $end_time_min_length_hr;} 
+            $end_time_min_length_min = get_option('va_end_time_min_length_min');
+            if(!empty($end_time_min_length_min)){$this->va_settings['end_time_min_length_min'] = $end_time_min_length_min;} 
+            $end_time_max_length_hr = get_option('va_end_time_max_length_hr');
+            if(!empty($end_time_max_length_hr)){$this->va_settings['end_time_max_length_hr'] = $end_time_max_length_hr;} 
+            $end_time_max_length_min = get_option('va_end_time_max_length_min');
+            if(!empty($end_time_max_length_min)){$this->va_settings['end_time_max_length_min'] = $end_time_max_length_min;} 
+            $end_time_minmax_interval = get_option('va_end_time_minmax_interval');
+            if(!empty($end_time_minmax_interval)){$this->va_settings['end_time_minmax_interval'] = $end_time_minmax_interval;} 
 
             $require_login = get_option('va_require_login');
             if(!empty($require_login)){$this->va_settings['require_login'] = $require_login;}
@@ -908,13 +932,8 @@
                 $end_cleanup_time = false;
             }
             $start_time = sanitize_text_field($_POST['va_start_time']);
-            if(in_array('end_time',$this->va_settings['show_form_fields'])){
-                $end_time = sanitize_text_field($_POST['va_end_time']);
-            }else{
-                $start_time_temp = strtotime($start_time);
-                $end_time_temp = strtotime("+".$this->va_settings['end_time_length_hr']." hours", $start_time_temp);
-                $end_time = date('H:i',strtotime("+".$this->va_settings['end_time_length_min']." minutes", $end_time_temp));
-            }
+            $end_time = sanitize_text_field($_POST['va_end_time']);
+        
             $name = sanitize_text_field($_POST['va_reservation_name']);
             if(in_array('phone',$this->va_settings['show_form_fields'])){
                 $phone = sanitize_text_field($_POST['va_reservation_phone']);
@@ -1703,7 +1722,10 @@
                     
                     <?php $setup_cleanup = $this->va_settings['setup_cleanup']; ?>
                     <div class="va-start">
-                        <label><strong>Start <?php echo $this->va_settings['reservation_single']; ?> at:</strong> <?php echo $this->va_get_time_select('va_start_time', $start_time, null, true); ?></label>
+                        <label>
+                            <strong>Start <?php echo $this->va_settings['reservation_single']; ?> at:</strong><br/> 
+                            <?php echo $this->va_get_time_select('va_start_time', $start_time, null, true, $start_time, $start_time); ?>
+                        </label>
                         <?php if(in_array('setup_time', $this->va_settings['show_form_fields'])) : ?>
                             <div class="va-setup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
                                 <label>Do you need setup time before your <?php echo $this->va_settings['reservation_single']; ?> begins?
@@ -1714,18 +1736,43 @@
                                 </label> 
                                 <div id="va-setup-time" style="display:none;">
                                     <label>Start Setup before <?php echo $this->va_settings['reservation_single']; ?> at:
-                                        <?php echo $this->va_get_time_select('va_start_setup_time',null,null,false,false,$start_time); ?>
+                                        <?php echo $this->va_get_time_select('va_start_setup_time',null,null,false,false,$start_time,0.25,true); ?>
                                     </label> 
                                 </div>
                             </div>
                         <?php endif; ?>
                     </div>
                     <div class="va-end">
-                        <?php if(in_array('end_time', $this->va_settings['show_form_fields'])) : ?>
-                            <label><strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> <?php echo $this->va_get_time_select('va_end_time', null, null, true, $start_time); ?></label>
-                        <?php else : ?>
-                            <br/>
-                            <label><?php echo $this->va_settings['reservation_plural']; ?> last for: <?php echo $this->va_settings['end_time_length_hr']; ?> hr <?php echo $this->va_settings['end_time_length_min']; ?> min</label>
+                        <?php if($this->va_settings['end_time_type'] == "standard") : ?>
+                            <label>
+                                <strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> 
+                                <?php $start_time = date('H:i',strtotime("+ 15 minutes", strtotime($start_time))); ?>
+                                <?php echo $this->va_get_time_select('va_end_time', $start_time, null, true, $start_time); ?>
+                            </label>
+                        <?php elseif($this->va_settings['end_time_type'] == "fixed") : ?>
+                            <label>
+                                <strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> 
+                                <?php 
+                                    $end_time_temp = strtotime("+".$this->va_settings['end_time_length_hr']." hours", strtotime($start_time));
+                                    $end_time = date('H:i',strtotime("+".$this->va_settings['end_time_length_min']." minutes", $end_time_temp));
+                                ?>
+                                <?php echo $this->va_get_time_select('va_end_time', $end_time, null, true, $end_time, $end_time); ?>
+                            </label>
+                        <?php else : // min/max ?>
+                            <label>
+                                <strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> 
+                                <?php 
+
+                                    $start_time_temp = strtotime("+".$this->va_settings['end_time_min_length_hr']." hours", strtotime($start_time));
+                                    $start_time_min = date('H:i',strtotime("+".$this->va_settings['end_time_min_length_min']." minutes", $start_time_temp));
+                                                  
+                                    $end_time_temp = strtotime("+".$this->va_settings['end_time_max_length_hr']." hours", strtotime($start_time));
+                                    $end_time_max = date('H:i',strtotime("+".$this->va_settings['end_time_max_length_min']." minutes", $end_time_temp));      
+
+                                    $interval = $this->va_settings['end_time_minmax_interval'];
+                                ?>
+                                <?php echo $this->va_get_time_select('va_end_time', $start_time_min, null, true, $start_time_min, $end_time_max, $interval); ?>
+                            </label>
                         <?php endif; ?>
                         <?php if(in_array('cleanup_time', $this->va_settings['show_form_fields'])) : ?>
                             <div class="va-cleanup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
@@ -2284,22 +2331,29 @@
 			return $decimal;
 		}
 		
-        function va_get_time_select($name, $value = null, $id = null, $required = false, $start = false, $end = false){
+        function va_get_time_select($name, $value = null, $id = null, $required = false, $start = false, $end = false, $interval = 0.25, $reverse = false){
             ob_start();
             ?>
             <select id="<?php echo $id; ?>" name="<?php echo $name; ?>" <?php if($required){echo 'required';} ?>>
-                <?php if($start) : ?>
-                    <?php $time_arr = explode(':',$start); ?>
-                    <?php $start_at = $time_arr[0] + ($time_arr[1]/60); ?>
-                    <?php $times = $this->va_get_times($start_at,23.75,0.25); ?>
-                <?php elseif($end) : ?>
-                    <?php $time_arr = explode(':',$end); ?>
-                    <?php $end_at = $time_arr[0] + ($time_arr[1]/60); ?>
-                    <?php $times = $this->va_get_times(0,$end_at,0.25); ?>
-                    <?php arsort($times); ?>
-                <?php else : ?>
-                    <?php $times = $this->va_get_times(0,23.75,0.25); ?>
-                <?php endif; ?>
+            
+                <?php 
+                    $start_at = 0;
+                    $end_at = 23.75;
+
+                    if($start){
+                        $time_arr = explode(':',$start);
+                        $start_at = $time_arr[0] + ($time_arr[1]/60);
+                    }
+                    if($end){
+                        $time_arr = explode(':',$end);
+                        $end_at = $time_arr[0] + ($time_arr[1]/60);
+                    }
+
+                    $times = $this->va_get_times($start_at,$end_at,$interval);
+                    if($reverse){
+                        arsort($times); 
+                    }
+                ?>
                 <option></option>
                 <?php foreach ($times as $time) : ?>
                     <option value="<?php echo $time; ?>" <?php if($time == $value){echo 'selected';} ?>>

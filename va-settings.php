@@ -42,7 +42,7 @@
 							<option value="no" <?php if($this->va_settings['hide_admin_bar'] == "no"){echo 'selected';};?>>No</option>
 						</select>
 						<div id="va-show-admin-bar" style="display:none;">
-							<p>Show WP admin bar for</p>
+							<p>BUT, Still Show WP admin bar for</p>
 							<?php global $wp_roles; ?>
 							<ul>
 							<?php foreach($wp_roles->roles as $role => $data) : ?>
@@ -92,6 +92,118 @@
 		<?php elseif($active_tab == 'va-forms') : ?>
 			<div id="va-forms">
 				<form method="post" action="">
+					<h2 class="va-tab-title"><?php echo $this->va_settings['reservation_single']; ?> End Time Options</h2><hr/>
+					<div id="va-end-time-options">
+						<div class="reservation-end-time-type">
+							<p>
+								<label style="width:auto;"><input id="va-standard-end-time" type="radio" name="va_end_time_type" value="standard" <?php if($this->va_settings['end_time_type'] == 'standard'){echo 'checked';};?> /> Standard End Time Selection</label><br/>
+								<label style="width:auto;"><input id="va-fixed-end-time" type="radio" name="va_end_time_type" value="fixed" <?php if($this->va_settings['end_time_type'] == 'fixed'){echo 'checked';};?> /> Fixed <?php echo $this->va_settings['reservation_single']; ?> Length</label><br/>
+								<label style="width:auto;"><input id="va-minmax-end-time" type="radio" name="va_end_time_type" value="minmax" <?php if($this->va_settings['end_time_type'] == 'minmax'){echo 'checked';};?> /> Min/Max <?php echo $this->va_settings['reservation_single']; ?> Length Selection</label>
+							</p>
+						</div>
+						<span class="va-clearer"></span>
+						<div class="reservation-fixed-end-times" style="display:none;">
+							<p>
+								<?php echo $this->va_settings['reservation_plural']; ?> last for:<br/>
+								<select name="va_end_time_length_hr">
+								<?php for($i=0;$i<24;$i++) : ?>
+									<option value="<?php echo $i; ?>" <?php if($this->va_settings['end_time_length_hr'] == $i){echo 'selected';};?>><?php echo $i; ?></option>
+								<?php endfor; ?>
+								</select> hours 
+								<select name="va_end_time_length_min">
+									<option value="00" <?php if($this->va_settings['end_time_length_min'] == '00'){echo 'selected';};?>>00</option>
+									<option value="15" <?php if($this->va_settings['end_time_length_min'] == '15'){echo 'selected';};?>>15</option>
+									<option value="30" <?php if($this->va_settings['end_time_length_min'] == '30'){echo 'selected';};?>>30</option>
+									<option value="45" <?php if($this->va_settings['end_time_length_min'] == '45'){echo 'selected';};?>>45</option>
+								</select> minutes
+							</p>
+						</div>	
+						<span class="va-clearer"></span>				
+						<div class="reservation-minmax-end-times" style="display:none;">
+							<p>
+								Minimum <?php echo $this->va_settings['reservation_single']; ?> Length:<br/><span class="description">(if a user chooses a 1:00pm start time and this setting is 30 minutes, the first available end time will be 1:30pm)</span><br/>
+								<select name="va_end_time_min_length_hr">
+								<?php for($i=0;$i<24;$i++) : ?>
+									<option value="<?php echo $i; ?>" <?php if($this->va_settings['end_time_min_length_hr'] == $i){echo 'selected';};?>><?php echo $i; ?></option>
+								<?php endfor; ?>
+								</select> hours 
+								<select name="va_end_time_min_length_min">
+									<option value="00" <?php if($this->va_settings['end_time_min_length_min'] == '00'){echo 'selected';};?>>00</option>
+									<option value="15" <?php if($this->va_settings['end_time_min_length_min'] == '15'){echo 'selected';};?>>15</option>
+									<option value="30" <?php if($this->va_settings['end_time_min_length_min'] == '30'){echo 'selected';};?>>30</option>
+									<option value="45" <?php if($this->va_settings['end_time_min_length_min'] == '45'){echo 'selected';};?>>45</option>
+								</select> minutes
+							</p>							
+							<p>
+								Maximum <?php echo $this->va_settings['reservation_single']; ?> Length:<br/><span class="description">(if a user chooses a 1:00pm start time and this setting is 2 hours, the last available end time will be 3:00pm)</span><br/>
+								<select name="va_end_time_max_length_hr">
+								<?php for($i=0;$i<24;$i++) : ?>
+									<option value="<?php echo $i; ?>" <?php if($this->va_settings['end_time_max_length_hr'] == $i){echo 'selected';};?>><?php echo $i; ?></option>
+								<?php endfor; ?>
+								</select> hours 
+								<select name="va_end_time_max_length_min">
+									<option value="00" <?php if($this->va_settings['end_time_max_length_min'] == '00'){echo 'selected';};?>>00</option>
+									<option value="15" <?php if($this->va_settings['end_time_max_length_min'] == '15'){echo 'selected';};?>>15</option>
+									<option value="30" <?php if($this->va_settings['end_time_max_length_min'] == '30'){echo 'selected';};?>>30</option>
+									<option value="45" <?php if($this->va_settings['end_time_max_length_min'] == '45'){echo 'selected';};?>>45</option>
+								</select> minutes
+							</p>
+							<p>								
+								<?php echo $this->va_settings['reservation_single']; ?> Time Interval:<br/><span class="description">(end times available to the user will be in intervals of this setting. make sure it fits evenly between your Min/Max settings above)</span><br/>
+								<select name="va_end_time_minmax_interval">
+									<option value="0.25" <?php if($this->va_settings['end_time_minmax_interval'] == '0.25'){echo 'selected';};?>>15 minutes</option>
+									<option value="0.5" <?php if($this->va_settings['end_time_minmax_interval'] == '0.5'){echo 'selected';};?>>30 minutes</option>
+									<option value="0.75" <?php if($this->va_settings['end_time_minmax_interval'] == '0.75'){echo 'selected';};?>>45 minutes</option>
+									<option value="1" <?php if($this->va_settings['end_time_minmax_interval'] == '1'){echo 'selected';};?>>1 hour</option>
+									<option value="1.25" <?php if($this->va_settings['end_time_minmax_interval'] == '1.25'){echo 'selected';};?>>1 hour 15 minutes</option>
+									<option value="1.5" <?php if($this->va_settings['end_time_minmax_interval'] == '1.5'){echo 'selected';};?>>1 hour 30 minutes</option>
+									<option value="1.75" <?php if($this->va_settings['end_time_minmax_interval'] == '1.75'){echo 'selected';};?>>1 hour 45 minutes</option>
+									<option value="2" <?php if($this->va_settings['end_time_minmax_interval'] == '2'){echo 'selected';};?>>2 hours</option>
+									<option value="2.25" <?php if($this->va_settings['end_time_minmax_interval'] == '2.25'){echo 'selected';};?>>2 hours 15 minutes</option>
+									<option value="2.5" <?php if($this->va_settings['end_time_minmax_interval'] == '2.5'){echo 'selected';};?>>2 hours 30 minutes</option>
+									<option value="2.75" <?php if($this->va_settings['end_time_minmax_interval'] == '2.75'){echo 'selected';};?>>2 hours 45 minutes</option>
+									<option value="3" <?php if($this->va_settings['end_time_minmax_interval'] == '3'){echo 'selected';};?>>3 hours</option>
+									<option value="3.25" <?php if($this->va_settings['end_time_minmax_interval'] == '3.25'){echo 'selected';};?>>3 hours 15 minutes</option>
+									<option value="3.5" <?php if($this->va_settings['end_time_minmax_interval'] == '3.5'){echo 'selected';};?>>3 hours 30 minutes</option>
+									<option value="3.75" <?php if($this->va_settings['end_time_minmax_interval'] == '3.75'){echo 'selected';};?>>3 hours 45 minutes</option>
+									<option value="4" <?php if($this->va_settings['end_time_minmax_interval'] == '4'){echo 'selected';};?>>4 hours</option>
+									<option value="4.25" <?php if($this->va_settings['end_time_minmax_interval'] == '4.25'){echo 'selected';};?>>4 hours 15 minutes</option>
+									<option value="4.5" <?php if($this->va_settings['end_time_minmax_interval'] == '4.5'){echo 'selected';};?>>4 hours 30 minutes</option>
+									<option value="4.75" <?php if($this->va_settings['end_time_minmax_interval'] == '4.75'){echo 'selected';};?>>4 hours 45 minutes</option>
+									<option value="5" <?php if($this->va_settings['end_time_minmax_interval'] == '5'){echo 'selected';};?>>5 hours</option>
+								</select>
+							</p>
+						</div>
+					</div>
+					<br/>
+					<h2 class="va-tab-title">Form Field Visibility</h2><hr/>
+					<div id="va-show-form-fields">
+						<p>Display these fields on the <?php echo $this->va_settings['reservation_single']; ?> form:</p>
+						<ul>
+						<?php
+							$fields = array(
+								//'end_time' => 'End Time',
+								'setup_time' => 'Setup Time',
+								'cleanup_time' => 'Cleanup Time',
+								'title' => 'Title',
+								'venue' => $this->va_settings['venue_single'],
+								'location' => $this->va_settings['location_single'],
+								'phone' => 'Phone',
+								'type' => $this->va_settings['reservation_single'] . ' type',
+								'description' => 'Description',
+								'setup_needs' => 'Setup Needs',
+								'av_needs' => 'A/V Needs'
+							); 
+						?>
+						<?php foreach($fields as $key => $value) : ?>
+							<li>
+								<input id="<?php echo $key; ?>" type="checkbox" name="va_show_form_fields[]" value="<?php echo $key; ?>" <?php if(is_array($this->va_settings['show_form_fields'])){if(in_array($key, $this->va_settings['show_form_fields'])){echo 'checked';}}else if($key == $this->va_settings['show_form_fields']){echo 'checked';} ?>/> <label for="<?php echo $key; ?>"><?php echo $value; ?></label>
+								<span class="va-clearer"></span>
+							</li>
+						<?php endforeach; ?>
+						</ul>
+					</div>
+					<br/>
 					<h2 class="va-tab-title">Form Field Labels</h2><hr/>
 					<p>This allows you to update the labels on the reservation form. Leave blank for default values shown.</p>
 					<div class="form-field-labels">
@@ -130,49 +242,6 @@
 						</p>
 					</div>
 					<br/>
-					<h2 class="va-tab-title">Form Field Visibility</h2><hr/>
-					<div id="va-show-form-fields">
-						<p>Display these fields on the <?php echo $this->va_settings['reservation_single']; ?> form:</p>
-						<ul>
-						<?php
-							$fields = array(
-								'end_time' => 'End Time',
-								'setup_time' => 'Setup Time',
-								'cleanup_time' => 'Cleanup Time',
-								'title' => 'Title',
-								'venue' => $this->va_settings['venue_single'],
-								'location' => $this->va_settings['location_single'],
-								'phone' => 'Phone',
-								'type' => $this->va_settings['reservation_single'] . ' type',
-								'description' => 'Description',
-								'setup_needs' => 'Setup Needs',
-								'av_needs' => 'A/V Needs'
-							); 
-						?>
-						<?php foreach($fields as $key => $value) : ?>
-							<li>
-								<input id="<?php echo $key; ?>" type="checkbox" name="va_show_form_fields[]" value="<?php echo $key; ?>" <?php if(is_array($this->va_settings['show_form_fields'])){if(in_array($key, $this->va_settings['show_form_fields'])){echo 'checked';}}else if($key == $this->va_settings['show_form_fields']){echo 'checked';} ?>/> <label for="<?php echo $key; ?>"><?php echo $value; ?></label>
-								<span class="va-clearer"></span>
-							</li>
-						<?php endforeach; ?>
-						</ul>
-					</div>
-					<div class="reservation-end-times" style="display:none;">
-						<p>
-							<?php echo $this->va_settings['reservation_plural']; ?> last for:<br/>
-							<select name="va_end_time_length_hr">
-							<?php for($i=0;$i<24;$i++) : ?>
-								<option value="<?php echo $i; ?>" <?php if($this->va_settings['end_time_length_hr'] == $i){echo 'selected';};?>><?php echo $i; ?></option>
-							<?php endfor; ?>
-							</select> hours<br/>
-							<select name="va_end_time_length_min">
-								<option value="00" <?php if($this->va_settings['end_time_length_hr'] == '00'){echo 'selected';};?>>00</option>
-								<option value="15" <?php if($this->va_settings['end_time_length_hr'] == '15'){echo 'selected';};?>>15</option>
-								<option value="30" <?php if($this->va_settings['end_time_length_hr'] == '30'){echo 'selected';};?>>30</option>
-								<option value="45" <?php if($this->va_settings['end_time_length_hr'] == '45'){echo 'selected';};?>>45</option>
-							</select> minutes
-						</p>
-					</div>
 					<input type="hidden" name="va_save_form_settings" />
 					<input class="button button-primary" type="submit" name="va_update_settings" value="Update Settings" />
 				</form>
@@ -359,11 +428,32 @@
 			$('#va-show-admin-bar').slideToggle('fast');
 		});
 
-		if(!($('#va-forms #end_time:checked').length > 0)){
-			$('.reservation-end-times').slideToggle('fast');
+		// show/hide end time types
+		var selectedVal = "";
+		var selected = $("input[type='radio'][name='va_end_time_type']:checked");
+		if(selected.length > 0){
+		    selectedVal = selected.val();
 		}
-		$('#end_time').on('click', function(){
-			$('.reservation-end-times').slideToggle('fast');
-		});
+
+		if(selectedVal == 'fixed'){
+			$('.reservation-fixed-end-times').fadeIn('fast');
+		}else if(selectedVal == 'minmax'){
+			$('.reservation-minmax-end-times').fadeIn('fast');
+		}
+
+    	// toggle fixed and min/max
+    	$('.reservation-end-time-type label').on('click', function(){
+			var selectedVal = $('input', this).val();
+    		if(selectedVal == 'fixed'){
+				$('.reservation-fixed-end-times').fadeIn('fast');
+				$('.reservation-minmax-end-times').hide();
+			}else if(selectedVal == 'minmax'){
+				$('.reservation-minmax-end-times').fadeIn('fast');
+				$('.reservation-fixed-end-times').hide();
+			}else {
+				$('.reservation-fixed-end-times').hide();
+				$('.reservation-minmax-end-times').hide();
+			}
+		});	
     });
 </script>
