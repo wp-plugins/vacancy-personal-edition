@@ -51,6 +51,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.2.3 =
+* Feature ADD! The reservation intervals can now be reflected on your calendar
+
 = 1.2.2 =
 * Feature ADD! You now have the ability to pick which type of reservation length to use; Standard (any length), Fixed Length, or Min/Max Length with custom Intervals
 
@@ -92,6 +95,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.2.3 =
+* Feature ADD! The reservation intervals can now be reflected on your calendar
 
 = 1.2.2 =
 * Feature ADD! You now have the ability to pick which type of reservation length to use; Standard (any length), Fixed Length, or Min/Max Length with custom Intervals

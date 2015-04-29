@@ -96,7 +96,7 @@
 					<div id="va-end-time-options">
 						<div class="reservation-end-time-type">
 							<p>
-								<label style="width:auto;"><input id="va-standard-end-time" type="radio" name="va_end_time_type" value="standard" <?php if($this->va_settings['end_time_type'] == 'standard'){echo 'checked';};?> /> Standard End Time Selection</label><br/>
+								<label style="width:auto;"><input id="va-standard-end-time" type="radio" name="va_end_time_type" value="standard" <?php if($this->va_settings['end_time_type'] == 'standard'){echo 'checked';};?> /> Standard End Time Selection (any length)</label><br/>
 								<label style="width:auto;"><input id="va-fixed-end-time" type="radio" name="va_end_time_type" value="fixed" <?php if($this->va_settings['end_time_type'] == 'fixed'){echo 'checked';};?> /> Fixed <?php echo $this->va_settings['reservation_single']; ?> Length</label><br/>
 								<label style="width:auto;"><input id="va-minmax-end-time" type="radio" name="va_end_time_type" value="minmax" <?php if($this->va_settings['end_time_type'] == 'minmax'){echo 'checked';};?> /> Min/Max <?php echo $this->va_settings['reservation_single']; ?> Length Selection</label>
 							</p>
@@ -173,26 +173,67 @@
 									<option value="5" <?php if($this->va_settings['end_time_minmax_interval'] == '5'){echo 'selected';};?>>5 hours</option>
 								</select>
 							</p>
+							<p>
+								Match Interval to Calendar Intervals<br/>
+								<select name="va_match_minmax_interval">
+									<option value="no" <?php if($this->va_settings['match_minmax_interval'] == 'no'){echo 'selected';};?>>No</option>
+									<option value="yes" <?php if($this->va_settings['match_minmax_interval'] == 'yes'){echo 'selected';};?>>Yes</option>
+								</select>
+							</p>
 						</div>
 					</div>
 					<br/>
 					<h2 class="va-tab-title">Form Field Visibility</h2><hr/>
 					<div id="va-show-form-fields">
-						<p>Display these fields on the <?php echo $this->va_settings['reservation_single']; ?> form:</p>
+						<p>
+							Display these fields on the <?php echo $this->va_settings['reservation_single']; ?> form:<br/>
+							<span class="description">(Name, Email, Date, Start Time & End Time are always required and cannot be hidden)</span>
+						</p>
+						
 						<ul>
 						<?php
+							if(!empty($this->va_settings['title_label'])){
+								$title = $this->va_settings['title_label'];
+							}else{
+								$title = $this->va_settings['reservation_single'] . ' Title';
+							}
+							if(!empty($this->va_settings['phone_label'])){
+								$phone = $this->va_settings['phone_label'];
+							}else{
+								$phone = 'Phone';
+							}							
+							if(!empty($this->va_settings['reservation_type_label'])){
+								$type = $this->va_settings['reservation_type_label'];
+							}else{
+								$type = $this->va_settings['reservation_single'] . ' Type';
+							}							
+							if(!empty($this->va_settings['description_label'])){
+								$description = $this->va_settings['description_label'];
+							}else{
+								$description = $this->va_settings['reservation_single'] . ' Description';
+							}							
+							if(!empty($this->va_settings['setup_needs_label'])){
+								$setup = $this->va_settings['setup_needs_label'];
+							}else{
+								$setup = 'Setup Needs';
+							}					
+							if(!empty($this->va_settings['av_needs_label'])){
+								$av = $this->va_settings['av_needs_label'];
+							}else{
+								$av = 'A/V Tech Needs: (ie. Screen, Projector, Speakers, Microphone, etc.)';
+							}
 							$fields = array(
 								//'end_time' => 'End Time',
 								'setup_time' => 'Setup Time',
 								'cleanup_time' => 'Cleanup Time',
-								'title' => 'Title',
+								'title' => $title,
 								'venue' => $this->va_settings['venue_single'],
 								'location' => $this->va_settings['location_single'],
-								'phone' => 'Phone',
-								'type' => $this->va_settings['reservation_single'] . ' type',
-								'description' => 'Description',
-								'setup_needs' => 'Setup Needs',
-								'av_needs' => 'A/V Needs'
+								'phone' => $phone,
+								'type' => $type,
+								'description' => $description,
+								'setup_needs' => $setup,
+								'av_needs' => $av
 							); 
 						?>
 						<?php foreach($fields as $key => $value) : ?>
