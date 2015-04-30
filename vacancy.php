@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.2.3
+    Version: 1.2.4
     Author: kraftpress
     Author URI: http://kraftpress.it
     Contributors: kraftpress, buildcreate, a2rocklobster
@@ -20,7 +20,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.2.3',
+                'version' => '1.2.4',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
@@ -528,6 +528,7 @@
                     if($status == 'approved'){echo '<i class="icon-ok-sign"></i> Approved';}
                     if($status == 'pending'){echo '<i class="icon-minus-sign"></i> Pending';}
                     if($status == 'denied'){echo '<i class="icon-remove-sign"></i> Denied';}
+                    if($status == 'blocked'){echo '<i class="icon-remove-sign"></i> Blocked';}
                     break;
                 case 'link' :
                     $event_id = get_post_meta($post_id, 'va_tribe_event_id', true);
@@ -1414,11 +1415,11 @@
 
                             $.post("<?php echo admin_url('admin-ajax.php'); ?>", data, function(response){
                                 $('#va-shortcode-day').html(response);
-                                var width = $('#va-day-view').width() - 100;
-                                var num_cols = $('#va-day-view th').length / 2; // account for floating header
+                                var width = $('.va-day-view').width() - 100;
+                                var num_cols = $('.va-day-view th').length / 2; // account for floating header
                                 var col_width = width / num_cols;
-                                $('#va-day-view th').attr('width', col_width+'px');
-                                $('#va-times').attr('width', '100px');
+                                $('.va-day-view th').attr('width', col_width+'px');
+                                $('.va-times').attr('width', '100px');
                             }); 
                         });    
 
@@ -1433,11 +1434,11 @@
         
                             $.post("<?php echo admin_url('admin-ajax.php'); ?>", data, function(response){
                                 $('#va-shortcode-day').html(response);
-                                var width = $('#va-day-view').width() - 100;
-                                var num_cols = $('#va-day-view th').length / 2; // account for floating header
+                                var width = $('.va-day-view').width() - 100;
+                                var num_cols = $('.va-day-view th').length / 2; // account for floating header
                                 var col_width = width / num_cols;
-                                $('#va-day-view th').attr('width', col_width+'px');
-                                $('#va-times').attr('width', '100px');
+                                $('.va-day-view th').attr('width', col_width+'px');
+                                $('.va-times').attr('width', '100px');
                             }); 
                         }); 
                         // check for posted date
@@ -1479,10 +1480,10 @@
                     </h3>
                     <?php $locations = new WP_Query('post_type=va_location&posts_per_page=-1&meta_key=va_venue_id&meta_value='.$venue_id); ?>
                     <?php if($locations) : ?>
-                        <table cellpadding="0" cellspacing="0" id="va-day-view">
+                        <table cellpadding="0" cellspacing="0" class="va-day-view">
                             <thead>
                                 <tr class="va-header-row" <?php echo apply_filters('va_table_header_background', ''); ?>>
-                                    <th id="va-times"></th>
+                                    <th class="va-times"></th>
                                 <?php foreach($locations->posts as $location) : ?>
                                     <th><?php echo $location->post_title; ?></th>
                                 <?php endforeach; ?>
@@ -1563,10 +1564,12 @@
                                                             <?php if($start <= $time && $end >= $time && ($reservation_displayed != $reservation->ID)) : ?>
                                                                 <?php $reservation_displayed = $reservation->ID; ?>
                                                                 <div class="reservation <?php echo $status; ?>" style="height:<?php echo $height; ?>px;<?php echo apply_filters('va_reservation_background', '', $status); ?>">
-                                                                    <?php if($this->va_settings['show_reservation_details'] == 'yes') : ?>
-                                                                        <?php echo $reservation->post_title . ' (' . date('g:i a', strtotime($start)) . ' - ' . date('g:i a', strtotime($end)) . ')'; ?>
-                                                                    <?php else : ?>
-                                                                        <?php echo date('g:i a', strtotime($start)) . ' - ' . date('g:i a', strtotime($end)); ?>
+                                                                    <?php if($status != 'blocked') : ?>
+                                                                        <?php if($this->va_settings['show_reservation_details'] == 'yes') : ?>
+                                                                            <?php echo $reservation->post_title . ' (' . date('g:i a', strtotime($start)) . ' - ' . date('g:i a', strtotime($end)) . ')'; ?>
+                                                                        <?php else : ?>
+                                                                            <?php echo date('g:i a', strtotime($start)) . ' - ' . date('g:i a', strtotime($end)); ?>
+                                                                        <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 </div>
                                                             <?php else : ?>
@@ -1591,18 +1594,18 @@
                     <script type="text/javascript">
                         jQuery(document).ready(function($){
                             if($('#wpadminbar').length > 0){ 
-                                $("#va-day-view").floatThead({
+                                $(".va-day-view").floatThead({
                                     //useAbsolutePositioning: true,
                                     scrollingTop: 32
                                 });
                                
                             }else{
-                               $("#va-day-view").floatThead({
+                               $(".va-day-view").floatThead({
                                     //useAbsolutePositioning: false
                                 });
                             }
                             
-                            $("#va-day-view td").each(function(){
+                            $(".va-day-view td").each(function(){
                                 if($(this).children('div').length > 0){$(this).toggleClass('available not-available');}
                             });
                             // prev next buttons
@@ -1639,7 +1642,7 @@
                             // });
 
                             var clicked = false;
-                            $('#va-day-view .available').on('click', function(){ 
+                            $('.va-day-view .available').on('click', function(){ 
                                 $('.va-editing').removeClass('va-editing').html('');
                                 $(this).addClass('va-editing').html('Selected <i class="icon-ok"></i>');
                                 var $clicked = $(this);
@@ -1656,7 +1659,7 @@
 
                                         // count table columns
                                         var cols = 0;
-                                        $('#va-day-view tr:nth-child(1) td').each(function () {
+                                        $('.va-day-view tr:nth-child(1) td').each(function () {
                                             cols++;
                                         });
                                         var res_var = "<?php echo $this->va_settings['reservation_single']; ?>";
@@ -1670,8 +1673,8 @@
                             });
 
                             // remove form when closed is clicked
-                            $(document).on('click', '#va-day-view #va-clicked-form h6 span', function(){
-                                $('#va-day-view #va-added-tr').remove();
+                            $(document).on('click', '.va-day-view #va-clicked-form h6 span', function(){
+                                $('.va-day-view #va-added-tr').remove();
                                 $('.va-editing').removeClass('va-editing').html('');
                             });
 
@@ -1693,7 +1696,11 @@
                 <p>Please Select a date.</p>
             <?php endif; ?>
             </div>
-            <?php echo ob_get_clean();
+            
+            <?php 
+            $html = ob_get_clean();
+            $content = apply_filters('va_tabbed_layout', $html); 
+            echo $content;
             die();
         }
         // ajax call from lightbox
@@ -2192,7 +2199,7 @@
            
             <h2><?php echo date('l - F jS, Y', strtotime($date)); ?></h2>
             <?php $locations = new WP_Query('post_type=va_location&posts_per_page=-1&meta_key=va_venue_id&meta_value='.$venue_id); ?>
-            <table cellpadding="0" cellspacing="0" id="va-day-view">
+            <table cellpadding="0" cellspacing="0" class="va-day-view">
                 <thead>
                 <tr class="va-header-row" <?php echo apply_filters('va_table_header_background', ''); ?>>
                     <th style="width:100px;"></th>

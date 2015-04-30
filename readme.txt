@@ -51,6 +51,10 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.2.4 =
+* Feature ADD! A new reservation status has been added to block off time. To use this, create a reservation on the admin backend and choose "Blocked" for the status.
+* Added hook for new Vacancy PRO tabbed display view
+
 = 1.2.3 =
 * Feature ADD! The reservation intervals can now be reflected on your calendar
 
@@ -95,6 +99,10 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+* Feature ADD! A new reservation status has been added to block off time. To use this, create a reservation on the admin backend and choose "Blocked" for the status.
+* Added hook for new Vacancy PRO tabbed display view
 
 = 1.2.3 =
 * Feature ADD! The reservation intervals can now be reflected on your calendar

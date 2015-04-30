@@ -7,13 +7,13 @@
             <?php echo apply_filters('va_ecp_status_note', null, $post->ID); ?>
             <label><?php echo $this->va_settings['reservation_single']; ?> status </label>
             <select id="va-reservation-status" name="va_reservation_status">
-                <?php $stauses = array('Pending', 'Approved', 'Denied'); ?>
+                <?php $stauses = array('Pending', 'Approved', 'Denied', 'Blocked'); ?>
                 <?php foreach($stauses as $status) : ?>
                     <option value="<?php echo strtolower($status); ?>" 
                         <?php if(get_post_meta($reservation->ID, 'va_reservation_status', true) == strtolower($status)){echo 'selected';} ?>
                     ><?php echo $status; ?></option>
                 <?php endforeach; ?>
-            </select><br/><span class="description">TIP: 'Pending' and 'Approved' will block out thier timeslot. 'Denied' simply won't show this <?php echo $this->va_settings['reservation_single']; ?> on the calendar</span><br/>
+            </select><br/><span class="description">TIP: 'Denied' <?php echo $this->va_settings['reservation_plural']; ?> won't be displayed on the calendar. 'Blocked' <?php echo $this->va_settings['reservation_plural']; ?> will appear on the calendar as unavailable but not styled.</span><br/>
             <br/><label>Comments <em>(sent to the submittor via <?php echo $this->va_settings['reservation_single']; ?> status change notification)</em></label></br/><textarea name="va_reservation_comments" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_comments', true); ?></textarea>
         </p>
         <h3><?php echo $this->va_settings['venue_single']; ?> and <?php echo $this->va_settings['location_single']; ?></h3>
