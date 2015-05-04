@@ -62,5 +62,5 @@
 #va-clicked-form h6 {margin:0 0 15px 0;border-bottom: 1px solid #ccc;padding: 15px 0;}
 #va-clicked-form h6 span {float:right; font-size:14px; color:#ccc; cursor:pointer;}
 #va-edit-dates {color:#ccc;cursor: pointer;}
-#va-reservation-submitted {padding: 15px 0;}
+#va-reservation-submitted {padding: 15px 0; height:auto;}
 .va-editing {text-align:center;line-height:1em;background:#ccc; color:#fff;}
