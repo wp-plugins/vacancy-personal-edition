@@ -120,15 +120,15 @@
         <h3>Contact Information</h3>
         <p>
             <label>Name </label>
-            <input type="text" name="va_reservation_name" value="<?php echo get_post_meta($reservation->ID, 'va_reservation_name', true); ?>" />
+            <input type="text" name="va_reservation_name" value="<?php echo apply_filters('va_before_meta_display', get_post_meta($reservation->ID, 'va_reservation_name', true)); ?>" />
         </p> 
         <p>
             <label>Phone </label>
-            <input type="tel" name="va_reservation_phone" value="<?php echo get_post_meta($reservation->ID, 'va_reservation_phone', true); ?>" />
+            <input type="tel" name="va_reservation_phone" value="<?php echo apply_filters('va_before_meta_display', get_post_meta($reservation->ID, 'va_reservation_phone', true)); ?>" />
         </p>  
         <p>
             <label>Email </label>
-            <input type="email" name="va_reservation_email" value="<?php echo get_post_meta($reservation->ID, 'va_reservation_email', true); ?>" />
+            <input type="email" name="va_reservation_email" value="<?php echo apply_filters('va_before_meta_display', get_post_meta($reservation->ID, 'va_reservation_email', true)); ?>" />
         </p>
         <br/>
         <a class="button" href="/wp-admin/admin.php?page=va-admin-calendar"><i class="icon-calendar"></i> View Calendar</a><br/>

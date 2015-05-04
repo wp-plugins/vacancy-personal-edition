@@ -25,7 +25,7 @@ The perfect booking solution for any person or establishment that needs to allow
 
 = Coming Soon =
 * Payment Gateway to require payment for user submitted reservations
-* Customizable form builder for reservations
+* Data encryption for sensitive information
 
 = Please Vote and Enjoy =
 
@@ -50,6 +50,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 6. Admin Calendar View
 
 == Changelog ==
+
+= 1.2.5 =
+* added hooks for future encryption functionality
 
 = 1.2.4 =
 * Feature ADD! A new reservation status has been added to block off time. To use this, create a reservation on the admin backend and choose "Blocked" for the status.
@@ -99,6 +102,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.2.5 =
+* added hooks for future encryption functionality
 
 = 1.2.4 =
 * Feature ADD! A new reservation status has been added to block off time. To use this, create a reservation on the admin backend and choose "Blocked" for the status.

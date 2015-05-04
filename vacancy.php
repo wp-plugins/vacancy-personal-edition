@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.2.4
+    Version: 1.2.5
     Author: kraftpress
     Author URI: http://kraftpress.it
     Contributors: kraftpress, buildcreate, a2rocklobster
@@ -20,7 +20,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.2.4',
+                'version' => '1.2.5',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
@@ -834,6 +834,13 @@
                 $setup_needs = sanitize_text_field($_POST['va_reservation_setup']);
                 $av_needs = sanitize_text_field($_POST['va_reservation_av']);
 
+                $reservation_data = array(
+                    'va_reservation_name' => $name,
+                    'va_reservation_phone' => $phone,
+                    'va_reservation_email' => $email
+                );
+
+                $data = apply_filters('va_before_submission_save', $reservation_data);
 
                 // Update the meta field in the database.
                 update_post_meta($post_id, 'va_reservation_status', $status);
@@ -842,9 +849,9 @@
                 update_post_meta($post_id, 'va_reservation_date', $date);
                 update_post_meta($post_id, 'va_start_time', $start_time);
                 update_post_meta($post_id, 'va_end_time', $end_time);
-                update_post_meta($post_id, 'va_reservation_name', $name);
-                update_post_meta($post_id, 'va_reservation_phone', $phone);
-                update_post_meta($post_id, 'va_reservation_email', $email);
+                update_post_meta($post_id, 'va_reservation_name', $data['va_reservation_name']);
+                update_post_meta($post_id, 'va_reservation_phone', $data['va_reservation_phone']);
+                update_post_meta($post_id, 'va_reservation_email', $data['va_reservation_email']);
                 update_post_meta($post_id, 'va_reservation_comments', $comments);
                 update_post_meta($post_id, 'va_reservation_setup', $setup_needs);
                 update_post_meta($post_id, 'va_reservation_av', $av_needs);
@@ -1069,6 +1076,15 @@
                             'post_status' => 'publish'
                         );
                         $post_id = wp_insert_post($post);
+
+                        $reservation_data = array(
+                            'va_reservation_name' => $name,
+                            'va_reservation_phone' => $phone,
+                            'va_reservation_email' => $email
+                        );
+
+                        $data = apply_filters('va_before_submission_save', $reservation_data);
+
                         update_post_meta($post_id, 'va_reservation_status', 'pending');
                         update_post_meta($post_id, 'va_venue_id', $venue_id);
                         update_post_meta($post_id, 'va_location_id', $location_ids);
@@ -1077,9 +1093,9 @@
                         update_post_meta($post_id, 'va_start_time', $start_time);
                         update_post_meta($post_id, 'va_end_time', $end_time);
                         update_post_meta($post_id, 'va_end_cleanup_time', $reservation_end);
-                        update_post_meta($post_id, 'va_reservation_name', $name);
-                        update_post_meta($post_id, 'va_reservation_phone', $phone);
-                        update_post_meta($post_id, 'va_reservation_email', $email);
+                        update_post_meta($post_id, 'va_reservation_name', $data['va_reservation_name']);
+                        update_post_meta($post_id, 'va_reservation_phone', $data['va_reservation_phone']);
+                        update_post_meta($post_id, 'va_reservation_email', $data['va_reservation_email']);
                         update_post_meta($post_id, 'va_reservation_setup', $setup_needs);
                         update_post_meta($post_id, 'va_reservation_av', $av_needs);
 						
