@@ -1,0 +1,1290 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Vacancy Personal Edition\n"
+"POT-Creation-Date: 2015-06-04 13:54-0500\n"
+"PO-Revision-Date: 2015-06-04 14:19-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: va-admin-calendar.php:2
+#, php-format
+msgid "%1$s calendar"
+msgstr "calendario de %1$s"
+
+#: va-admin-calendar.php:37 va-location-meta.php:47
+#: va-reservation-meta.php:142 va-settings.php:462
+#, php-format
+msgid "Select a %1$s"
+msgstr "Selecciona un %s"
+
+#: va-location-meta.php:8
+#, php-format
+msgid "Which %1$s does this %2$s belong to"
+msgstr "Que %1$s pertenece este %2$s a"
+
+#: va-location-meta.php:24
+#, php-format
+msgid "Use %1$s availability"
+msgstr "Uso de la disponibilidad de %1$s"
+
+#: va-location-meta.php:26
+#, php-format
+msgid "Use custom availability for this %1$s"
+msgstr "Uso de la disponibilidad de encargo para este %1$s"
+
+#: va-location-meta.php:26 va-venue-meta.php:49
+#, php-format
+msgid "Leave times blank to make this %1$s unavailable on those days"
+msgstr "Deje en blanco para hacer este %1$s disponible en esos días veces"
+
+#: va-location-meta.php:29 va-venue-meta.php:50
+msgid "Monday"
+msgstr "Lunes"
+
+#: va-location-meta.php:29 va-venue-meta.php:50
+msgid "Tuesday"
+msgstr "Martes"
+
+#: va-location-meta.php:29 va-venue-meta.php:50
+msgid "Wednesday"
+msgstr "Miércoles"
+
+#: va-location-meta.php:29 va-venue-meta.php:50
+msgid "Thursday"
+msgstr "Jueves"
+
+#: va-location-meta.php:29 va-venue-meta.php:50
+msgid "Friday"
+msgstr "Viernes"
+
+#: va-location-meta.php:29 va-venue-meta.php:50
+msgid "Saturday"
+msgstr "Sábado"
+
+#: va-location-meta.php:29 va-venue-meta.php:50
+msgid "Sunday"
+msgstr "Domingo"
+
+#: va-location-meta.php:33 va-venue-meta.php:54
+msgid "Start"
+msgstr "Empezar"
+
+#: va-location-meta.php:35 va-venue-meta.php:56
+msgid "End"
+msgstr "Fin"
+
+#: va-reservation-meta.php:8
+#, php-format
+msgid "%1$s status"
+msgstr "Estado de %1$s"
+
+#: va-reservation-meta.php:16
+#, php-format
+msgid ""
+"TIP: 'Denied' %1$s won't be displayed on the calendar. 'Blocked' %2$s will "
+"appear on the calendar as unavailable but not styled"
+msgstr ""
+"Consejo: No se mostrarán 'Negado' %1$s en el calendario. 'Bloqueado' %2$s "
+"aparecerá en el calendario como disponible pero no estilo"
+
+#: va-reservation-meta.php:17
+#, php-format
+msgid ""
+"Comments %1$s(sent to the submittor via %2$s status change notification)"
+msgstr ""
+"Comentarios de %1$s(sent to the submittor via %2$s status change "
+"notification)"
+
+#: va-reservation-meta.php:24
+#, php-format
+msgid "Which %1$s is this %2$s for"
+msgstr "Que %1$s es este %2$s para"
+
+#: va-reservation-meta.php:57 vacancy.php:659
+#, php-format
+msgid "This %1$s is for which %2$s"
+msgstr "Este %1$s está para que %2$s"
+
+#: va-reservation-meta.php:88 vacancy.php:473 vacancy.php:511 vacancy.php:525
+#: vacancy.php:909 vacancy.php:1135 vacancy.php:1187 vacancy.php:2081
+#: vacancy.php:2220
+msgid "Date"
+msgstr "Fecha"
+
+#: va-reservation-meta.php:92
+#, php-format
+msgid "Setup Start Time (before %1$s)"
+msgstr "Hora de inicio de instalación (antes de %1$s)"
+
+#: va-reservation-meta.php:97 vacancy.php:527 vacancy.php:913 vacancy.php:1139
+#: vacancy.php:1191
+msgid "Start Time"
+msgstr "Hora de inicio"
+
+#: va-reservation-meta.php:102 vacancy.php:528 vacancy.php:914
+#: vacancy.php:1140 vacancy.php:1192
+msgid "End Time"
+msgstr "Hora de finalización"
+
+#: va-reservation-meta.php:107
+#, php-format
+msgid "Cleanup End Time (after %1$s)"
+msgstr "Hora de finalización de la limpieza (después de %1$s)"
+
+#: va-reservation-meta.php:112 vacancy.php:1197
+msgid "Set Up Needs"
+msgstr "Establecer las necesidades"
+
+#: va-reservation-meta.php:116
+msgid "A/V Tech Needs"
+msgstr "A necesidades V Tech"
+
+#: va-reservation-meta.php:120 va-venue-meta.php:13 vacancy.php:1144
+msgid "Contact Information"
+msgstr "Información de Contacto"
+
+#: va-reservation-meta.php:122 vacancy.php:1145
+msgid "Name"
+msgstr "Nombre"
+
+#: va-reservation-meta.php:126 va-settings.php:204 va-settings.php:261
+#: va-venue-meta.php:39 vacancy.php:1146 vacancy.php:1924
+msgid "Phone"
+msgstr "Teléfono"
+
+#: va-reservation-meta.php:130 va-settings.php:265 vacancy.php:1147
+#: vacancy.php:1936
+msgid "Email"
+msgstr "Email"
+
+#: va-reservation-meta.php:134
+msgid "View Calendar"
+msgstr "Ver Calendario"
+
+#: va-reservation-meta.php:135
+#, php-format
+msgid "Tip: Remember to update this %1$s first"
+msgstr "Consejo: No olvide actualizar este %1$s primero"
+
+#: va-reservation-meta.php:150 vacancy.php:2034
+#, php-format
+msgid "Select some %1$s"
+msgstr "Seleccione algunos %1$s"
+
+#: va-settings.php:2
+msgid "Vacancy Settings"
+msgstr "Configuración de la vacante"
+
+#: va-settings.php:6
+msgid "General"
+msgstr "General"
+
+#: va-settings.php:7
+msgid "Labels"
+msgstr "Etiquetas"
+
+#: va-settings.php:8
+msgid "Forms"
+msgstr "Formularios"
+
+#: va-settings.php:9
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: va-settings.php:10
+msgid "Setup & Usage"
+msgstr "Configuración y uso"
+
+#: va-settings.php:13
+msgid "To show Vacancy on the frontend use the shortcode"
+msgstr "Para mostrar la vacante en el uso de la interfaz el shortcode"
+
+#: va-settings.php:21
+msgid "General Settings"
+msgstr "configuración General"
+
+#: va-settings.php:22
+msgid "Here you can customize the general Vacancy settings to your liking"
+msgstr ""
+"Aquí usted puede personalizar la configuración general de la vacante a tu "
+"gusto"
+
+#: va-settings.php:25
+#, php-format
+msgid "Show %1$s Details"
+msgstr "Mostrar %1$s detalles"
+
+#: va-settings.php:27 va-settings.php:34 va-settings.php:41 va-settings.php:81
+#: va-settings.php:181 va-settings.php:299 va-settings.php:306
+#: va-settings.php:313 vacancy.php:1783 vacancy.php:1831
+msgid "Yes"
+msgstr "Sí"
+
+#: va-settings.php:28 va-settings.php:35 va-settings.php:42 va-settings.php:82
+#: va-settings.php:180 va-settings.php:300 va-settings.php:307
+#: va-settings.php:314 vacancy.php:1782 vacancy.php:1830
+msgid "No"
+msgstr "No"
+
+#: va-settings.php:32
+msgid "Require Login"
+msgstr "Requerir inicio de sesión"
+
+#: va-settings.php:39
+msgid "Hide WP admin bar"
+msgstr "Ocultar barra de admin de WP"
+
+#: va-settings.php:45
+msgid "BUT, Still Show WP admin bar for"
+msgstr "PERO barra de admin de WP todavía demostrar para"
+
+#: va-settings.php:58
+#, php-format
+msgid "Default %1$s"
+msgstr "Predeterminada %1$s"
+
+#: va-settings.php:67
+#, php-format
+msgid "No %1$s have been created yet"
+msgstr "Se han creado todavía no %1$s"
+
+#: va-settings.php:67
+#, php-format
+msgid "Create new %1$s"
+msgstr "Crear nuevo %1$s"
+
+#: va-settings.php:71
+msgid "Day View Start Time"
+msgstr "Hora de inicio de vista de día"
+
+#: va-settings.php:75
+msgid "Day View End Time"
+msgstr "Hora de finalización de vista de día"
+
+#: va-settings.php:79
+msgid "Use Setup/Cleanup Times"
+msgstr "Utilice instalación/limpieza veces"
+
+#: va-settings.php:87
+#, php-format
+msgid "Message to display after successful %1$s submission"
+msgstr "Mensaje a mostrar después de la presentación de éxito %1$s"
+
+#: va-settings.php:96
+#, php-format
+msgid "%1$s End Time Options"
+msgstr "Opciones de %1$s final"
+
+#: va-settings.php:100
+msgid "Standard End Time Selection (any length)"
+msgstr "Selección estándar de tiempo final (cualquier longitud)"
+
+#: va-settings.php:101
+#, php-format
+msgid "Fixed %1$s Length"
+msgstr "%1$s longitud fija"
+
+#: va-settings.php:102
+#, php-format
+msgid "Min/Max %1$s Length Selection"
+msgstr "Min/Max %1$s longitud selección"
+
+#: va-settings.php:108
+#, php-format
+msgid "%1$s last for"
+msgstr "%1$s para la última"
+
+#: va-settings.php:113 va-settings.php:130 va-settings.php:144
+msgid "hours"
+msgstr "Horas"
+
+#: va-settings.php:119 va-settings.php:136 va-settings.php:150
+msgid "minutes"
+msgstr "Minutos"
+
+#: va-settings.php:125
+#, php-format
+msgid "Minimum %1$s Length"
+msgstr "Mínimo %1$s longitud"
+
+#: va-settings.php:125
+msgid ""
+"if a user chooses a 1:00pm start time and this setting is 30 minutes, the "
+"first available end time will be 1:30pm"
+msgstr ""
+"Si un usuario elige una 13:00 hora de inicio y este valor es de 30 minutos, "
+"la primera vez de la disposición final será de 13:30"
+
+#: va-settings.php:139
+#, php-format
+msgid "Maximum %1$s Length"
+msgstr "Máximo %1$s longitud"
+
+#: va-settings.php:139
+msgid ""
+"if a user chooses a 1:00pm start time and this setting is 2 hours, the last "
+"available end time will be 3:00pm"
+msgstr ""
+"Si un usuario elige una 13:00 hora de inicio y esta configuración es de 2 "
+"horas, la última vez que disposición final será de 15:00"
+
+#: va-settings.php:153
+#, php-format
+msgid "%1$s Time Interval"
+msgstr "%1$s intervalo de tiempo"
+
+#: va-settings.php:153
+msgid ""
+"end times available to the user will be in intervals of this setting. make "
+"sure it fits evenly between your Min/Max settings above"
+msgstr ""
+"disponibles para el usuario final de los tiempos será en intervalos de esta "
+"configuración. Asegúrese de que quede uniformemente entre la configuración "
+"de Min/Max arriba"
+
+#: va-settings.php:155
+msgid "15 minutes"
+msgstr "15 minutos"
+
+#: va-settings.php:156
+msgid "30 minutes"
+msgstr "30 minutos"
+
+#: va-settings.php:157
+msgid "45 minutes"
+msgstr "45 minutos"
+
+#: va-settings.php:158
+msgid "1 hour"
+msgstr "1 hora"
+
+#: va-settings.php:159
+msgid "1 hour 15 minutes"
+msgstr "1 hora 15 minutos"
+
+#: va-settings.php:160
+msgid "1 hour 30 minutes"
+msgstr "1 hora 30 minutos"
+
+#: va-settings.php:161
+msgid "1 hour 45 minutes"
+msgstr "1 hora 45 minutos"
+
+#: va-settings.php:162
+msgid "2 hours"
+msgstr "2 horas"
+
+#: va-settings.php:163
+msgid "2 hours 15 minutes"
+msgstr "2 horas 15 minutos"
+
+#: va-settings.php:164
+msgid "2 hours 30 minutes"
+msgstr "2 horas 30 minutos"
+
+#: va-settings.php:165
+msgid "2 hours 45 minutes"
+msgstr "2 horas 45 minutos"
+
+#: va-settings.php:166
+msgid "3 hours"
+msgstr "3 horas"
+
+#: va-settings.php:167
+msgid "3 hours 15 minutes"
+msgstr "3 horas 15 minutos"
+
+#: va-settings.php:168
+msgid "3 hours 30 minutes"
+msgstr "3 horas 30 minutos"
+
+#: va-settings.php:169
+msgid "3 hours 45 minutes"
+msgstr "3 horas 45 minutos"
+
+#: va-settings.php:170
+msgid "4 hours"
+msgstr "4 horas"
+
+#: va-settings.php:171
+msgid "4 hours 15 minutes"
+msgstr "4 horas 15 minutos"
+
+#: va-settings.php:172
+msgid "4 hours 30 minutes"
+msgstr "4 horas 30 minutos"
+
+#: va-settings.php:173
+msgid "4 hours 45 minutes"
+msgstr "4 horas 45 minutos"
+
+#: va-settings.php:174
+msgid "5 hours"
+msgstr "5 horas"
+
+#: va-settings.php:178
+msgid "Match Interval to Calendar Intervals"
+msgstr "Intervalo del partido a intervalos de calendario"
+
+#: va-settings.php:187
+msgid "Form Field Visibility"
+msgstr "Visibilidad de campo de formulario"
+
+#: va-settings.php:190
+#, php-format
+msgid "Display these fields on the %1$s form"
+msgstr "Mostrar estos campos en el formulario de %1$s"
+
+#: va-settings.php:191
+msgid ""
+"Name, Email, Date, Start Time & End Time are always required and cannot be "
+"hidden"
+msgstr ""
+"Nombre, Email, fecha, Inicio tiempo final y tiempo siempre son necesario y "
+"no puede ocultarse"
+
+#: va-settings.php:199 va-settings.php:253
+#, php-format
+msgid "%1$s Title"
+msgstr "%1$s título"
+
+#: va-settings.php:209 va-settings.php:269 vacancy.php:1948
+#, php-format
+msgid "%1$s Type"
+msgstr "%1$s tipo de"
+
+#: va-settings.php:214 va-settings.php:273 vacancy.php:1970
+#, php-format
+msgid "%1$s Description"
+msgstr "%1$s Descripción"
+
+#: va-settings.php:219 va-settings.php:277 vacancy.php:1981
+msgid "Setup Needs"
+msgstr "Necesidades de instalación"
+
+#: va-settings.php:224 va-settings.php:281 vacancy.php:1992
+msgid "A/V Tech Needs: (ie. Screen, Projector, Speakers, Microphone, etc.)"
+msgstr ""
+"A / V Tech necesita: (es decir. Pantalla, proyector, altavoces, micrófono, "
+"etc.)"
+
+#: va-settings.php:228
+msgid "Setup Time"
+msgstr "Tiempo de montaje"
+
+#: va-settings.php:229
+msgid "Cleanup Time"
+msgstr "Tiempo de limpieza"
+
+#: va-settings.php:249
+msgid "Form Field Labels"
+msgstr "Etiquetas de campo de formulario"
+
+#: va-settings.php:250
+msgid "This allows you to update the labels on the reservation form"
+msgstr "Esto le permite actualizar las etiquetas en el formulario de reserva"
+
+#: va-settings.php:250
+msgid "Leave blank for default values shown"
+msgstr "Deje en blanco para los valores por defecto que se muestra"
+
+#: va-settings.php:257 vacancy.php:1913
+msgid "Your Name"
+msgstr "Nombre"
+
+#: va-settings.php:293
+msgid "Notification Settings"
+msgstr "Ajustes de notificaciones"
+
+#: va-settings.php:294
+msgid ""
+"These notification settings are for the emails that Vacancy can send when "
+"various actions occur"
+msgstr ""
+"Estos ajustes de notificación son para los correos electrónicos que puede "
+"enviar vacante cuando diferentes acciones ocurren"
+
+#: va-settings.php:294
+msgid "Customize these to your liking"
+msgstr "Personaliza a tu gusto"
+
+#: va-settings.php:295
+msgid "Choose when Notifications are sent"
+msgstr "Elegir cuándo se envían las notificaciones"
+
+#: va-settings.php:297
+#, php-format
+msgid "Send admin notification when a new %1$s is submitted"
+msgstr "Enviar notificación de admin cuando se envía una %1$s nueva"
+
+#: va-settings.php:304
+#, php-format
+msgid "Send user notification when a new %1$s is submitted"
+msgstr "Enviar notificación de usuario cuando se envía una %1$s nueva"
+
+#: va-settings.php:311
+#, php-format
+msgid "Send user notification when a %1$s is approved/denied"
+msgstr "Enviar notificación de usuario cuando un %1$s está aprobado o no"
+
+#: va-settings.php:317
+msgid "This is where your Notifications are from"
+msgstr "Se trata de donde proceden las notificaciones"
+
+#: va-settings.php:319
+msgid "FROM Email name"
+msgstr "Nombre del eMail"
+
+#: va-settings.php:321
+msgid "the name to appear as who notifications are from"
+msgstr "el nombre que aparezca como que las notificaciones son de"
+
+#: va-settings.php:324
+msgid "FROM Email address"
+msgstr "De Correo Eletronico"
+
+#: va-settings.php:326
+msgid "this should match your domain to help avoid spam filtering"
+msgstr "Esto debe coincidir con su dominio para evitar el filtrado de spam"
+
+#: va-settings.php:328
+msgid "These are where Admin Notifications can go to"
+msgstr "Estos son donde Admin notificaciones puede ir a"
+
+#: va-settings.php:329
+#, php-format
+msgid "This will be chosen by the user when submitting a %1$s"
+msgstr "Este será elegido por el usuario cuando se envía una %1$s"
+
+#: va-settings.php:329
+msgid ""
+"Leave the second label and email address blank if you only want to give the "
+"user one option"
+msgstr ""
+"Deje en blanco si desea dar a la opción de un usuario la segunda etiqueta y "
+"correo electrónico"
+
+#: va-settings.php:334 va-settings.php:350
+msgid "Label"
+msgstr "Etiqueta"
+
+#: va-settings.php:336
+msgid "i.e. Rentals"
+msgstr "es decir, alquiler"
+
+#: va-settings.php:341 va-settings.php:357
+msgid "TO email address(es)"
+msgstr "A direcciones de correo electrónico"
+
+#: va-settings.php:343 va-settings.php:359
+msgid "comma separate multiple emails"
+msgstr "coma separar múltiples correos electrónicos"
+
+#: va-settings.php:352
+msgid "i.e. Student Groups"
+msgstr "es decir, grupos de estudiantes"
+
+#: va-settings.php:364
+msgid "This is the content of your Notifications"
+msgstr "Este es el contenido de las notificaciones"
+
+#: va-settings.php:366
+#, php-format
+msgid "User notification for new %1$s subject line"
+msgstr "Notificación del usuario para la nueva línea de %1$s tema"
+
+#: va-settings.php:368 va-settings.php:373 va-settings.php:378
+msgid "leave blank for default"
+msgstr "deja en blanco por defecto"
+
+#: va-settings.php:371
+#, php-format
+msgid "User notification for approved/denied %1$s subject line"
+msgstr "Notificación del usuario para la línea de asunto de aprobado o no %1$s"
+
+#: va-settings.php:376
+msgid "Email Notification Header"
+msgstr "Encabezado de notificación de correo electrónico"
+
+#: va-settings.php:381
+msgid "Email Notification Footer"
+msgstr "Pie de la notificación de correo electrónico"
+
+#: va-settings.php:383
+msgid "Organization contact info will generally go here"
+msgstr "Información de contacto de organización generalmente va aquí"
+
+#: va-settings.php:391
+msgid "Update Labels"
+msgstr "Actualizar etiquetas"
+
+#: va-settings.php:392
+msgid ""
+"This allows you to update all the labels of the content types of Vacancy"
+msgstr ""
+"Esto permite actualizar todas las etiquetas de los tipos de contenido de "
+"vacante"
+
+#: va-settings.php:392
+msgid "We recommended choosing labels that will better clarify your situation"
+msgstr "Se recomienda elegir las etiquetas que mejor aclare su situación"
+
+#: va-settings.php:392
+msgid ""
+"Examples for \"Venue/Location/Reservation\" might be \"Restaurant/Table/"
+"Reservation\" or \"Building/Room/Appointment\""
+msgstr ""
+"Ejemplos para la \"Reserva de ubicación de lugar\" podrían ser \"Reserva de "
+"mesa de restaurante\" o \"Edificio/espacio/cita\""
+
+#: va-settings.php:395
+msgid "Single Venue label"
+msgstr "Etiqueta única sede"
+
+#: va-settings.php:399
+msgid "Plural Venue label"
+msgstr "Etiqueta de espacio plural"
+
+#: va-settings.php:403
+msgid "Single Location label"
+msgstr "Etiqueta de ubicación única"
+
+#: va-settings.php:407
+msgid "Plural Location label"
+msgstr "Etiqueta de ubicación plural"
+
+#: va-settings.php:411
+msgid "Single Reservation label"
+msgstr "Etiqueta única reserva"
+
+#: va-settings.php:415
+msgid "Plural Reservation label"
+msgstr "Etiqueta de reserva plural"
+
+#: va-settings.php:425
+msgid "Setting up and Using Vacancy"
+msgstr "Configurar y usar vacante"
+
+#: va-settings.php:426
+msgid ""
+"Vacancy is a reservation system that is comprised of 3 interacting content "
+"types"
+msgstr ""
+"Vacante es un sistema de reserva que consta de 3 tipos de contenidos "
+"interacción"
+
+#: va-settings.php:428
+msgid "The Basics"
+msgstr "Los conceptos básicos"
+
+#: va-settings.php:430
+#, php-format
+msgid "These are the overarching places your %1$s will be assigned to"
+msgstr "Estos son los lugares preponderantes a que se asignará el %1$s"
+
+#: va-settings.php:430
+msgid "An example might be \"The Chamber of Commerce\""
+msgstr "Un ejemplo podría ser \"la cámara de comercio\""
+
+#: va-settings.php:431
+#, php-format
+msgid "These are sections of a %1$s will be assigned to"
+msgstr "Estas son las secciones de un %1$s se asignarán a"
+
+#: va-settings.php:431
+msgid "An example might be \"Conference Room\""
+msgstr "Un ejemplo podría ser \"Sala\""
+
+#: va-settings.php:432
+msgid "These are what your users will be creating when they make a reservation"
+msgstr "Estos son lo que sus usuarios va a crear cuando hace una reserva"
+
+#: va-settings.php:432
+#, php-format
+msgid "Each %1$s will be assigned to one or more %2$s"
+msgstr "Cada %1$s se le asignará a uno o más %2$s"
+
+#: va-settings.php:434
+msgid "Initial Setup"
+msgstr "Configuración inicial"
+
+#: va-settings.php:436
+#, php-format
+msgid "The first thing you'll need to do is %1$screate a%2$s"
+msgstr "Lo primero que deberás hacer es %1$sscreate de %2$s"
+
+#: va-settings.php:436 va-settings.php:437
+#, php-format
+msgid ""
+"This is done by clicking on the \"%1$s\" submenu item under \"Vacancy\" in "
+"the Wordpress admin sidebar and then adding a new post"
+msgstr ""
+"Esto se hace haciendo clic en \"%1$s\" elemento de submenú bajo \"Vacante\" "
+"en la barra de admin de Wordpress y luego agregando un nuevo post"
+
+#: va-settings.php:436 va-settings.php:437
+#, php-format
+msgid "Give your %1$s a title and complete the meta fields"
+msgstr "Dar el %1$s un título y completar los campos meta"
+
+#: va-settings.php:437
+#, php-format
+msgid "Next you'll need to %1$screate a %2$s"
+msgstr "A continuación usted necesitará %1$screate un %2$s"
+
+#: va-settings.php:437
+#, php-format
+msgid ""
+"Each %1$s can use the availability of the %2$s you assign it to, or can use "
+"its own availability"
+msgstr ""
+"Cada %1$s puede utilizar la disponibilidad de las %2$s a que asigna, o puede "
+"utilizar su propia disponibilidad"
+
+#: va-settings.php:438
+#, php-format
+msgid ""
+"Once you've created your %1$s & %2$s you should visit the \"General\", "
+"\"Labels\", \"Forms\" and \"Notifications\" tabs above"
+msgstr ""
+"Una vez que hayas creado tu %1$s y %2$s deben visitar el \"General\", "
+"\"Etiquetas\", \"Forma\" y \"Notificaciones\" pestañas de arriba"
+
+#: va-settings.php:438
+msgid ""
+"Browse through the settings and configure Vacancy to behave the way you want "
+"it to"
+msgstr ""
+"Navegar a través de la configuración y configurar vacante para comportarse "
+"de la manera que desea que"
+
+#: va-settings.php:440
+msgid "Usage"
+msgstr "Uso"
+
+#: va-settings.php:442
+msgid "Vacancy is displayed to the users of your site through a shortcode"
+msgstr "Vacante se muestra a los usuarios de su sitio mediante un shortcode"
+
+#: va-settings.php:442
+#, php-format
+msgid "Simply put the shortcode %1$s in any page or post and enjoy"
+msgstr ""
+"Simplemente poner el código %1$s en cualquier página o post y disfrutar"
+
+#: va-settings.php:443
+#, php-format
+msgid ""
+"Users will submit %1$s requests from the Vacancy interface generated on the "
+"page that you placed the shortcode"
+msgstr ""
+"Los usuarios presentarán %1$s peticiones desde la interfaz de la vacante "
+"generada en la página que colocaste el shortcode"
+
+#: va-settings.php:444
+msgid "Submitted requests will be created with a \"Pending\" status"
+msgstr "Las solicitudes presentadas se creará con un estado \"Pendiente\""
+
+#: va-settings.php:444
+#, php-format
+msgid ""
+"When viewing the %1$s request you can change the its status to \"Approved\" "
+"or \"Denied\""
+msgstr ""
+"Al ver la solicitud de %1$s se puede cambiar el estado de \"Aprobado\" o "
+"\"Denegado\""
+
+#: va-settings.php:444
+#, php-format
+msgid ""
+"This will help keep your %1$s system organized and also keep the user "
+"informed by sending out notifications of the status change (if configured in "
+"the %2$sNotifications settings tab%3$s"
+msgstr ""
+"Esto ayudará a mantener tu sistema de %1$s organizado y también mantener al "
+"usuario informado enviando notificaciones del cambio de estado (si está "
+"configurado en el %2$sNotifications Ajustes ficha %3$s"
+
+#: va-settings.php:445
+#, php-format
+msgid ""
+"If you ever need to reorder the way your %1$s display on the front end you "
+"can simply set their \"menu order\" page attribute to order them as you wish"
+msgstr ""
+"Si alguna vez necesita volver a ordenar la manera su exhibición de %1$s en "
+"la parte delantera simplemente puede establecer su atributo de \"orden del "
+"menú\" página ordenarlos como desee"
+
+#: va-settings.php:447
+msgid "The Calendar View"
+msgstr "La vista Calendario"
+
+#: va-settings.php:449
+#, php-format
+msgid ""
+"Vacancy has an %1$sAdministrator Calendar View%2$s for you to easily find, "
+"view and edit existing %3$s or even create new ones"
+msgstr ""
+"Vacante tiene un %1$sAdministrator calendario vista %2$s para que usted "
+"pueda encontrar fácilmente, ver y editar %3$s existente o incluso crear "
+"nuevos"
+
+#: va-settings.php:449
+#, php-format
+msgid ""
+"Be careful though, Administrators can create %1$s that can conflict with "
+"existing %2$s or %3$s/%4$s availability schedules"
+msgstr ""
+"Tenga cuidado sin embargo, los administradores pueden crear %1$s que puedan "
+"entrar en conflicto con los %2$s o %3$s/%4$s disponibilidad horarios"
+
+#: va-venue-meta.php:7
+#, php-format
+msgid "This %1$s is NOT offsite, use details and availability below"
+msgstr ""
+"Este %1$s no es fuera del sitio, detalles de uso y la disponibilidad a "
+"continuación"
+
+#: va-venue-meta.php:9
+#, php-format
+msgid "This %1$s IS offsite and will have NO %2$s associated with it"
+msgstr "Este %1$s está fuera del sitio y no hay %2$s asociado"
+
+#: va-venue-meta.php:9
+msgid "NOTE: This also means that scheduling conflicts will be ignored"
+msgstr ""
+"Nota: Esto también significa que los conflictos de programación se ignorará"
+
+#: va-venue-meta.php:15 vacancy.php:471
+msgid "Address"
+msgstr "Dirección"
+
+#: va-venue-meta.php:19
+msgid "City"
+msgstr "Ciudad"
+
+#: va-venue-meta.php:23
+msgid "State or Province (abbreviation)"
+msgstr "Estado o provincia (abreviatura)"
+
+#: va-venue-meta.php:27
+msgid "Zipcode"
+msgstr "Código postal"
+
+#: va-venue-meta.php:31
+msgid "Country"
+msgstr "País"
+
+#: va-venue-meta.php:35
+msgid "Contact Email"
+msgstr "Email de Contacto"
+
+#: va-venue-meta.php:43
+msgid "Website"
+msgstr "Web"
+
+#: va-venue-meta.php:49
+#, php-format
+msgid "%1$s availability"
+msgstr "disponibilidad de %1$s"
+
+#: vacancy.php:28
+msgid "Venue"
+msgstr "Lugar"
+
+#: vacancy.php:29
+msgid "Venues"
+msgstr "Lugares"
+
+#: vacancy.php:30
+msgid "Location"
+msgstr "Ámbito"
+
+#: vacancy.php:31
+msgid "Locations"
+msgstr "Ubicaciones"
+
+#: vacancy.php:32
+msgid "Reservation"
+msgstr "Reserva"
+
+#: vacancy.php:33
+msgid "Reservations"
+msgstr "Reservas"
+
+#: vacancy.php:48
+msgid "Rentals"
+msgstr "Contrato de arrendamiento"
+
+#: vacancy.php:404
+msgid "Welcome to Vacancy!"
+msgstr "¡ Bienvenido a vacante!"
+
+#: vacancy.php:404
+msgid ""
+"Please take a moment to learn about how to setup and use your new "
+"reservation system!"
+msgstr ""
+"Por favor tome un momento para aprender acerca de cómo configurar y utilizar "
+"su nuevo sistema de reservas."
+
+#: vacancy.php:404
+msgid "Click here for more"
+msgstr "Haga clic aquí para más"
+
+#: vacancy.php:412
+msgid "Vacancy"
+msgstr "Vacancy"
+
+#: vacancy.php:415
+msgid "Calendar View"
+msgstr "Vista de calendario"
+
+#: vacancy.php:416
+msgid "Settings"
+msgstr "Ajustes"
+
+#: vacancy.php:456 vacancy.php:462
+msgid "Vacancy Personal Edition is limited to using only 1 "
+msgstr "Vacante Personal Edition está limitado a usar solo 1"
+
+#: vacancy.php:456
+msgid "Upgrade to "
+msgstr "Actualizar a"
+
+#: vacancy.php:456 vacancy.php:462
+msgid "Vacancy Pro Edition"
+msgstr "Vacantes Pro Edition"
+
+#: vacancy.php:456 vacancy.php:462
+msgid "to create an Unlimited amount of "
+msgstr "para crear una cantidad ilimitada de"
+
+#: vacancy.php:456 vacancy.php:462
+msgid "UPGRADE NOW"
+msgstr "ACTUALIZAR AHORA"
+
+#: vacancy.php:462
+msgid "Upgrade to"
+msgstr "Actualizar a"
+
+#: vacancy.php:470 vacancy.php:509 vacancy.php:521 vacancy.php:897
+#: vacancy.php:1120 vacancy.php:1172
+msgid "Title"
+msgstr "Título"
+
+#: vacancy.php:472
+msgid "Offsite"
+msgstr "En el exterior"
+
+#: vacancy.php:522
+msgid "Status"
+msgstr "Estado"
+
+#: vacancy.php:526
+msgid "Setup Start"
+msgstr "Configuración de inicio"
+
+#: vacancy.php:529
+msgid "Cleanup End"
+msgstr "Limpieza final"
+
+#: vacancy.php:530
+msgid "Publish Date"
+msgstr "Fecha de publicación"
+
+#: vacancy.php:539
+msgid "Approved"
+msgstr "Aprobado"
+
+#: vacancy.php:540
+msgid "Pending"
+msgstr "Pendiente"
+
+#: vacancy.php:541
+msgid "Denied"
+msgstr "Denegado"
+
+#: vacancy.php:542
+msgid "Blocked"
+msgstr "Bloqueado"
+
+#: vacancy.php:551
+msgid "published"
+msgstr "publicado"
+
+#: vacancy.php:552
+msgid "draft"
+msgstr "letra de cambio"
+
+#: vacancy.php:555
+msgid "in trash"
+msgstr "en la basura"
+
+#: vacancy.php:557
+msgid "view"
+msgstr "visto"
+
+#: vacancy.php:681 vacancy.php:687 vacancy.php:693
+#, php-format
+msgid "%1$s Details"
+msgstr "%1$s detalles"
+
+#: vacancy.php:892
+#, php-format
+msgid "Your %1$s has been %2$s"
+msgstr "El %1$s ha sido %2$s"
+
+#: vacancy.php:896
+#, php-format
+msgid "The following %1$s has been %2$s"
+msgstr "El siguiente %1$s ha sido %2$s"
+
+#: vacancy.php:911
+msgid "Start Setup Time"
+msgstr "Tiempo de configuración de inicio"
+
+#: vacancy.php:916
+msgid "End Cleanup Time"
+msgstr "Tiempo de limpieza final"
+
+#: vacancy.php:918
+msgid "Comments"
+msgstr "Comentarios"
+
+#: vacancy.php:1028
+#, php-format
+msgid "%1$s %2$s are not available %3$s all day %4$s on %5$s"
+msgstr "%1$s %2$s está no disponible %3$s todos día %4$s a %5$s"
+
+#: vacancy.php:1031
+#, php-format
+msgid "%1$s %2$s are not available %3$s before %4$s %5$s on %6$s"
+msgstr "%1$s %2$s no disponible %3$s antes %4$s %5$s en %6$s"
+
+#: vacancy.php:1034
+#, php-format
+msgid "%1$s %2$s are not available %3$s after %4$s %5$s on %6$s"
+msgstr "%1$s %2$s no disponible %3$s después de %4$s %5$s en %6$s"
+
+#: vacancy.php:1070
+#, php-format
+msgid "Existing %1$s"
+msgstr "%1$s existentes"
+
+#: vacancy.php:1118
+#, php-format
+msgid "A new %1$s has been submitted for review"
+msgstr "Un nuevo %1$s ha sido sometido para revisión"
+
+#: vacancy.php:1119 vacancy.php:1167
+#, php-format
+msgid "The following %1$s information has been submitted"
+msgstr "La siguiente información de %1$s ha sido presentada"
+
+#: vacancy.php:1119
+#, php-format
+msgid "Edit this %1$s here"
+msgstr "Editar este %1$s"
+
+#: vacancy.php:1137 vacancy.php:1189
+msgid "Setup Start Time"
+msgstr "Hora de inicio de instalación"
+
+#: vacancy.php:1142 vacancy.php:1194
+msgid "Cleanup End Time"
+msgstr "Hora de finalización de la limpieza"
+
+#: vacancy.php:1148
+msgid "Set Up Need"
+msgstr "Necesidad de establecer"
+
+#: vacancy.php:1149 vacancy.php:1200
+msgid "A/V Needs"
+msgstr "A o V"
+
+#: vacancy.php:1150
+msgid " Description"
+msgstr "Descripción"
+
+#: vacancy.php:1159
+msgid "Thank you for submitting your "
+msgstr "Gracias por enviar su"
+
+#: vacancy.php:1159
+msgid " request"
+msgstr "solicitud"
+
+#: vacancy.php:1160
+#, php-format
+msgid "Thank you for submitting your %1$s"
+msgstr "Gracias por enviar tu %1$s"
+
+#: vacancy.php:1203
+msgid "Description"
+msgstr "Descripción"
+
+#: vacancy.php:1216 vacancy.php:1247
+msgid "ERROR"
+msgstr "ERROR"
+
+#: vacancy.php:1216
+#, php-format
+msgid "The selected end time (%1$s) is before the selected start time (%2$s)"
+msgstr ""
+"El tiempo extremo seleccionado (%1$s) es antes de la hora de inicio "
+"seleccionada (%2$s)"
+
+#: vacancy.php:1225 vacancy.php:1236
+msgid "SUCCESS"
+msgstr "Éxito!"
+
+#: vacancy.php:1225 vacancy.php:1236
+msgid "These dates had no conflicts"
+msgstr "Estas fechas no tenían conflictos"
+
+#: vacancy.php:1235
+#, php-format
+msgid "Your %1$s request(s) have been submitted for review"
+msgstr "Su solicitud de %1$s se han presentado para revisión"
+
+#: vacancy.php:1247
+msgid "These dates were not submitted due to conflicts"
+msgstr "Estas fechas no se presentaron debido a los conflictos"
+
+#: vacancy.php:1266
+#, php-format
+msgid "You must be logged in to make a %1$s"
+msgstr "Usted debe estar conectado para hacer un %1$s"
+
+#: vacancy.php:1267
+#, php-format
+msgid "Please %1$s login here %2$s"
+msgstr "Por favor, %1$s login aquí %2$s"
+
+#: vacancy.php:1324 vacancy.php:2095
+msgid "Sun"
+msgstr "Do"
+
+#: vacancy.php:1324 vacancy.php:2095
+msgid "Mon"
+msgstr "Lun"
+
+#: vacancy.php:1324 vacancy.php:2095
+msgid "Tue"
+msgstr "Mar"
+
+#: vacancy.php:1324 vacancy.php:2095
+msgid "Wed"
+msgstr "Mie"
+
+#: vacancy.php:1324 vacancy.php:2095
+msgid "Thu"
+msgstr "Jue"
+
+#: vacancy.php:1324 vacancy.php:2095
+msgid "Fri"
+msgstr "Vie"
+
+#: vacancy.php:1324 vacancy.php:2095
+msgid "Sat"
+msgstr "Sab"
+
+#: vacancy.php:1494 vacancy.php:1509 vacancy.php:2084 vacancy.php:2223
+msgid "next"
+msgstr "siguiente"
+
+#: vacancy.php:1508 vacancy.php:2082 vacancy.php:2221
+msgid "prev"
+msgstr "prev"
+
+#: vacancy.php:1621
+#, php-format
+msgid "Sorry, no %1$s were found"
+msgstr "Lo sentimos, no hay %1$s se encontraron"
+
+#: vacancy.php:1623
+msgid "click"
+msgstr "clic"
+
+#: vacancy.php:1696
+#, php-format
+msgid "Submit %1$s requests using the form below"
+msgstr "Presentar %1$s peticiones mediante el siguiente formulario"
+
+#: vacancy.php:1696
+msgid "close"
+msgstr "cerrar"
+
+#: vacancy.php:1726
+msgid "Please Select a date"
+msgstr "Por favor, selecciona una fecha."
+
+#: vacancy.php:1767
+#, php-format
+msgid "%1$s date(s)"
+msgstr "%1$s fecha (s)"
+
+#: vacancy.php:1767
+msgid "edit"
+msgstr "Modificar"
+
+#: vacancy.php:1775
+#, php-format
+msgid "Start %1$s at"
+msgstr "Inicio %1$s en"
+
+#: vacancy.php:1780
+#, php-format
+msgid "Do you need setup time before your %1$s begins"
+msgstr "Necesita configurar antes su %1$s comienza"
+
+#: vacancy.php:1787
+#, php-format
+msgid "Start Setup before %1$s at"
+msgstr "Iniciar la instalación antes de %1$s en"
+
+#: vacancy.php:1797 vacancy.php:1803 vacancy.php:1812
+#, php-format
+msgid "End %1$s at"
+msgstr "End %1$s en"
+
+#: vacancy.php:1828
+#, php-format
+msgid "Do you need cleanup time after your %1$s ends"
+msgstr "Necesita limpieza tiempo después termina su %1$s"
+
+#: vacancy.php:1835
+#, php-format
+msgid "End Cleanup after %1$s at"
+msgstr "Limpieza final después de %1$s en"
+
+#: vacancy.php:1883
+#, php-format
+msgid "%1$s not available for offsite %2$s"
+msgstr "%1$s no disponible fuera del sitio %2$s"
+
+#: vacancy.php:1957
+msgid "Choose One"
+msgstr "Elige Uno"
+
+#: vacancy.php:2083 vacancy.php:2222
+msgid "current"
+msgstr "corriente"
+
+#: vacancy.php:2224
+msgid "calendar"
+msgstr "calendario"

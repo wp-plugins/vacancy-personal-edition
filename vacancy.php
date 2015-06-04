@@ -3,9 +3,10 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.2.5
+    Version: 1.3
     Author: kraftpress
     Author URI: http://kraftpress.it
+    Text Domain: vpe
     Contributors: kraftpress, buildcreate, a2rocklobster
     License: GPL
     */
@@ -20,16 +21,16 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.2.5',
+                'version' => '1.3',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
-                'venue_single' => 'Venue',
-                'venue_plural' => 'Venues',
-                'location_single' => 'Location',
-                'location_plural' => 'Locations',
-                'reservation_single' => 'Reservation',
-                'reservation_plural' => 'Reservations',
+                'venue_single' => __('Venue','vpe'),
+                'venue_plural' => __('Venues','vpe'),
+                'location_single' => __('Location','vpe'),
+                'location_plural' => __('Locations','vpe'),
+                'reservation_single' => __('Reservation','vpe'),
+                'reservation_plural' => __('Reservations','vpe'),
                 'default_venue' => '',
                 'day_start_time' => '08:00',
                 'day_end_time' => '22:00',
@@ -44,7 +45,7 @@
                 'match_minmax_interval' => 'no',
                 'require_login' => 'yes',
                 'admin_new_notification' => 'yes',
-                'admin_email_label_one' => 'Rentals',
+                'admin_email_label_one' => __('Rentals','vpe'),
                 'admin_email_one' => get_option('admin_email'),
                 'admin_email_label_two' => '',
                 'admin_email_two' => '',
@@ -99,10 +100,20 @@
             add_action('pre_get_posts', array($this, 'va_column_orderby'));
             add_action('after_setup_theme', array($this, 'va_extensions'));
             add_action('load-post-new.php', array($this, 'va_disable_new_post'));
+
+            // localization
+            add_action('plugins_loaded', array($this, 'va_load_textdomain'));
             
             // shortcode
             add_shortcode('vacancy', array($this, 'va_display_form'));
         }
+
+
+        // add localization
+        function va_load_textdomain() {
+            load_plugin_textdomain('vpe', false, basename( dirname( __FILE__ ) ) . '/lang' );
+        }
+
         function init(){
 			// force browser to clear cache
 			header("Cache-Control: no-cache, must-revalidate");
@@ -390,7 +401,7 @@
             if($clicked != 1){
             ?>
             <div class="updated">
-                <p><strong>Welcome to Vacancy!<strong> Please take a moment to learn about how to setup and use your new reservation system! <a href="/wp-admin/admin.php?page=va-settings&tab=va-setup-usage&notice=1">Click here for more</a></p>
+                <p><strong><?php __('Welcome to Vacancy!','vpe'); ?><strong> <?php __('Please take a moment to learn about how to setup and use your new reservation system!','vpe'); ?> <a href="/wp-admin/admin.php?page=va-settings&tab=va-setup-usage&notice=1"><?php __('Click here for more','vpe'); ?></a></p>
             </div>
             <?php
             }
@@ -398,11 +409,11 @@
 
         function admin_menu(){
             global $submenu;
-            add_menu_page("Vacancy", "Vacancy", 'manage_options', 'va-settings', array($this, 'va_settings_callback'), '', '6.66');
+            add_menu_page(__('Vacancy','vpe'), __('Vacancy','vpe'), 'manage_options', 'va-settings', array($this, 'va_settings_callback'), '', '6.66');
             add_submenu_page('va-settings', $this->va_settings['location_plural'], $this->va_settings['location_plural'], 'manage_options', 'edit.php?post_type=va_location');
             add_submenu_page('va-settings', $this->va_settings['venue_plural'], $this->va_settings['venue_plural'], 'manage_options', 'edit.php?post_type=va_venue');
-            add_submenu_page('va-settings', "Calendar View", "Calendar View", 'manage_options', 'va-admin-calendar', array($this, 'va_calendar_callback'));
-            add_submenu_page('va-settings', 'Settings', 'Settings', 'manage_options', 'va-settings', array($this, 'va_settings_callback'));
+            add_submenu_page('va-settings', __('Calendar View','vpe'), __('Calendar View','vpe'), 'manage_options', 'va-admin-calendar', array($this, 'va_calendar_callback'));
+            add_submenu_page('va-settings', __('Settings','vpe'), __('Settings','vpe'), 'manage_options', 'va-settings', array($this, 'va_settings_callback'));
             $submenu['va-settings'][0][0] = $this->va_settings['reservation_plural'];
             $submenu['va-settings'][0][2] = 'edit.php?post_type=va_reservation';
         }
@@ -442,13 +453,13 @@
             if(get_current_screen()->post_type == 'va_location'){
                 $locations = new WP_Query('post_type=va_location&post_status=publish');
                 if($locations->found_posts > 1){
-                    wp_die("<div style='text-align:center;'><h1>Vacancy Personal Edition is limited to using only 1 " . $this->va_settings['location_single'] . ".</h1><p>Upgrade to <a target='_blank' href='//kraftpress.it/vacancy'>Vacancy Pro Edition</a> to create an Unlimited amount of " . $this->va_settings['location_plural'] . ".</p><a style='display:block; width:150px; margin:30px auto 0; padding:10px 20px; background:#21759B; color:#ffffff; border-radius:5px;' target='_blank' href='//kraftpress.it/vacancy'>UPGRADE NOW&nbsp;&nbsp;></i></a></div>");
+                    wp_die("<div style='text-align:center;'><h1>".__('Vacancy Personal Edition is limited to using only 1 ','vpe') . $this->va_settings['location_single'] . ".</h1><p>".__('Upgrade to ','vpe')."<a target='_blank' href='//kraftpress.it/vacancy'>".__('Vacancy Pro Edition','vpe')."</a> ".__('to create an Unlimited amount of ','vpe') . $this->va_settings['location_plural'] . ".</p><a style='display:block; width:150px; margin:30px auto 0; padding:10px 20px; background:#21759B; color:#ffffff; border-radius:5px;' target='_blank' href='//kraftpress.it/vacancy'>".__('UPGRADE NOW','vpe')."&nbsp;&nbsp;></i></a></div>");
                 }
             }
             if(get_current_screen()->post_type == 'va_venue'){
                 $venues = new WP_Query('post_type=va_venue&post_status=publish');
                 if($venues->found_posts > 1){
-                    wp_die("<div style='text-align:center;'><h1>Vacancy Personal Edition is limited to using only 1 " . $this->va_settings['venue_single'] . ".</h1><p>Upgrade to <a target='_blank' href='//kraftpress.it/vacancy'>Vacancy Pro Edition</a> to create an Unlimited amount of " . $this->va_settings['venue_plural'] . ".</p><a style='display:block; width:150px; margin:30px auto 0; padding:10px 20px; background:#21759B; color:#ffffff; border-radius:5px;' target='_blank' href='//kraftpress.it/vacancy'>UPGRADE NOW&nbsp;&nbsp;></i></a></div>");
+                    wp_die("<div style='text-align:center;'><h1>".__('Vacancy Personal Edition is limited to using only 1 ','vpe') . $this->va_settings['venue_single'] . ".</h1><p>".__('Upgrade to','vpe')." <a target='_blank' href='//kraftpress.it/vacancy'>".__('Vacancy Pro Edition','vpe')."</a> ".__('to create an Unlimited amount of ','vpe') . $this->va_settings['venue_plural'] . ".</p><a style='display:block; width:150px; margin:30px auto 0; padding:10px 20px; background:#21759B; color:#ffffff; border-radius:5px;' target='_blank' href='//kraftpress.it/vacancy'>".__('UPGRADE NOW','vpe')."&nbsp;&nbsp;></i></a></div>");
                 } 
             }
         }
@@ -456,10 +467,10 @@
         function va_venue_columns_filter($columns){
             $columns = array(
                 'cb' => '<input type="checkbox" />',
-                'title' => 'Title',
-                'address' => 'Address',
-                'offsite' => 'Offsite',
-                'date' => 'Date'
+                'title' => __('Title','vpe'),
+                'address' => __('Address','vpe'),
+                'offsite' => __('Offsite','vpe'),
+                'date' => __('Date','vpe')
             );
             return $columns;
         }
@@ -495,9 +506,9 @@
         function va_location_columns_filter($columns){
             $columns = array(
                 'cb' => '<input type="checkbox" />',
-                'title' => 'Title',
+                'title' => __('Title','vpe'),
                 'venue' => $this->va_settings['venue_single'],
-                'date' => 'Date'
+                'date' => __('Date','vpe')
             );
             return $columns;
         }
@@ -507,16 +518,16 @@
         function va_reservation_columns_filter($columns){
             $columns = array(
                 'cb' => '<input type="checkbox" />',
-                'title' => 'Title',
-                'status' => 'Status',
+                'title' => __('Title','vpe'),
+                'status' => __('Status','vpe'),
                 'venue' => $this->va_settings['venue_single'],
                 'location' => $this->va_settings['location_plural'],
-                'reservation-date' => $this->va_settings['reservation_single'].' Date',
-                'setup' => 'Setup Start',
-                'start' => 'Start Time',
-                'end' => 'End Time',
-                'cleanup' => 'Cleanup End',
-                'date' => 'Publish Date'
+                'reservation-date' => $this->va_settings['reservation_single'].' '.__('Date','vpe'),
+                'setup' => __('Setup Start','vpe'),
+                'start' => __('Start Time','vpe'),
+                'end' => __('End Time','vpe'),
+                'cleanup' => __('Cleanup End','vpe'),
+                'date' => __('Publish Date','vpe')
             );
             $columns = apply_filters('va_reservation_columns', $columns);
             return $columns;
@@ -525,10 +536,10 @@
             switch($column){
                 case 'status' :
                     $status =  get_post_meta($post_id, 'va_reservation_status', true);
-                    if($status == 'approved'){echo '<i class="icon-ok-sign"></i> Approved';}
-                    if($status == 'pending'){echo '<i class="icon-minus-sign"></i> Pending';}
-                    if($status == 'denied'){echo '<i class="icon-remove-sign"></i> Denied';}
-                    if($status == 'blocked'){echo '<i class="icon-remove-sign"></i> Blocked';}
+                    if($status == 'approved'){echo '<i class="icon-ok-sign"></i> '.__('Approved','vpe');}
+                    if($status == 'pending'){echo '<i class="icon-minus-sign"></i> '.__('Pending','vpe');}
+                    if($status == 'denied'){echo '<i class="icon-remove-sign"></i> '.__('Denied','vpe');}
+                    if($status == 'blocked'){echo '<i class="icon-remove-sign"></i> '.__('Blocked','vpe');}
                     break;
                 case 'link' :
                     $event_id = get_post_meta($post_id, 'va_tribe_event_id', true);
@@ -537,13 +548,13 @@
                     $post_status = '';
                     if($event){
                         $event_link = "/wp-admin/post.php?post=$event_id&action=edit";
-                        if($event->post_status == 'publish'){$post_status = 'published';}
-                        if($event->post_status == 'draft'){$post_status = 'draft';}
+                        if($event->post_status == 'publish'){$post_status = __('published','vpe');}
+                        if($event->post_status == 'draft'){$post_status = __('draft','vpe');}
                         if($event->post_status == 'trash'){
                             $event_link = "/wp-admin/edit.php?post_status=trash&post_type=tribe_events";
-                            $post_status = 'in trash';
+                            $post_status = __('in trash','vpe');
                         }
-                        echo '<a href="'.$event_link.'">view ('.$post_status.')</a>';
+                        echo '<a href="'.$event_link.'">'.__('view','vpe').' ('.$post_status.')</a>';
                     }else{
                         echo '-';
                     }
@@ -645,7 +656,7 @@
             );
             $locations = new WP_Query($args);
             if($locations->have_posts()){
-                $html = '<p><label>This ' . $this->va_settings['reservation_single'] . ' is for which ' . $this->va_settings['location_plural'] . '? </label>';
+                $html = '<p><label>'.sprintf(__('This %1$s is for which %2$s','vpe'),$this->va_settings['reservation_single'],$this->va_settings['location_plural']).'? </label>';
                 $html .= '<select id="va-location-id" name="va_location_id" multiple>';
                 $html .=  '<option></option>';
                 while($locations->have_posts()) : $locations->the_post();
@@ -667,19 +678,19 @@
             return $reservations;
         }
         function va_venue_meta_box(){
-            add_meta_box('va-venue-meta', $this->va_settings['venue_single'] . ' Details', array($this, 'va_venue_meta_box_html'), 'va_venue', 'normal', 'high');
+            add_meta_box('va-venue-meta', sprintf(__('%1$s Details','vpe'),$this->va_settings['venue_single']), array($this, 'va_venue_meta_box_html'), 'va_venue', 'normal', 'high');
         }
         function va_venue_meta_box_html(){
             include_once('va-venue-meta.php');
         }        
         function va_location_meta_box(){
-            add_meta_box('va-location-meta', $this->va_settings['location_single'] . ' Details', array($this, 'va_location_meta_box_html'), 'va_location', 'normal', 'high');
+            add_meta_box('va-location-meta', sprintf(__('%1$s Details','vpe'),$this->va_settings['location_single']), array($this, 'va_location_meta_box_html'), 'va_location', 'normal', 'high');
         }
         function va_location_meta_box_html(){
             include_once('va-location-meta.php');
         }        
         function va_reservation_meta_box(){
-            add_meta_box('va-reservation-meta', $this->va_settings['reservation_single'] . ' Details', array($this, 'va_reservation_meta_box_html'), 'va_reservation', 'normal', 'high');
+            add_meta_box('va-reservation-meta', sprintf(__('%1$s Details','vpe'),$this->va_settings['reservation_single']), array($this, 'va_reservation_meta_box_html'), 'va_reservation', 'normal', 'high');
         }
         function va_reservation_meta_box_html(){
             include_once('va-reservation-meta.php');
@@ -878,12 +889,12 @@
                 if($this->va_settings['user_approved_notification'] == 'yes'){
                     if(($old_status != $status) && ($status != 'pending')){
                         if(empty($this->va_settings['user_subject_line_approved'])){
-                            $subject = 'Your '.$this->va_settings['reservation_single'].' has been '.ucfirst($status);
+                            $subject = sprintf(__('Your %1$s has been %2$s','vpe'),$this->va_settings['reservation_single'],ucfirst($status));
                         }else{
                             $subject = $this->va_settings['user_subject_line_approved'];
                         }
-                        $content = '<p>The following '.$this->va_settings['reservation_single'].' has been '.ucfirst($status).'.</p>';
-                        $content .= '<ul><li><strong>Title: </strong> '.get_the_title($post_id).'</li>';
+                        $content = '<p>'.sprintf(__('The following %1$s has been %2$s','vpe'),$this->va_settings['reservation_single'],ucfirst($status)).'.</p>';
+                        $content .= '<ul><li><strong>'.__('Title','vpe').': </strong> '.get_the_title($post_id).'</li>';
                         $content .= '<li><strong>'.$this->va_settings['venue_single'].': </strong> '.get_the_title($venue_id).'</li>';
                         $first = true;
                         foreach($location_id as $location){
@@ -895,16 +906,16 @@
                             }
                         }
                         $content .= '<li><strong>'.$this->va_settings['location_plural'].': </strong> '.$location_names.'</li>';
-                        $content .= '<li><strong>Date: </strong> '.date('m/d/Y', strtotime($date)).'</li>';
+                        $content .= '<li><strong>'.__('Date','vpe').': </strong> '.date('m/d/Y', strtotime($date)).'</li>';
                         if($start_setup_time){
-                            $content .= '<li><strong>Start Setup Time: </strong> '.date('g:i a', strtotime($start_setup_time)).'</li>';
+                            $content .= '<li><strong>'.__('Start Setup Time','vpe').': </strong> '.date('g:i a', strtotime($start_setup_time)).'</li>';
                         }
-                        $content .= '<li><strong>Start Time: </strong> '.date('g:i a', strtotime($start_time)).'</li>';
-                        $content .= '<li><strong>End Time: </strong> '.date('g:i a', strtotime($end_time)).'</li>';
+                        $content .= '<li><strong>'.__('Start Time','vpe').': </strong> '.date('g:i a', strtotime($start_time)).'</li>';
+                        $content .= '<li><strong>'.__('End Time','vpe').': </strong> '.date('g:i a', strtotime($end_time)).'</li>';
                         if($end_cleanup_time){
-                            $content .= '<li><strong>End Cleanup Time: </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li></ul>';
+                            $content .= '<li><strong>'.__('End Cleanup Time','vpe').': </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li></ul>';
                         }
-                        $content .= '<br/><p><strong>Comments:</strong><br/>';
+                        $content .= '<br/><p><strong>'.__('Comments','vpe').':</strong><br/>';
                         $content .= $comments .'</p><br/>';
                         $content .= '<p>'.nl2br(get_option('va_notification_footer')).'</p>';
                         $this->va_send_notification($email, $subject, $content);
@@ -1014,13 +1025,13 @@
 
                         // first check availability conflict
                         if(!$location_start && !$location_end){
-                            $conflicts[$date] = get_the_title($location_id) . ' ' . $this->va_settings['reservation_plural'] . ' are unavailable <strong>all day</strong> on ' . date('l', strtotime($date)) . 's';
+                            $conflicts[$date] = sprintf(__('%1$s %2$s are not available %3$s all day %4$s on %5$s','vpe'),get_the_title($location_id),$this->va_settings['reservation_plural'],'<strong>','</strong>',date('l', strtotime($date)));
                             $conflict = true;
                         }else if($reservation_start < $location_start){
-                            $conflicts[$date] = get_the_title($location_id) . ' ' . $this->va_settings['reservation_plural'] . ' are not available <strong>before</strong> ' . date('g:i a', strtotime($location_start)) . ' on ' . date('l', strtotime($date)) . 's';
+                            $conflicts[$date] = sprintf(__('%1$s %2$s are not available %3$s before %4$s %5$s on %6$s','vpe'),get_the_title($location_id),$this->va_settings['reservation_plural'],'<strong>','</strong>',date('g:i a', strtotime($location_start)),date('l', strtotime($date)));
                             $conflict = true;
                         }else if($reservation_end > $location_end){
-                            $conflicts[$date] = get_the_title($location_id) . ' ' . $this->va_settings['reservation_plural'] . ' are not available <strong>after</strong> ' . date('g:i a', strtotime($location_end)) . ' on ' . date('l', strtotime($date)) . 's';;
+                            $conflicts[$date] = sprintf(__('%1$s %2$s are not available %3$s after %4$s %5$s on %6$s','vpe'),get_the_title($location_id),$this->va_settings['reservation_plural'],'<strong>','</strong>',date('g:i a', strtotime($location_start)),date('l', strtotime($date)));
                             $conflict = true;
                         }else{
                             // then check for existing reservation conflicts
@@ -1056,7 +1067,7 @@
                                         // check for existing reservations in chosen location(s)
                                         $compare = array_intersect($locations, $location_ids);
                                         if(!empty($compare)){
-                                            $conflicts[$date] = 'Existing ' . $this->va_settings['reservation_single'];
+                                            $conflicts[$date] = sprintf(__('Existing %1$s','vpe'),$this->va_settings['reservation_single']);
                                             $conflict = true;
                                         }
                                     }
@@ -1104,9 +1115,9 @@
 
                         // send notifications
                         if($this->va_settings['admin_new_notification'] == 'yes'){
-                            $subject = 'A new '.$this->va_settings['reservation_single'].' has been submitted for review';
-                            $content = '<p>The following '.$this->va_settings['reservation_single'].' information has been submitted. <a href="'.admin_url().'post.php?post='.$post_id.'&action=edit">Edit this '.$this->va_settings['reservation_single'].' here</a>.</p>';
-                            $content .= '<ul><li><strong>Title: </strong> '.get_the_title($post_id).'</li>';
+                            $subject = sprintf(__('A new %1$s has been submitted for review','vpe'),$this->va_settings['reservation_single']);
+                            $content = '<p>'.sprintf(__('The following %1$s information has been submitted','vpe'),$this->va_settings['reservation_single']).' <a href="'.admin_url().'post.php?post='.$post_id.'&action=edit">'.sprintf(__('Edit this %1$s here','vpe'),$this->va_settings['reservation_single']).'</a>.</p>';
+                            $content .= '<ul><li><strong>'.__('Title','vpe').': </strong> '.get_the_title($post_id).'</li>';
                             $content .= '<li><strong>'.$this->va_settings['venue_single'].': </strong> '.get_the_title($venue_id).'</li>';
                             $first = true;
                             $location_names = '';
@@ -1121,22 +1132,22 @@
                                 }
                             }
                             $content .= '<li><strong>'.$this->va_settings['location_plural'].': </strong> '.$location_names.'</li>';
-                            $content .= '<li><strong>Date: </strong> '.date('m/d/Y', strtotime($date)).'</li>';
+                            $content .= '<li><strong>'.__('Date','vpe').': </strong> '.date('m/d/Y', strtotime($date)).'</li>';
                             if($start_setup_time){
-                                $content .= '<li><strong>Setup Start Time: </strong> '.date('g:i a', strtotime($start_setup_time)).'</li>';
+                                $content .= '<li><strong>'.__('Setup Start Time').': </strong> '.date('g:i a', strtotime($start_setup_time)).'</li>';
                             }
-                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' Start Time: </strong> '.date('g:i a', strtotime($start_time)).'</li>';
-                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' End Time: </strong> '.date('g:i a', strtotime($end_time)).'</li>';
+                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' '.__('Start Time','vpe').': </strong> '.date('g:i a', strtotime($start_time)).'</li>';
+                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' '.__('End Time','vpe').': </strong> '.date('g:i a', strtotime($end_time)).'</li>';
                             if($end_cleanup_time){
-                                $content .= '<li><strong>Cleanup End Time: </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li></ul>';
+                                $content .= '<li><strong>'.__('Cleanup End Time','vpe').': </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li></ul>';
                             }
-                            $content .= '<br/><p>Contact Information:<p>';
-                            $content .= '<ul><li><strong>Name: </strong> '.$name.'</li>';
-                            $content .= '<li><strong>Phone: </strong> '.$phone.'</li>';
-                            $content .= '<li><strong>Email: </strong> '.$email.'</li>';
-                            $content .= '<li><strong>Set Up Need: </strong> '.$setup_needs.'</li>';
-                            $content .= '<li><strong>A/V Needs: </strong> '.$av_needs.'</li></ul>';
-                            $content .= '<br/><p><strong>'.$this->va_settings['reservation_single'].' Description:</strong><br/>';
+                            $content .= '<br/><p>'.__('Contact Information','vpe').':<p>';
+                            $content .= '<ul><li><strong>'.__('Name','vpe').': </strong> '.$name.'</li>';
+                            $content .= '<li><strong>'.__('Phone','vpe').': </strong> '.$phone.'</li>';
+                            $content .= '<li><strong>'.__('Email','vpe').': </strong> '.$email.'</li>';
+                            $content .= '<li><strong>'.__('Set Up Need','vpe').': </strong> '.$setup_needs.'</li>';
+                            $content .= '<li><strong>'.__('A/V Needs','vpe').': </strong> '.$av_needs.'</li></ul>';
+                            $content .= '<br/><p><strong>'.$this->va_settings['reservation_single'].__(' Description','vpe').':</strong><br/>';
                             $content .= $post_content.'</p><br/>';
                             $content .= '<p>'.nl2br(get_option('va_notification_footer')).'</p>';
                             $this->va_send_notification($admin_notification_email, $subject, $content); 
@@ -1145,19 +1156,20 @@
 
                         if($this->va_settings['user_new_notification'] == 'yes'){
                             if(empty($this->va_settings['user_subject_line_new'])){
-                                 $subject = 'Thank you for submitting your '.$this->va_settings['reservation_single'].' request!';
+                                 $subject = __('Thank you for submitting your ','vpe').$this->va_settings['reservation_single'].__(' request','vpe').'!';
+                                 $subject = sprintf(__('Thank you for submitting your %1$s','vpe'),$this->va_settings['reservation_single']).'!';
                             }else{
                                 $subject = $this->va_settings['user_subject_line_new'];
                             }
 
                             $email_header = get_option('va_notification_header');
                             if(empty($email_header)){
-                                $content = '<p>The following '.$this->va_settings['reservation_single'].' information has been submitted.</p>';
+                                $content = '<p>'.sprintf(__('The following %1$s information has been submitted','vpe'),$this->va_settings['reservation_single']).'.</p>';
                             }else{
                                 $content .= '<p>'.nl2br(get_option('va_notification_header')).'</p>';
                             }
                                    
-                            $content .= '<ul><li><strong>Title: </strong> '.get_the_title($post_id).'</li>';
+                            $content .= '<ul><li><strong>'.__('Title','vpe').': </strong> '.get_the_title($post_id).'</li>';
                             $content .= '<li><strong>'.$this->va_settings['venue_single'].': </strong> '.get_the_title($venue_id).'</li>';
                             $first = true;
                             $location_names = '';
@@ -1172,23 +1184,23 @@
                                 }
                             }
                             $content .= '<li><strong>'.$this->va_settings['location_plural'].': </strong> '.$location_names.'</li>';
-                            $content .= '<li><strong>Date: </strong> '.date('m/d/Y', strtotime($date)).'</li>';
+                            $content .= '<li><strong>'.__('Date','vpe').': </strong> '.date('m/d/Y', strtotime($date)).'</li>';
                             if($start_setup_time){
-                                $content .= '<li><strong>Setup Start Time: </strong> '.date('g:i a', strtotime($start_setup_time)).'</li>';
+                                $content .= '<li><strong>'.__('Setup Start Time','vpe').': </strong> '.date('g:i a', strtotime($start_setup_time)).'</li>';
                             }
-                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' Start Time: </strong> '.date('g:i a', strtotime($start_time)).'</li>';
-                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' End Time: </strong> '.date('g:i a', strtotime($end_time)).'</li>';
+                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' '.__('Start Time','vpe').': </strong> '.date('g:i a', strtotime($start_time)).'</li>';
+                            $content .= '<li><strong>'.$this->va_settings['reservation_single'].' '.__('End Time','vpe').': </strong> '.date('g:i a', strtotime($end_time)).'</li>';
                             if($end_cleanup_time){
-                                $content .= '<li><strong>Cleanup End Time: </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li>';
+                                $content .= '<li><strong>'.__('Cleanup End Time','vpe').': </strong> '.date('g:i a', strtotime($end_cleanup_time)).'</li>';
                             }                            
 							if($setup_needs){
-                                $content .= '<li><strong>Set Up Needs: </strong> '.$setup_needs.'</li>';
+                                $content .= '<li><strong>'.__('Set Up Needs','vpe').': </strong> '.$setup_needs.'</li>';
                             }                            
 							if($av_needs){
-                                $content .= '<li><strong>A/V Needs: </strong> '.$av_needs.'</li>';
+                                $content .= '<li><strong>'.__('A/V Needs','vpe').': </strong> '.$av_needs.'</li>';
                             }
 							$content .= '</ul>';
-                            $content .= '<br/><p><strong>'.$this->va_settings['reservation_single'].' Description:</strong><br/>';
+                            $content .= '<br/><p><strong>'.$this->va_settings['reservation_single'].' '.__('Description','vpe').':</strong><br/>';
                             $content .= $post_content.'</p><br/>';
                             $content .= '<p>'.nl2br(get_option('va_notification_footer')).'</p>';
                             $this->va_send_notification(sanitize_text_field($_POST['va_reservation_email']), $subject, $content); 
@@ -1201,7 +1213,7 @@
 
             }else{
                 // notify about start/end time error
-                $message .= '<strong>ERROR:</strong> The selected end time (' . date("g:i a", strtotime($reservation_end)) . ') is before the selected start time (' .  date("g:i a", strtotime($reservation_start)) . ').';
+                $message .= '<strong>'.__('ERROR','vpe').':</strong> '.sprintf(__('The selected end time (%1$s) is before the selected start time (%2$s)','vpe'),date("g:i a", strtotime($reservation_end)),date("g:i a", strtotime($reservation_start))) . '.';
                 return $message;
             } 
 
@@ -1210,7 +1222,7 @@
                 // notify about successes
                 if(!empty($successes)){
                     $message .= $this->va_settings['reservation_success_message'] . '<br/>';
-                    $message .= '<br/><strong>SUCCESS:</strong> These dates had no conflicts.';
+                    $message .= '<br/><strong>'.__('SUCCESS','vpe').':</strong> '.__('These dates had no conflicts','vpe').'.';
                     $message .= '<ul>';
                     foreach($successes as $success){
                         $message .= '<li>' . date('F jS, Y',strtotime($success)) . '</li>';
@@ -1220,8 +1232,8 @@
             }else{
                 // notify about successes
                 if(!empty($successes)){
-                    $message .= 'Your ' . $this->va_settings['reservation_single'] . ' request(s) have been submitted for review.<br/>';
-                    $message .= '<br/><strong>SUCCESS:</strong> These dates had no conflicts.';
+                    $message .= sprintf(__('Your %1$s request(s) have been submitted for review','vpe'),$this->va_settings['reservation_single']).'.<br/>';
+                    $message .= '<br/><strong>'.__('SUCCESS','vpe').':</strong> '.__('These dates had no conflicts','vpe').'.';
                     $message .= '<ul>';
                     foreach($successes as $success){
                         $message .= '<li>' . date('F jS, Y',strtotime($success)) . '</li>';
@@ -1232,7 +1244,7 @@
 
             // notify about conflicts
             if(!empty($conflicts)){
-                $message .= '<strong>ERROR:</strong> These dates were not submitted due to conflicts.';
+                $message .= '<strong>'.__('ERROR','vpe').':</strong> '.__('These dates were not submitted due to conflicts','vpe').'.';
                 $message .= '<ul>';
                 foreach($conflicts as $conflict => $reason){
                     $message .= '<li>' . date('F jS, Y',strtotime($conflict)) . ' - ' . $reason .' </li>';
@@ -1251,7 +1263,9 @@
                 if(is_user_logged_in()){
                     $can_submit = true;
                 }else{
-                    return 'You must be logged in to make a '. $this->va_settings['reservation_single'] . '. Please <a href="/wp-login.php?redirect_to='. get_permalink($post->ID).'">login here</a>.';
+                    $login_message = sprintf(__('You must be logged in to make a %1$s','vpe'),$this->va_settings['reservation_single']).'. ';
+                    $login_message .= sprintf(__('Please %1$s login here %2$s','vpe'),'<a href="/wp-login.php?redirect_to='. get_permalink($post->ID).'">','</a>.');
+                    return $login_message;
                 }
             }else{
                 $can_submit = true;
@@ -1307,7 +1321,7 @@
                         <table cellpadding="0" cellspacing="0" id="va-calendar-month" class="va-calendar">
                             <thead>
                                 <?php //table headings ?>
-                                <?php $headings = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat'); ?>
+                                <?php $headings = array(__('Sun','vpe'),__('Mon','vpe'),__('Tue','vpe'),__('Wed','vpe'),__('Thu','vpe'),__('Fri','vpe'),__('Sat','vpe')); ?>
                                 <tr class="calendar-row">
                                     <th class="calendar-day-head">
                                         <?php echo implode('</th><th class="calendar-day-head">',$headings); ?>
@@ -1477,6 +1491,7 @@
             ob_start();
             ?>
             <div id="va-table-wrap">
+                <?php _e('next','vpe'); ?>
             <?php if(!empty($_POST['date']) && isset($_POST['venue_id'])) : ?>
                 <?php $date = sanitize_text_field($_POST['date']); ?>
                 <?php $venue_id = sanitize_text_field($_POST['venue_id']); ?>
@@ -1490,8 +1505,8 @@
                       
                     <h3>
                         <?php echo date('l - F jS, Y', strtotime($date)); ?>
-                        <button class="va-prev-day" data-date="<?php echo date('Y-m-d', strtotime($date . ' -1 day')); ?>"><i class="icon-double-angle-left"></i> prev</button>
-                        <button class="va-next-day" data-date="<?php echo date('Y-m-d', strtotime($date . ' +1 day')); ?>">next <i class="icon-double-angle-right"></i></button>
+                        <button class="va-prev-day" data-date="<?php echo date('Y-m-d', strtotime($date . ' -1 day')); ?>"><i class="icon-double-angle-left"></i> <?php echo __('prev','vpe'); ?></button>
+                        <button class="va-next-day" data-date="<?php echo date('Y-m-d', strtotime($date . ' +1 day')); ?>"><?php echo __('next','vpe');?> <i class="icon-double-angle-right"></i></button>
                         <span class="va-clearer"></span>
                     </h3>
                     <?php $locations = new WP_Query('post_type=va_location&posts_per_page=-1&meta_key=va_venue_id&meta_value='.$venue_id); ?>
@@ -1603,9 +1618,9 @@
                             </tbody>
                         </table>
                     <?php else : ?>
-                        <p>Sorry, no <?php echo $this->va_settings['location_plural']; ?> were found.</p>
+                        <p><?php printf(__('Sorry, no %1$s were found'),$this->va_settings['location_plural']); ?>.</p>
                     <?php endif; ?>
-                    <a style="display:none;" id="va-thickbox-link" class="thickbox" title="<?php echo $this->va_settings['reservation_single']; ?> details" href="#TB_inline?width=600&height=550&inlineId=va-reservation-form">click</a>
+                    <a style="display:none;" id="va-thickbox-link" class="thickbox" title="<?php echo $this->va_settings['reservation_single']; ?> details" href="#TB_inline?width=600&height=550&inlineId=va-reservation-form"><?php echo __('click','vpe');?></a>
                     <div id="va-reservation-form-wrap" style="display:none;"></div>
                     <script type="text/javascript">
                         jQuery(document).ready(function($){
@@ -1678,8 +1693,7 @@
                                         $('.va-day-view tr:nth-child(1) td').each(function () {
                                             cols++;
                                         });
-                                        var res_var = "<?php echo $this->va_settings['reservation_single']; ?>";
-                                        $clicked.parents('tr:first').after('<tr id="va-added-tr"><td colspan="'+cols+'" style="padding:0;"><div id="va-clicked-form" style="display:none;"><h6>Submit '+ res_var +' requests using the form below <span>close <i class="icon-remove-sign"></i></h6>'+response+'</div></td></tr>');
+                                        $clicked.parents('tr:first').after('<tr id="va-added-tr"><td colspan="'+cols+'" style="padding:0;"><div id="va-clicked-form" style="display:none;"><h6>'+"<?php printf(__('Submit %1$s requests using the form below','vpe'),$this->va_settings['reservation_single']); ?>"+' <span>'+"<?php echo __('close','vpe');?>"+' <i class="icon-remove-sign"></i></h6>'+response+'</div></td></tr>');
                                         $('#va-clicked-form').slideToggle('fast');
                                         //$('#va-thickbox-link').trigger('click');
                                         clicked = false;
@@ -1709,7 +1723,7 @@
                     </script>
                 <?php endif; ?>
             <?php else : ?>
-                <p>Please Select a date.</p>
+                <p><?php _e('Please Select a date','vpe'); ?>.</p>
             <?php endif; ?>
             </div>
             
@@ -1750,7 +1764,7 @@
                 ?>    
 
                 <div class="va-lightbox-form">
-                    <label><strong><?php echo $this->va_settings['reservation_single']; ?> date(s):</strong> <span id="va-reservation-dates-display"><?php echo date('m/d/Y', strtotime($date)); ?></span>&nbsp;&nbsp;<span id="va-edit-dates">[edit]</span></label>
+                    <label><strong><?php printf(__('%1$s date(s)','vpe'),$this->va_settings['reservation_single']); ?>:</strong> <span id="va-reservation-dates-display"><?php echo date('m/d/Y', strtotime($date)); ?></span>&nbsp;&nbsp;<span id="va-edit-dates">[<?php echo __('edit','vpe');?>]</span></label>
                     <div id="va-lightbox-datepicker" style="display:none;"></div>
                     <input type="hidden" id="va-reservation-dates" name="va_reservation_dates" value="<?php echo date('m/d/Y', strtotime($date)); ?>" />
                     <span class="va-clearer"></span>
@@ -1758,19 +1772,19 @@
                     <?php $setup_cleanup = $this->va_settings['setup_cleanup']; ?>
                     <div class="va-start">
                         <label>
-                            <strong>Start <?php echo $this->va_settings['reservation_single']; ?> at:</strong><br/> 
+                            <strong><?php printf(__('Start %1$s at', 'vpe'),$this->va_settings['reservation_single']); ?>:</strong><br/> 
                             <?php echo $this->va_get_time_select('va_start_time', $start_time, null, true, $start_time, $start_time); ?>
                         </label>
                         <?php if(in_array('setup_time', $this->va_settings['show_form_fields'])) : ?>
                             <div class="va-setup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
-                                <label>Do you need setup time before your <?php echo $this->va_settings['reservation_single']; ?> begins?
+                                <label><?php printf(__('Do you need setup time before your %1$s begins','vpe'),$this->va_settings['reservation_single']); ?>?
                                     <select name="va_need_setup_time">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><?php _e('No','vpe'); ?></option>
+                                        <option value="yes"><?php _e('Yes','vpe'); ?></option>
                                     </select>
                                 </label> 
                                 <div id="va-setup-time" style="display:none;">
-                                    <label>Start Setup before <?php echo $this->va_settings['reservation_single']; ?> at:
+                                    <label><?php printf(__('Start Setup before %1$s at','vpe'),$this->va_settings['reservation_single']); ?>:
                                         <?php echo $this->va_get_time_select('va_start_setup_time',null,null,false,false,$start_time,0.25,true); ?>
                                     </label> 
                                 </div>
@@ -1780,13 +1794,13 @@
                     <div class="va-end">
                         <?php if($this->va_settings['end_time_type'] == "standard") : ?>
                             <label>
-                                <strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> 
+                                <strong><?php printf(__('End %1$s at','vpe'),$this->va_settings['reservation_single']); ?>:</strong> 
                                 <?php $start_time = date('H:i',strtotime("+ 15 minutes", strtotime($start_time))); ?>
                                 <?php echo $this->va_get_time_select('va_end_time', $start_time, null, true, $start_time); ?>
                             </label>
                         <?php elseif($this->va_settings['end_time_type'] == "fixed") : ?>
                             <label>
-                                <strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> 
+                                <strong><?php printf(__('End %1$s at','vpe'),$this->va_settings['reservation_single']); ?>:</strong> 
                                 <?php 
                                     $end_time_temp = strtotime("+".$this->va_settings['end_time_length_hr']." hours", strtotime($start_time));
                                     $end_time = date('H:i',strtotime("+".$this->va_settings['end_time_length_min']." minutes", $end_time_temp));
@@ -1795,7 +1809,7 @@
                             </label>
                         <?php else : // min/max ?>
                             <label>
-                                <strong>End <?php echo $this->va_settings['reservation_single']; ?> at:</strong> 
+                                <strong><?php printf(__('End %1$s at','vpe'),$this->va_settings['reservation_single']); ?>:</strong> 
                                 <?php 
 
                                     $start_time_temp = strtotime("+".$this->va_settings['end_time_min_length_hr']." hours", strtotime($start_time));
@@ -1811,14 +1825,14 @@
                         <?php endif; ?>
                         <?php if(in_array('cleanup_time', $this->va_settings['show_form_fields'])) : ?>
                             <div class="va-cleanup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
-                                <label>Do you need cleanup time after your <?php echo $this->va_settings['reservation_single']; ?> ends?
+                                <label><?php printf(__('Do you need cleanup time after your %1$s ends','vpe'),$this->va_settings['reservation_single']); ?>?
                                     <select name="va_need_cleanup_time">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><?php _e('No','vpe'); ?></option>
+                                        <option value="yes"><?php _e('Yes','vpe'); ?></option>
                                     </select>
                                 </label>
                                 <div id="va-cleanup-time" style="display:none;">
-                                    <label>End Cleanup after <?php echo $this->va_settings['reservation_single']; ?> at:
+                                    <label><?php printf(__('End Cleanup after %1$s at','vpe'),$this->va_settings['reservation_single']); ?>:
                                         <?php echo $this->va_get_time_select('va_end_cleanup_time',null,null,false,$start_time); ?>
                                     </label> 
                                 </div>
@@ -1866,7 +1880,7 @@
                         <div class="va-locations">
                             <label><?php echo $this->va_settings['location_plural']?>:</label> 
                             <?php if($offsite) : ?>
-                                <p>*<?php echo $this->va_settings['location_plural']; ?> not available for offsite <?php echo $this->va_settings['venue_plural']; ?></p>
+                                <p>*<?php printf(__('%1$s not available for offsite %2$s','vpe'),$this->va_settings['location_plural'],$this->va_settings['venue_plural']); ?></p>
                             <?php else : ?>
                                 <?php 
                                     $args = array(
@@ -1896,7 +1910,7 @@
                     <div class="va-your-name">
                         <label><strong>
                             <?php if(empty($this->va_settings['name_label'])) : ?>
-                                Your Name:
+                                <?php _e('Your Name','vpe'); ?>:
                             <?php else :  ?>
                                 <?php echo $this->va_settings['name_label']; ?>
                             <?php endif; ?>
@@ -1907,7 +1921,7 @@
                         <div class="va-phone">
                             <label><strong>
                                 <?php if(empty($this->va_settings['phone_label'])) : ?>
-                                    Phone:
+                                    <?php _e('Phone','vpe'); ?>:
                                 <?php else :  ?>
                                     <?php echo $this->va_settings['phone_label']; ?>
                                 <?php endif; ?>
@@ -1919,7 +1933,7 @@
                     <div class="va-email">
                         <label><strong>
                             <?php if(empty($this->va_settings['email_label'])) : ?>
-                                Email:
+                                <?php _e('Email','vpe'); ?>:
                             <?php else :  ?>
                                 <?php echo $this->va_settings['email_label']; ?>
                             <?php endif; ?>
@@ -1931,7 +1945,7 @@
                         <div class="va-send-to">
                             <label><strong>
                                 <?php if(empty($this->va_settings['reservation_type_label'])) : ?>
-                                     <?php echo $this->va_settings['reservation_single']; ?> Type:
+                                     <?php printf(__('%1$s Type','vpe'),$this->va_settings['reservation_single']); ?>:
                                 <?php else :  ?>
                                     <?php echo $this->va_settings['reservation_type_label']; ?>
                                 <?php endif; ?>
@@ -1940,7 +1954,7 @@
                                 <?php if($this->va_settings['admin_email_two'] == '') : ?>
                                     <option value="one"><?php echo $this->va_settings['admin_email_label_one']; ?></option>
                                 <?php else : ?>
-                                    <option value="">-- Choose One --</option>
+                                    <option value="">-- <?php _e('Choose One','vpe'); ?> --</option>
                                     <option value="one"><?php echo $this->va_settings['admin_email_label_one']; ?></option>
                                     <option value="two"><?php echo $this->va_settings['admin_email_label_two']; ?></option>
                                 <?php endif; ?>
@@ -1953,7 +1967,7 @@
                     <?php if(in_array('description', $this->va_settings['show_form_fields'])) : ?>
                         <label><strong>
                             <?php if(empty($this->va_settings['description_label'])) : ?>
-                                <?php echo $this->va_settings['reservation_single']; ?> Description:
+                                <?php printf(__('%1$s Description','vpe'),$this->va_settings['reservation_single']); ?>
                             <?php else :  ?>
                                 <?php echo $this->va_settings['description_label']; ?>
                             <?php endif; ?>
@@ -1964,7 +1978,7 @@
                     <?php if(in_array('setup_needs', $this->va_settings['show_form_fields'])) : ?>
                         <label><strong>
                             <?php if(empty($this->va_settings['setup_needs_label'])) : ?>
-                                Setup Needs:
+                                <?php _e('Setup Needs','vpe'); ?>:
                             <?php else :  ?>
                                 <?php echo $this->va_settings['setup_needs_label']; ?>
                             <?php endif; ?>
@@ -1975,7 +1989,7 @@
                     <?php if(in_array('av_needs', $this->va_settings['show_form_fields'])) : ?>
                         <label><strong>
                             <?php if(empty($this->va_settings['av_needs_label'])) : ?>
-                                A/V Tech Needs: (ie. Screen, Projector, Speakers, Microphone, etc.)
+                                <?php _e('A/V Tech Needs: (ie. Screen, Projector, Speakers, Microphone, etc.)','vpe'); ?>
                             <?php else :  ?>
                                 <?php echo $this->va_settings['av_needs_label']; ?>
                             <?php endif; ?>
@@ -2017,7 +2031,7 @@
 
                     // locations
                     $('#va-location-id').chosen({
-                        placeholder_text_multiple: "Select some <?php echo $this->va_settings['location_plural']; ?>",
+                        placeholder_text_multiple: "<?php printf(__('Select some %1$s','vpe'),$this->va_settings['location_plural']); ?>",
                         width:"100%"
                     });
 
@@ -2064,10 +2078,10 @@
                     <?php endif;?>
                 </div>
                 <div class="va-calendar-nav">
-                    Date <input id="va-datepicker" type="text" name="va_date_chosen" value="<?php echo $date; ?>" onchange="this.form.submit();"/>
-                    <button class="button" name="va_prev" value="<?php echo date('m/d/Y', strtotime($date.'-1 months')); ?>"><i class="icon-double-angle-left"></i> prev</button>
-                    <button class="button" name="va_current" value="<?php echo date('m/d/Y', strtotime('now')); ?>">current</button>
-                    <button class="button" name="va_next" value="<?php echo date('m/d/Y', strtotime($date.'+1 months')); ?>">next <i class="icon-double-angle-right"></i></button>
+                    <?php _e('Date','vpe'); ?> <input id="va-datepicker" type="text" name="va_date_chosen" value="<?php echo $date; ?>" onchange="this.form.submit();"/>
+                    <button class="button" name="va_prev" value="<?php echo date('m/d/Y', strtotime($date.'-1 months')); ?>"><i class="icon-double-angle-left"></i> <?php _e('prev','vpe'); ?></button>
+                    <button class="button" name="va_current" value="<?php echo date('m/d/Y', strtotime('now')); ?>"><?php _e('current','vpe'); ?></button>
+                    <button class="button" name="va_next" value="<?php echo date('m/d/Y', strtotime($date.'+1 months')); ?>"><?php _e('next','vpe'); ?> <i class="icon-double-angle-right"></i></button>
                     <input type="hidden" name="va_view" value="month" />
                 </div>
                 <span class="va-clearer"></span>
@@ -2078,7 +2092,7 @@
             <table cellpadding="0" cellspacing="0" id="va-calendar-month" class="va-calendar">
             <thead>
             <?php //table headings ?>
-            <?php $headings = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat'); ?>
+            <?php $headings = array(_e('Sun','vpe'),_e('Mon','vpe'),_e('Tue','vpe'),_e('Wed','vpe'),_e('Thu','vpe'),_e('Fri','vpe'),_e('Sat','vpe')); ?>
             <tr class="calendar-row">
                 <th class="calendar-day-head">
                     <?php echo implode('</th><th class="calendar-day-head">',$headings); ?>
@@ -2203,11 +2217,11 @@
                     <?php endif;?>
                 </div>
                 <div class="va-calendar-nav">
-                    Date <input id="va-datepicker" type="text" name="va_date_chosen" value="<?php echo date('m/d/Y', strtotime($date)); ?>" onchange="this.form.submit();"/>
-                    <button class="button" name="va_prev" value="<?php echo date('m/d/Y', strtotime($date.'-1 days')); ?>"><i class="icon-double-angle-left"></i> prev</button>
-                    <button class="button" name="va_current" value="<?php echo date('m/d/Y', strtotime('now')); ?>">current</button>
-                    <button class="button" name="va_next" value="<?php echo date('m/d/Y', strtotime($date.'+1 days')); ?>">next <i class="icon-double-angle-right"></i></button>
-                    <button class="button" name="va_back" value="back"><i class="icon-calendar"></i> calendar</button>
+                    <?php _e('Date','vpe'); ?> <input id="va-datepicker" type="text" name="va_date_chosen" value="<?php echo date('m/d/Y', strtotime($date)); ?>" onchange="this.form.submit();"/>
+                    <button class="button" name="va_prev" value="<?php echo date('m/d/Y', strtotime($date.'-1 days')); ?>"><i class="icon-double-angle-left"></i> <?php _e('prev','vpe'); ?></button>
+                    <button class="button" name="va_current" value="<?php echo date('m/d/Y', strtotime('now')); ?>"><?php _e('current','vpe'); ?></button>
+                    <button class="button" name="va_next" value="<?php echo date('m/d/Y', strtotime($date.'+1 days')); ?>"><?php _e('next','vpe'); ?> <i class="icon-double-angle-right"></i></button>
+                    <button class="button" name="va_back" value="back"><i class="icon-calendar"></i> <?php _e('calendar','vpe'); ?></button>
                     <input type="hidden" name="va_view" value="day" />
                 </div>
                 <span class="va-clearer"></span>

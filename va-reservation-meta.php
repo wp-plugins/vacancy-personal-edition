@@ -5,7 +5,7 @@
     <div id="va-fields">
         <p>
             <?php echo apply_filters('va_ecp_status_note', null, $post->ID); ?>
-            <label><?php echo $this->va_settings['reservation_single']; ?> status </label>
+            <label><?php printf(__('%1$s status','vpe'),$this->va_settings['reservation_single']); ?></label>
             <select id="va-reservation-status" name="va_reservation_status">
                 <?php $stauses = array('Pending', 'Approved', 'Denied', 'Blocked'); ?>
                 <?php foreach($stauses as $status) : ?>
@@ -13,15 +13,15 @@
                         <?php if(get_post_meta($reservation->ID, 'va_reservation_status', true) == strtolower($status)){echo 'selected';} ?>
                     ><?php echo $status; ?></option>
                 <?php endforeach; ?>
-            </select><br/><span class="description">TIP: 'Denied' <?php echo $this->va_settings['reservation_plural']; ?> won't be displayed on the calendar. 'Blocked' <?php echo $this->va_settings['reservation_plural']; ?> will appear on the calendar as unavailable but not styled.</span><br/>
-            <br/><label>Comments <em>(sent to the submittor via <?php echo $this->va_settings['reservation_single']; ?> status change notification)</em></label></br/><textarea name="va_reservation_comments" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_comments', true); ?></textarea>
+            </select><br/><span class="description"><?php printf(__('TIP: \'Denied\' %1$s won\'t be displayed on the calendar. \'Blocked\' %2$s will appear on the calendar as unavailable but not styled','vpe'),$this->va_settings['reservation_plural'],$this->va_settings['reservation_plural']); ?>.</span><br/>
+            <br/><label><?php printf(__('Comments %1$s(sent to the submittor via %2$s status change notification)','vpe'),'<em>',$this->va_settings['reservation_single']); ?></em></label></br/><textarea name="va_reservation_comments" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_comments', true); ?></textarea>
         </p>
         <h3><?php echo $this->va_settings['venue_single']; ?> and <?php echo $this->va_settings['location_single']; ?></h3>
         <?php $venue_id; ?>
         <?php $venues = $this->va_get_venues(); ?>
         <?php if($venues->have_posts()) : ?>
         <p>
-            <label>Which <?php echo $this->va_settings['venue_single']; ?> is this <?php echo $this->va_settings['reservation_single']; ?> for? </label>
+            <label><?php printf(__('Which %1$s is this %2$s for','vpe'),$this->va_settings['venue_single'],$this->va_settings['reservation_single']); ?>?</label>
             <select id="va-venue-id" name="va_venue_id">
             <?php while($venues->have_posts()) : $venues->the_post(); ?>
                 <option value="<?php the_ID();?>" 
@@ -54,7 +54,7 @@
             ?>
             <?php if($locations->have_posts()) : ?>
             <p>
-                <label>This <?php echo $this->va_settings['reservation_single']; ?> is for which <?php echo $this->va_settings['location_plural']; ?>? </label>
+                <label><?php printf(__('This %1$s is for which %2$s','vpe'),$this->va_settings['reservation_single'],$this->va_settings['location_plural']); ?>? </label>
                 <select id="va-location-id" name="va_location_id[]" multiple>
                 <option></option>
                 <?php while($locations->have_posts()) : $locations->the_post(); ?>
@@ -85,61 +85,61 @@
             <?php endif; ?>
         </div>
         <p>
-            <label>Date</label> <input id="va-reservation-datepicker" type="text" value="<?php if(isset($_GET['va_reservation_date'])){echo date('m/d/Y', strtotime(sanitize_text_field($_GET['va_reservation_date'])));}elseif(get_post_meta($reservation->ID, 'va_reservation_date', true)){echo date('m/d/Y', strtotime(get_post_meta($reservation->ID, 'va_reservation_date', true)));} ?>" />
+            <label><?php _e('Date','vpe'); ?></label> <input id="va-reservation-datepicker" type="text" value="<?php if(isset($_GET['va_reservation_date'])){echo date('m/d/Y', strtotime(sanitize_text_field($_GET['va_reservation_date'])));}elseif(get_post_meta($reservation->ID, 'va_reservation_date', true)){echo date('m/d/Y', strtotime(get_post_meta($reservation->ID, 'va_reservation_date', true)));} ?>" />
             <input id="va-reservation-date" name="va_reservation_date" type="hidden" value="<?php if(isset($_GET['va_reservation_date'])){echo sanitize_text_field($_GET['va_reservation_date']);}elseif(get_post_meta($reservation->ID, 'va_reservation_date', true)){echo get_post_meta($reservation->ID, 'va_reservation_date', true);} ?>"/>
         </p>
         <p>
-            <label>Setup Start Time (before <?php echo $this->va_settings['reservation_single']; ?>)</label>
+            <label><?php printf(__('Setup Start Time (before %1$s)','vpe'),$this->va_settings['reservation_single']); ?></label>
             <?php $value = get_post_meta($reservation->ID, 'va_start_setup_time', true); ?>
             <?php echo $this->va_get_time_select('va_start_setup_time', $value); ?>
         </p> 
         <p>
-            <label>Start Time</label>
+            <label><?php _e('Start Time','vpe'); ?></label>
             <?php if(isset($_GET['va_start_time'])){$value = sanitize_text_field($_GET['va_start_time']);}else{$value = get_post_meta($reservation->ID, 'va_start_time', true);} ?>
             <?php echo $this->va_get_time_select('va_start_time', $value); ?>
         </p>
         <p>
-            <label>End Time</label>
+            <label><?php _e('End Time','vpe'); ?></label>
             <?php if(isset($_GET['va_end_time'])){$value = sanitize_text_field($_GET['va_end_time']);}else{$value = get_post_meta($reservation->ID, 'va_end_time', true);} ?>
             <?php echo $this->va_get_time_select('va_end_time', $value); ?>
         </p>  
         <p>
-            <label>Cleanup End Time (after <?php echo $this->va_settings['reservation_single']; ?>)</label>
+            <label><?php printf(__('Cleanup End Time (after %1$s)','vpe'),$this->va_settings['reservation_single']); ?></label>
             <?php $value = get_post_meta($reservation->ID, 'va_end_cleanup_time', true); ?>
             <?php echo $this->va_get_time_select('va_end_cleanup_time', $value); ?>
         </p>
 		<p>
-			<label>Set Up Needs</label></br/>
+			<label><?php _e('Set Up Needs','vpe'); ?></label></br/>
 			<textarea name="va_reservation_setup" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_setup', true); ?></textarea>
 		</p>		
 		<p>
-			<label>A/V Tech Needs</label></br/>
+			<label><?php _e('A/V Tech Needs','vpe'); ?></label></br/>
 			<textarea name="va_reservation_av" rows="6" cols="80"><?php echo get_post_meta($reservation->ID, 'va_reservation_av', true); ?></textarea>
 		</p>
 
-        <h3>Contact Information</h3>
+        <h3><?php _e('Contact Information','vpe'); ?></h3>
         <p>
-            <label>Name </label>
+            <label><?php _e('Name','vpe'); ?> </label>
             <input type="text" name="va_reservation_name" value="<?php echo apply_filters('va_before_meta_display', get_post_meta($reservation->ID, 'va_reservation_name', true)); ?>" />
         </p> 
         <p>
-            <label>Phone </label>
+            <label><?php _e('Phone','vpe'); ?> </label>
             <input type="tel" name="va_reservation_phone" value="<?php echo apply_filters('va_before_meta_display', get_post_meta($reservation->ID, 'va_reservation_phone', true)); ?>" />
         </p>  
         <p>
-            <label>Email </label>
+            <label><?php _e('Email','vpe'); ?> </label>
             <input type="email" name="va_reservation_email" value="<?php echo apply_filters('va_before_meta_display', get_post_meta($reservation->ID, 'va_reservation_email', true)); ?>" />
         </p>
         <br/>
-        <a class="button" href="/wp-admin/admin.php?page=va-admin-calendar"><i class="icon-calendar"></i> View Calendar</a><br/>
-        <span class="description">Tip: Remember to update this <?php echo $this->va_settings['reservation_single']; ?> first!</span>
+        <a class="button" href="/wp-admin/admin.php?page=va-admin-calendar"><i class="icon-calendar"></i> <?php _e('View Calendar','vpe'); ?></a><br/>
+        <span class="description"><?php printf(__('Tip: Remember to update this %1$s first','vpe'),$this->va_settings['reservation_single']); ?>!</span>
     </div>
 </div>
 <script type="text/javascript">
     jQuery(document).ready(function($){
         // run chosen on load
         $('#va-venue-id').chosen({
-            placeholder_text_single: "Select a <?php echo $this->va_settings['venue_single']; ?>",
+            placeholder_text_single: "<?php printf(__('Select a %1$s','vpe'),$this->va_settings['venue_single']); ?>",
             width: "auto"
         });     
         $('#va-reservation-status').chosen({ 
@@ -147,7 +147,7 @@
             width: "auto"
         });    
         $('#va-location-id').chosen({
-            placeholder_text_multiple: "Select some <?php echo $this->va_settings['location_plural']; ?>",
+            placeholder_text_multiple: "<?php printf(__('Select some %1$s','vpe'),$this->va_settings['location_plural']); ?>",
             width: "50%"
         });
         $('#va-reservation-datepicker').datepicker({

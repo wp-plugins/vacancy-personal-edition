@@ -1,5 +1,5 @@
 <div class="va-main-wrap">
-	<h1 class="va-page-title"><i class="icon-calendar"></i> <?php echo $this->va_settings['reservation_single']; ?> calendar</h1>
+	<h1 class="va-page-title"><i class="icon-calendar"></i> <?php printf(__('%1$s calendar','vpe'),$this->va_settings['reservation_single']); ?></h1>
 	<hr/>
 	<?php 
 		$venue_id = get_option('va_default_venue');
@@ -34,7 +34,7 @@
 <script type="text/javascript">
     jQuery(document).ready(function($){
         $('#va-venue-id').chosen({
-            placeholder_text_single: "Select a <?php echo $this->va_settings['venue_single']; ?>"
+            placeholder_text_single: "<?php printf(__('Select a %1$s','vpe'),$this->va_settings['venue_single']); ?>"
         });
 
 		$("table").stickyTableHeaders({fixedOffset: 32});

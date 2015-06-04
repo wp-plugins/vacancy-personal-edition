@@ -22,6 +22,7 @@ The perfect booking solution for any person or establishment that needs to allow
 * Reservation Conflict detection
 * Push reservations to Modern Tribe's Events Calendar Pro now available in the <a target="_blank" href="//kraftpress.it/downloads/vacancy-ecp/">Vacancy ECP addon</a>!
 * Recurring reservations, Export your schedules, Customize colors, Use unlimited venues/locations and more now available in the <a target="_blank" href="//kraftpress.it/downloads/vacancy-pro-edition/">Vacancy PRO Edition addon</a>!
+* Fully localized
 
 = Coming Soon =
 * Payment Gateway to require payment for user submitted reservations
@@ -50,6 +51,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 6. Admin Calendar View
 
 == Changelog ==
+
+= 1.3 =
+* Vacancy is now localized and includes French and Spanish translation files. If you need another translation please notify us on the forums at https://wordpress.org/support/plugin/vacancy-personal-edition
 
 = 1.2.5 =
 * added hooks for future encryption functionality
@@ -102,6 +106,10 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.3 =
+= 1.3 =
+* Vacancy is now localized and includes French and Spanish translation files. If you need another translation please notify us on the forums at https://wordpress.org/support/plugin/vacancy-personal-edition
 
 = 1.2.5 =
 * added hooks for future encryption functionality
