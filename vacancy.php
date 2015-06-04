@@ -931,12 +931,12 @@
             if(!wp_verify_nonce($_POST['va_save_submitted_reservation_nonce'], 'va_save_submitted_reservation')){return;}
             
             // sanitize data
-            if(in_array('title',$this->va_settings['show_form_fields'])){
+            if(is_array($this->va_settings['show_form_fields']) && in_array('title',$this->va_settings['show_form_fields'])){
                 $title = sanitize_text_field($_POST['va_reservation_title']);
             }else{
                 $title = sanitize_text_field($_POST['va_reservation_name']);
             }
-            if(in_array('description',$this->va_settings['show_form_fields'])){
+            if(is_array($this->va_settings['show_form_fields']) && in_array('description',$this->va_settings['show_form_fields'])){
                 $post_content = sanitize_text_field($_POST['va_reservation_content']);
             }else{
                 $post_content = '';
@@ -944,12 +944,12 @@
             $venue_id = sanitize_text_field($_POST['va_venue_id']);
             $location_ids = $_POST['va_location_id'];
             $date = sanitize_text_field($_POST['va_reservation_dates']);
-            if(in_array('setup_time',$this->va_settings['show_form_fields'])){
+            if(is_array($this->va_settings['show_form_fields']) && in_array('setup_time',$this->va_settings['show_form_fields'])){
                 $start_setup_time = sanitize_text_field($_POST['va_start_setup_time']);
             }else{
                 $start_setup_time = false;
             }
-            if(in_array('cleanup_time',$this->va_settings['show_form_fields'])){
+            if(is_array($this->va_settings['show_form_fields']) && in_array('cleanup_time',$this->va_settings['show_form_fields'])){
                 $end_cleanup_time = sanitize_text_field($_POST['va_end_cleanup_time']);
             }else{
                 $end_cleanup_time = false;
@@ -958,7 +958,7 @@
             $end_time = sanitize_text_field($_POST['va_end_time']);
         
             $name = sanitize_text_field($_POST['va_reservation_name']);
-            if(in_array('phone',$this->va_settings['show_form_fields'])){
+            if(is_array($this->va_settings['show_form_fields']) && in_array('phone',$this->va_settings['show_form_fields'])){
                 $phone = sanitize_text_field($_POST['va_reservation_phone']);
             }else{
                 $phone = '';
@@ -966,12 +966,12 @@
             $email = sanitize_text_field($_POST['va_reservation_email']);
             $admin_notification_label = sanitize_text_field($_POST['va_reservation_send_to']);
             $admin_notification_email = $this->va_settings['admin_email_'.$admin_notification_label];
-			if(in_array('setup_needs',$this->va_settings['show_form_fields'])){
+			if(is_array($this->va_settings['show_form_fields']) && in_array('setup_needs',$this->va_settings['show_form_fields'])){
                 $setup_needs = sanitize_text_field($_POST['va_reservation_setup']);
             }else {
                 $setup_needs = '';
             }
-            if(in_array('av_needs',$this->va_settings['show_form_fields'])){
+            if(is_array($this->va_settings['show_form_fields']) && in_array('av_needs',$this->va_settings['show_form_fields'])){
 			 $av_needs = sanitize_text_field($_POST['va_reservation_av']);
             }else {
                 $av_needs = '';
