@@ -52,6 +52,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.3.1 =
+* Bug fix: fixed reservation form warnings when form field availability settings haven't yet been saved.
+
 = 1.3 =
 * Vacancy is now localized and includes French and Spanish translation files. If you need another translation please notify us on the forums at https://wordpress.org/support/plugin/vacancy-personal-edition
 
@@ -107,7 +110,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Upgrade Notice ==
 
-= 1.3 =
+= 1.3.1 =
+* Bug fix: fixed reservation form warnings when form field availability settings haven't yet been saved.
+
 = 1.3 =
 * Vacancy is now localized and includes French and Spanish translation files. If you need another translation please notify us on the forums at https://wordpress.org/support/plugin/vacancy-personal-edition
 

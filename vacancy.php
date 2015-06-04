@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.3
+    Version: 1.3.1
     Author: kraftpress
     Author URI: http://kraftpress.it
     Text Domain: vpe
@@ -21,7 +21,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.3',
+                'version' => '1.3.1',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
@@ -1491,7 +1491,6 @@
             ob_start();
             ?>
             <div id="va-table-wrap">
-                <?php _e('next','vpe'); ?>
             <?php if(!empty($_POST['date']) && isset($_POST['venue_id'])) : ?>
                 <?php $date = sanitize_text_field($_POST['date']); ?>
                 <?php $venue_id = sanitize_text_field($_POST['venue_id']); ?>
@@ -1775,7 +1774,7 @@
                             <strong><?php printf(__('Start %1$s at', 'vpe'),$this->va_settings['reservation_single']); ?>:</strong><br/> 
                             <?php echo $this->va_get_time_select('va_start_time', $start_time, null, true, $start_time, $start_time); ?>
                         </label>
-                        <?php if(in_array('setup_time', $this->va_settings['show_form_fields'])) : ?>
+                        <?php if(is_array($this->va_settings['show_form_fields']) && in_array('setup_time', $this->va_settings['show_form_fields'])) : ?>
                             <div class="va-setup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
                                 <label><?php printf(__('Do you need setup time before your %1$s begins','vpe'),$this->va_settings['reservation_single']); ?>?
                                     <select name="va_need_setup_time">
@@ -1823,7 +1822,7 @@
                                 <?php echo $this->va_get_time_select('va_end_time', $start_time_min, null, true, $start_time_min, $end_time_max, $interval); ?>
                             </label>
                         <?php endif; ?>
-                        <?php if(in_array('cleanup_time', $this->va_settings['show_form_fields'])) : ?>
+                        <?php if(is_array($this->va_settings['show_form_fields']) && in_array('cleanup_time', $this->va_settings['show_form_fields'])) : ?>
                             <div class="va-cleanup-time" <?php if($setup_cleanup == 'no'){echo 'style="display:none;"';}?>>
                                 <label><?php printf(__('Do you need cleanup time after your %1$s ends','vpe'),$this->va_settings['reservation_single']); ?>?
                                     <select name="va_need_cleanup_time">
@@ -1841,7 +1840,7 @@
                     </div>
                     <span class="va-clearer"></span>
                     
-                    <?php if(in_array('title', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('title', $this->va_settings['show_form_fields'])) : ?>
                         <label><strong>
                             <?php if(empty($this->va_settings['title_label'])) : ?>
                                 <?php echo $this->va_settings['reservation_single']; ?> Title:</label>
@@ -1853,7 +1852,7 @@
                     <?php endif; ?>
                     <span class="va-clearer"></span>
 
-                    <?php if(in_array('venue', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('venue', $this->va_settings['show_form_fields'])) : ?>
                         <div class="va-venue">
                             <label><?php echo $this->va_settings['venue_single']; ?>:</label>
                             <?php if($offsite) : ?>
@@ -1876,7 +1875,7 @@
                         <input type="hidden" name="va_venue_id" value="<?php echo $venue_id; ?>" />
                     <?php endif; ?>
 
-                    <?php if(in_array('location', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('location', $this->va_settings['show_form_fields'])) : ?>
                         <div class="va-locations">
                             <label><?php echo $this->va_settings['location_plural']?>:</label> 
                             <?php if($offsite) : ?>
@@ -1917,7 +1916,7 @@
                         </strong></label>
                         <input type="text" name="va_reservation_name" value="<?php if(isset($_COOKIE['va_reservation_name'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_name']));} ?>" required />
                     </div>
-                    <?php if(in_array('phone', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('phone', $this->va_settings['show_form_fields'])) : ?>
                         <div class="va-phone">
                             <label><strong>
                                 <?php if(empty($this->va_settings['phone_label'])) : ?>
@@ -1941,7 +1940,7 @@
                         <input type="email" name="va_reservation_email" value="<?php if(isset($_COOKIE['va_reservation_email'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_email']));} ?>" required />
                         <span class="va-clearer"></span>
                     </div>
-                    <?php if(in_array('type', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('type', $this->va_settings['show_form_fields'])) : ?>
                         <div class="va-send-to">
                             <label><strong>
                                 <?php if(empty($this->va_settings['reservation_type_label'])) : ?>
@@ -1964,7 +1963,7 @@
                         <input type="hidden" name="va_reservation_send_to" value="one" />
                     <?php endif; ?>
                     <span class="va-clearer"></span>
-                    <?php if(in_array('description', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('description', $this->va_settings['show_form_fields'])) : ?>
                         <label><strong>
                             <?php if(empty($this->va_settings['description_label'])) : ?>
                                 <?php printf(__('%1$s Description','vpe'),$this->va_settings['reservation_single']); ?>
@@ -1975,7 +1974,7 @@
                         <textarea name="va_reservation_content" style="width:100%;" rows="6"><?php if(isset($_COOKIE['va_reservation_content'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_content']));} ?></textarea>
                     <?php endif; ?>
 				    <span class="va-clearer"></span>
-                    <?php if(in_array('setup_needs', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('setup_needs', $this->va_settings['show_form_fields'])) : ?>
                         <label><strong>
                             <?php if(empty($this->va_settings['setup_needs_label'])) : ?>
                                 <?php _e('Setup Needs','vpe'); ?>:
@@ -1986,7 +1985,7 @@
                         <textarea name="va_reservation_setup" style="width:100%;" rows="6"><?php if(isset($_COOKIE['va_reservation_setup'])){echo stripslashes(sanitize_text_field($_COOKIE['va_reservation_setup']));} ?></textarea>
                     <?php endif; ?>
                     <span class="va-clearer"></span> 
-                    <?php if(in_array('av_needs', $this->va_settings['show_form_fields'])) : ?>
+                    <?php if(is_array($this->va_settings['show_form_fields']) && in_array('av_needs', $this->va_settings['show_form_fields'])) : ?>
                         <label><strong>
                             <?php if(empty($this->va_settings['av_needs_label'])) : ?>
                                 <?php _e('A/V Tech Needs: (ie. Screen, Projector, Speakers, Microphone, etc.)','vpe'); ?>
