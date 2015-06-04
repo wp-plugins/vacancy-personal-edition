@@ -1,0 +1,66 @@
+.va-clearer {
+	clear: both; 
+	height: 0; 
+	line-height: 0; 
+	display: block;
+}
+#va-day-form {}
+#va-day-form p {float:left; margin-right: 20px;}
+#va-day-form label {display:block; float:left; width:120px;}
+#va-day-form #va-datepicker {margin-right:10px;}
+#va-table-wrap {clear:left;}
+#va-table-wrap h3 {text-align: center;}
+#va-table-wrap .va-prev-day {font-size:0.6em; float:left;}
+#va-table-wrap .va-next-day {font-size:0.6em; float:right;}
+.va-day-view {margin:20px 0; width:100%; background: #fff; border-right:1px solid #eee; border-bottom:1px solid #eee;}
+.va-day-view .va-header-row {background: #ddd;}
+.va-header-row th {text-align: center;}
+.va-day-view th {padding:10px; box-sizing:border-box; text-align: center; line-height: 1.2em;}
+.va-day-view td {position:relative; box-sizing:border-box; height:30px; border-left:1px solid #eee; border-top:1px solid #eee;}
+.va-day-view td.ui-selectee:hover {background:#FFDAB9;}
+.va-day-view td.available:hover {cursor:pointer;}
+/*.va-day-view td.available:hover:before {float:left; content:'Select'; display: block; line-height:1em; padding-left:10px;}*/
+/*.va-day-view td.available:hover:after {margin-left:5px; margin-right:10px; float:right; line-height:1em; content:"\f00c"; font-family: 'FontAwesome';}*/
+.va-day-view td.available:hover:after {display:block; text-align:center; line-height:1em; content:"\f00c"; font-family: 'FontAwesome';}
+.va-day-view td.available.va-editing:hover:before {float:left; content:''; display: block; line-height:1em; padding-left:10px;}
+.va-day-view td.available.va-editing:hover:after {margin-left:5px; margin-right:10px; float:right; line-height:1em; content:""; font-family: 'FontAwesome';}
+.va-day-view td.time {padding:0 10px; white-space:nowrap;}
+.va-day-view .reservation {border: 1px solid #fff; border-width: 0 0 1px 0; padding:10px; line-height:1.4em; color:white; z-index:9; position:absolute; top:0; left:0; width:100%; box-sizing:border-box; overflow: auto;}
+.va-day-view .pending {background:#74ace8;}
+.va-day-view .approved {background:#43d94d;}
+.va-day-view .denied {background:#e87f4a;}
+#va-calendar-month .reservation {padding:3px 5px; border-radius: 3px; margin-bottom:5px; line-height:1.2em; color:white; width:100%; box-sizing:border-box;}
+#va-calendar-month .pending {background:#74ace8;}
+#va-calendar-month .approved {background:#43d94d;}
+#va-calendar-month .denied {background:#e87f4a;}
+.va-day-view .not-available {background:#ccc;}
+.tableFloatingHeaderOriginal{z-index: 99;}
+.ui-selecting{background:#FFDAB9;}
+.ui-selected{background:#FFDAB9;}
+#va-calendar-month {margin:20px 0; width:100%;border:1px solid #ccc; border-width: 1px 1px 1px 0;}
+#va-calendar-month th {width:14.285%; background: #ddd; padding:5px 0;border-left:1px solid #ccc; text-align: center;}
+.va-calendar .calendar-row td.calendar-day:hover {cursor:pointer;}
+.va-calendar .calendar-row td {padding:25px 10px 5px 10px; background:#fff; position:relative; height: 100px; overflow: auto; border:1px solid #ccc; border-width: 1px 0 0 1px;}
+.va-calendar .calendar-row td.calendar-day-np {background: #f5f5f5;}
+.va-calendar .calendar-row td.today {background:#ffffe0;}
+.va-calendar .calendar-row td .day-number {position:absolute; top:0; right:5px;}
+.va-reservation-success-message {margin-bottom:20px; clear: left;padding: 5px 10px;background: #F0F8FF;border-radius: 5px;border: 1px solid #ADD8E6;}
+#va-reservation-form {margin-top:10px;}
+#va-reservation-form label {display:block; line-height: 1.2em;}
+.va-lightbox-form label {font-weight:bold; margin-bottom:10px;}
+#va-reservation-form input, 
+#va-reservation-form textarea, 
+#va-reservation-form select, 
+#va-reservation-form .chosen-container {width:100%; margin-bottom:10px;}
+#va-lightbox-datepicker {margin-bottom:10px;}
+.va-your-name, .va-venue, .va-email {float:left; width:48%;margin-right:4%;}
+.va-phone, .va-locations, .va-send-to {float:left; width:48%; }
+.va-start {width:48%; float: left;}
+.va-end {width:48%; float: right;}
+.chosen-choices {box-shadow: 0 0 5px rgba(0, 0, 0, 0);}
+#va-clicked-form {background:#fafafa; position: relative; z-index: 99; padding:0 10px; box-shadow: inset 0px 0px 10px #ddd;}
+#va-clicked-form h6 {margin:0 0 15px 0;border-bottom: 1px solid #ccc;padding: 15px 0;}
+#va-clicked-form h6 span {float:right; font-size:14px; color:#ccc; cursor:pointer;}
+#va-edit-dates {color:#ccc;cursor: pointer;}
+#va-reservation-submitted {padding: 15px 0; height:auto;}
+.va-editing {text-align:center;line-height:1em;background:#ccc; color:#fff;}
