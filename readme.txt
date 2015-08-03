@@ -52,6 +52,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 == Changelog ==
 
+= 1.3.2 =
+* Bug fix: fixed the activation notification.
+
 = 1.3.1 =
 * Bug fix: fixed reservation form warnings when form field availability settings haven't yet been saved.
 
@@ -109,6 +112,9 @@ Your votes really make a difference! And don't forget to leave your support/feat
 
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+* Bug fix: fixed the activation notification.
 
 = 1.3.1 =
 * Bug fix: fixed reservation form warnings when form field availability settings haven't yet been saved.

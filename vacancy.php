@@ -3,7 +3,7 @@
     Plugin Name: Vacancy Personal Edition
     Plugin URI: http://kraftpress.it
     Description: A full featured appointment and reservation booking solution
-    Version: 1.3.1
+    Version: 1.3.2
     Author: kraftpress
     Author URI: http://kraftpress.it
     Text Domain: vpe
@@ -21,7 +21,7 @@
             add_filter('va_get_dir', array($this, 'va_get_dir'), 1, 1);
              // vars
             $this->va_settings = array(
-                'version' => '1.3.1',
+                'version' => '1.3.2',
                 'path' => apply_filters('va_get_path', __FILE__),
                 'dir' => apply_filters('va_get_dir', __FILE__),
                 'hook' => basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ),
@@ -401,7 +401,7 @@
             if($clicked != 1){
             ?>
             <div class="updated">
-                <p><strong><?php __('Welcome to Vacancy!','vpe'); ?><strong> <?php __('Please take a moment to learn about how to setup and use your new reservation system!','vpe'); ?> <a href="/wp-admin/admin.php?page=va-settings&tab=va-setup-usage&notice=1"><?php __('Click here for more','vpe'); ?></a></p>
+                <p><strong><?php __('Welcome to Vacancy!','vpe'); ?></strong> <?php __('Please take a moment to learn about how to setup and use your new reservation system!','vpe'); ?> <a href="/wp-admin/admin.php?page=va-settings&tab=va-setup-usage&notice=1"><?php __('Click here for more','vpe'); ?></a></p>
             </div>
             <?php
             }
